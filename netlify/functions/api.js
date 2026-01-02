@@ -5,12 +5,15 @@
 //   /health  /.netlify/functions/api/health   200
 
 const hasPg = !!(
+  process.env.NETLIFY_DATABASE_URL ||
   process.env.DATABASE_URL ||
-  process.env.NETLIFY_DATABASE_URL_UNPOOLED ||
-  process.env.NETLIFY_DATABASE_URL
+  process.env.NETLIFY_DATABASE_URL_UNPOOLED
 );
 
-const DB = hasPg ? require("../../src/db_pg") : require("../../src/db");
+// Prefer Netlify DB driver (Neon) for any Postgres connection string.
+const DB = hasPg ? require("../../src/db_neon") : require("../../src/db");
+ 
+
 
 let initPromise = null;
 async function ensureInit() {
