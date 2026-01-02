@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course UI Demo</title>
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/layout.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Course navigation">
+      <div class="sidebar-top">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <div class="brand-text">
+            <div class="brand-title">Course Demo</div>
+            <div class="brand-subtitle">10 lessons, local flow</div>
+          </div>
+        </div>
+
+        <div class="sidebar-meta">
+          <div class="meta-card">
+            <div class="meta-label">Progress</div>
+            <div class="meta-value"><span id="metaDone">0</span>/<span id="metaTotal">10</span> lessons</div>
+            <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+              <div class="meter-fill" id="meterFill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="tabs" id="lessonTabs" aria-label="Lessons">
+        <!-- tabs injected -->
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="btn btn-square btn-ghost" id="resetBtn" type="button">Reset demo</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="crumb">
+            <span class="crumb-muted">Module</span>
+            <span class="crumb-dot" aria-hidden="true"></span>
+            <span class="crumb-strong" id="crumbLesson">Lesson 1</span>
+          </div>
+          <div class="title" id="lessonTitle">Lesson title</div>
+          <div class="subtitle" id="lessonSubtitle">Short description goes here.</div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="chip" id="statusChip">In progress</div>
+          <button class="btn btn-square" id="completeBtn" type="button">Complete lesson</button>
+        </div>
+      </header>
+
+      <section class="content-grid">
+        <section class="card lesson-card">
+          <div class="card-head">
+            <div class="card-title">Content</div>
+            <div class="card-actions">
+              <button class="btn btn-square btn-soft" id="prevBtn" type="button">Prev</button>
+              <button class="btn btn-square btn-soft" id="nextBtn" type="button">Next</button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="lesson-body" id="lessonBody">
+              <!-- lesson content injected -->
+            </div>
+          </div>
+        </section>
+
+        <aside class="card tutor-card">
+          <div class="card-head">
+            <div class="card-title">Tutor</div>
+            <div class="card-actions">
+              <button class="btn btn-square btn-ghost" id="hintBtn" type="button">Hint</button>
+            </div>
+          </div>
+
+          <div class="card-body tutor-body">
+            <div class="robot-area" aria-label="Robot placeholder">
+              <div class="robot-placeholder" id="robotPlaceholder">
+                <div class="robot-ring" aria-hidden="true"></div>
+                <div class="robot-core" aria-hidden="true"></div>
+                <div class="robot-label">ROBOT PLACEHOLDER</div>
+                <div class="robot-note">Replace this with your robot</div>
+              </div>
+            </div>
+
+            <div class="bubble-area" aria-label="Bubble placeholder">
+              <div class="bubble-placeholder" id="bubblePlaceholder">
+                <div class="bubble-title">BUBBLE PLACEHOLDER</div>
+                <div class="bubble-text" id="bubbleText">Text will appear here.</div>
+              </div>
+            </div>
+
+            <div class="qa">
+              <div class="qa-title">Quick question</div>
+              <div class="qa-text" id="questionText">Pick an answer to get feedback.</div>
+
+              <div class="choices" id="choices"></div>
+
+              <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+
+              <button class="btn btn-square btn-accent" id="continueBtn" type="button">Continue</button>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <script src="assets/js/state.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
