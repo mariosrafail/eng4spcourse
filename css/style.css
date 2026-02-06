@@ -1,10 +1,10 @@
 /* Global font imports */
-@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
 
 /* Global font defaults */
 * { font-family: 'Poppins', sans-serif; }
 h1, h2, h3, h4, h5, h6, .unit-title, .module-focus-title, .card-title, .side-title, .kw-title, .reading-section-title, .writing-task-head {
-  font-family: 'Balsamiq Sans', 'Playfair Display', serif;
+  font-family: 'Merriweather', 'Playfair Display', serif;
 }
 
 /* ==========================================================================
@@ -102,7 +102,7 @@ body{
    ======================================================================= */
 h1{
   margin: 12px 0 6px;
-  font-size: 40px;
+  font-size: 41px;
   letter-spacing:.2px;
 }
 
@@ -794,14 +794,14 @@ h1{
 .module-focus-title{
   font-weight:900;
   color: var(--purple-700);
-  font-size: 21px;
+  font-size: 22px;
   margin-bottom: 6px;
 }
 
 .module-focus-sub{
   font-weight:800;
   color: var(--ink);
-  font-size: 18px;
+  font-size: 19px;
 }
 
 .focus-box{
@@ -821,7 +821,7 @@ h1{
 .focus-h{
   margin: 0 0 8px 0;
   color: rgba(122,103,201,.85);
-  font-size: 21px;
+  font-size: 22px;
   letter-spacing:.2px;
 }
 
@@ -858,7 +858,7 @@ h1{
 
 .unit-title{
   margin: 10px 0 6px 0;
-  font-size: 33px;
+  font-size: 34px;
   color: var(--purple-700);
   letter-spacing:.3px;
 }
@@ -924,14 +924,14 @@ h1{
 
 .card-title{
   font-weight: 900;
-  font-size: 21px;
+  font-size: 22px;
   color: var(--purple-700);
   margin-bottom: 8px;
 }
 
 .side-title{
   margin: 6px 0 10px 0;
-  font-size: 24px;
+  font-size: 25px;
   line-height: 1.15;
   color: var(--purple-700);
   text-align: center;
