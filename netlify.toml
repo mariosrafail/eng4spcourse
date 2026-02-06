@@ -11,3 +11,33 @@
   from = "/api/check-dnd"
   to = "/.netlify/functions/check-dnd"
   status = 200
+
+[[redirects]]
+  from = "/api/auth/register"
+  to = "/.netlify/functions/auth-register"
+  status = 200
+
+[[redirects]]
+  from = "/api/auth/login"
+  to = "/.netlify/functions/auth-login"
+  status = 200
+
+[[redirects]]
+  from = "/api/auth/me"
+  to = "/.netlify/functions/auth-me"
+  status = 200
+
+[[redirects]]
+  from = "/api/auth/logout"
+  to = "/.netlify/functions/auth-logout"
+  status = 200
+
+[[redirects]]
+  from = "/api/progress/get"
+  to = "/.netlify/functions/progress-get"
+  status = 200
+
+[[redirects]]
+  from = "/api/progress/set"
+  to = "/.netlify/functions/progress-set"
+  status = 200
