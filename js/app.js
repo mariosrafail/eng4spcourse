@@ -1,3 +1,33 @@
+// Basic UI hardening (deterrent only, not real security).
+(() => {
+  if (window.__uiHardeningBound) return;
+  window.__uiHardeningBound = true;
+
+  document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const key = (e.key || '').toLowerCase();
+    const ctrl = e.ctrlKey || e.metaKey;
+    const shift = e.shiftKey;
+
+    const blocked =
+      key === 'f11' ||
+      key === 'f12' ||
+      (ctrl && key === 's') ||
+      (ctrl && key === 'u') ||
+      (ctrl && key === 'p') ||
+      (ctrl && shift && (key === 'i' || key === 'j' || key === 'c' || key === 'k')) ||
+      (shift && key === 'f10');
+
+    if (blocked) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+})();
+
 // Wrap everything in a function that can be called multiple times (for dynamic module loading)
 window.initializeApp = function initializeApp() {
   // Tabs (scoped to active module only)
