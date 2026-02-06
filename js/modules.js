@@ -5,14 +5,27 @@
 
   const moduleButtons = Array.from(modulesSidebar.querySelectorAll('.module-btn'));
   const sidebar = document.querySelector('.sidebar');
+  const activeModuleTitle = document.querySelector('#activeModuleTitle');
   const mainContent = document.querySelector('main.content');
   const modulePanels = Array.from(document.querySelectorAll('.module-panel'));
   const _cache = Object.create(null);
+  const EXPAND_PROXIMITY_PX = 72;
+  const COLLAPSE_DISTANCE_PX = 140;
+  const COLLAPSE_FADE_MS = 220;
+  let collapseTimer = null;
+
+  function getActiveModulePanel(){
+    return modulePanels.find((p) => p.classList.contains('is-active'));
+  }
 
   // Initialize tab switching for dynamically loaded content
-  function initTabs(){
-    const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
-    const panels = Array.from(document.querySelectorAll('.tab-panel'));
+  function initTabs(options = {}){
+    const { forceFirstTab = false, focusActiveTab = false } = options;
+    const activeModulePanel = getActiveModulePanel();
+    if(!activeModulePanel) return;
+
+    let tabButtons = Array.from(activeModulePanel.querySelectorAll('.tab-btn'));
+    const panels = Array.from(document.querySelectorAll('main.content .tab-panel'));
 
     function setActiveTab(key){
       tabButtons.forEach((b) => {
@@ -47,17 +60,27 @@
     });
     
     // Get fresh references after cloning
-    const freshTabButtons = Array.from(document.querySelectorAll('.tab-btn'));
+    const freshTabButtons = Array.from(activeModulePanel.querySelectorAll('.tab-btn'));
+    tabButtons = freshTabButtons;
     freshTabButtons.forEach((btn) => {
       btn.addEventListener('click', () => setActiveTab(btn.dataset.tab));
     });
 
     // Set initial active tab
-    const initiallyActive = freshTabButtons.find((b) => b.classList.contains('is-active'))?.dataset.tab || 'info';
+    const initiallyActive =
+      (forceFirstTab ? freshTabButtons[0]?.dataset.tab : null) ||
+      freshTabButtons.find((b) => b.classList.contains('is-active'))?.dataset.tab ||
+      freshTabButtons[0]?.dataset.tab ||
+      'info';
     setActiveTab(initiallyActive);
+    if(focusActiveTab){
+      const activeBtn = freshTabButtons.find((b) => b.classList.contains('is-active'));
+      activeBtn?.focus({ preventScroll: true });
+    }
   }
 
-  async function loadModule(id){
+  async function loadModule(id, options = {}){
+    const { forceFirstTab = false, focusActiveTab = false } = options;
     const panel = modulePanels.find(p => p.dataset.module === String(id));
     if(!panel || !mainContent) return;
     
@@ -65,7 +88,7 @@
     if(_cache[id]){ 
       panel.innerHTML = _cache[id].menu; 
       mainContent.innerHTML = _cache[id].content;
-      initTabs();
+      initTabs({ forceFirstTab, focusActiveTab });
       // Also reinitialize all app functionality
       if (window.initializeApp) {
         window.initializeApp();
@@ -96,7 +119,7 @@
       mainContent.innerHTML = contentHTML;
       
       // Initialize tabs after injection
-      initTabs();
+      initTabs({ forceFirstTab, focusActiveTab });
       
       // Also reinitialize all app functionality (audio, quizzes, drag-drop, etc.)
       if (window.initializeApp) {
@@ -117,7 +140,15 @@
     });
     // Show the sidebar when a module is activated
     if(sidebar) sidebar.style.display = 'flex';
-    loadModule(id);
+    if(activeModuleTitle) activeModuleTitle.textContent = `Module ${id}`;
+    // Keep modules sidebar open on click; collapse only after cursor moves far away.
+    if(collapseTimer){
+      clearTimeout(collapseTimer);
+      collapseTimer = null;
+    }
+    modulesSidebar.classList.remove('is-collapsing');
+    modulesSidebar.classList.remove('is-collapsed');
+    loadModule(id, { forceFirstTab: true, focusActiveTab: true });
   }
 
   moduleButtons.forEach(btn => {
@@ -129,6 +160,57 @@
     btn.addEventListener('keydown', (e)=>{
       if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); btn.click(); }
     });
+  });
+
+  function hasActiveModule(){
+    return moduleButtons.some((b) => b.classList.contains('is-active'));
+  }
+
+  function distanceFromRect(x, y, rect){
+    const dx = x < rect.left ? rect.left - x : x > rect.right ? x - rect.right : 0;
+    const dy = y < rect.top ? rect.top - y : y > rect.bottom ? y - rect.bottom : 0;
+    return Math.hypot(dx, dy);
+  }
+
+  function handlePointerProximity(x, y){
+    if(!hasActiveModule()) return;
+    const rect = modulesSidebar.getBoundingClientRect();
+    const distance = distanceFromRect(x, y, rect);
+
+    if(modulesSidebar.classList.contains('is-collapsed')){
+      if(distance <= EXPAND_PROXIMITY_PX){
+        if(collapseTimer){
+          clearTimeout(collapseTimer);
+          collapseTimer = null;
+        }
+        modulesSidebar.classList.remove('is-collapsing');
+        modulesSidebar.classList.remove('is-collapsed');
+      }
+      return;
+    }
+
+    if(distance >= COLLAPSE_DISTANCE_PX){
+      if(modulesSidebar.classList.contains('is-collapsing') || collapseTimer) return;
+      modulesSidebar.classList.add('is-collapsing');
+      collapseTimer = setTimeout(() => {
+        modulesSidebar.classList.add('is-collapsed');
+        modulesSidebar.classList.remove('is-collapsing');
+        collapseTimer = null;
+      }, COLLAPSE_FADE_MS);
+      return;
+    }
+
+    if(modulesSidebar.classList.contains('is-collapsing')){
+      if(collapseTimer){
+        clearTimeout(collapseTimer);
+        collapseTimer = null;
+      }
+      modulesSidebar.classList.remove('is-collapsing');
+    }
+  }
+
+  document.addEventListener('mousemove', (e) => {
+    handlePointerProximity(e.clientX, e.clientY);
   });
 
 })();

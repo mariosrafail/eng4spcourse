@@ -1,10 +1,10 @@
 /* Global font imports */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
 
 /* Global font defaults */
 * { font-family: 'Poppins', sans-serif; }
 h1, h2, h3, h4, h5, h6, .unit-title, .module-focus-title, .card-title, .side-title, .kw-title, .reading-section-title, .writing-task-head {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Balsamiq Sans', 'Playfair Display', serif;
 }
 
 /* ==========================================================================
@@ -102,7 +102,7 @@ body{
    ======================================================================= */
 h1{
   margin: 12px 0 6px;
-  font-size: 38px;
+  font-size: 40px;
   letter-spacing:.2px;
 }
 
@@ -383,9 +383,98 @@ h1{
   display:flex;
   flex-direction:column;
   gap:12px;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  z-index: 100;
+  overflow: visible;
 }
-.modules-nav{display:flex;flex-direction:column;gap:8px}
-.module-btn{padding:8px 10px; font-size:13px; text-align:left; border-radius:12px; background: rgba(255,255,255,.9); border:1px solid rgba(205,191,232,.85); cursor:pointer}
+
+/* Stage 1: fade out sidebar content before collapsing width */
+.modules-sidebar.is-collapsing .logo-image,
+.modules-sidebar.is-collapsing .modules-label,
+.modules-sidebar.is-collapsing .modules-nav{
+  opacity: 0;
+}
+
+.modules-sidebar.is-collapsing .modules-nav{
+  pointer-events: none;
+}
+
+/* Collapsed state - slide to the left, keeping fat indicator */
+.modules-sidebar.is-collapsed{
+  width:36px;
+  flex:0 0 36px;
+  padding:10px 4px;
+  border-width: 2px 2px 2px 3px;
+  border-color: rgba(205,191,232,.78);
+  overflow: hidden;
+}
+
+/* Thin collapse bar indicator - visible always */
+.modules-sidebar.is-collapsed::before{
+  content: none;
+}
+
+/* Fade out logo and label when collapsed */
+.logo-image{
+  width:80px;
+  height:80px;
+  object-fit:contain;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modules-sidebar.is-collapsed .logo-image{
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.modules-label{
+  width:100%;
+  padding:12px 10px;
+  text-align:center;
+  font-weight:700;
+  letter-spacing:.3px;
+  color: var(--purple-700);
+  background: rgba(122,103,201,.12);
+  border: 2px solid rgba(122,103,201,.25);
+  border-radius: 12px;
+  font-size:14px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modules-sidebar.is-collapsed .modules-label{
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.modules-nav{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modules-sidebar.is-collapsed .modules-nav{
+  opacity: 0;
+  pointer-events: none;
+}
+
+.module-btn{
+  padding:8px 10px;
+  font-size:13px;
+  text-align:left;
+  border-radius:12px;
+  background: rgba(255,255,255,.9);
+  border:1px solid rgba(205,191,232,.85);
+  cursor:pointer;
+  white-space: nowrap;
+}
 
 /* Module submenu placeholders inside the main sidebar */
 .welcome-panel{padding:12px 0; text-align:center; color:var(--muted)}
@@ -412,7 +501,7 @@ h1{
   gap:12px;
   align-items:center;
   padding:10px 10px 14px 10px;
-  border-bottom: 1px solid rgba(205,191,232,.75);
+  border-bottom: 0;
   margin-bottom:14px;
 }
 
@@ -420,6 +509,8 @@ h1{
   width:80px;
   height:80px;
   object-fit:contain;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .modules-label{
@@ -433,6 +524,8 @@ h1{
   border: 2px solid rgba(122,103,201,.25);
   border-radius: 12px;
   font-size:14px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .side-mark{
@@ -701,14 +794,14 @@ h1{
 .module-focus-title{
   font-weight:900;
   color: var(--purple-700);
-  font-size: 18px;
+  font-size: 21px;
   margin-bottom: 6px;
 }
 
 .module-focus-sub{
   font-weight:800;
   color: var(--ink);
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .focus-box{
@@ -728,7 +821,7 @@ h1{
 .focus-h{
   margin: 0 0 8px 0;
   color: rgba(122,103,201,.85);
-  font-size: 18px;
+  font-size: 21px;
   letter-spacing:.2px;
 }
 
@@ -765,7 +858,7 @@ h1{
 
 .unit-title{
   margin: 10px 0 6px 0;
-  font-size: 30px;
+  font-size: 33px;
   color: var(--purple-700);
   letter-spacing:.3px;
 }
@@ -831,8 +924,17 @@ h1{
 
 .card-title{
   font-weight: 900;
+  font-size: 21px;
   color: var(--purple-700);
   margin-bottom: 8px;
+}
+
+.side-title{
+  margin: 6px 0 10px 0;
+  font-size: 24px;
+  line-height: 1.15;
+  color: var(--purple-700);
+  text-align: center;
 }
 
 .card-p{margin: 0 0 10px 0; color: var(--ink);}
