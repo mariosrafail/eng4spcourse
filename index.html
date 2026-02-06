@@ -10,10 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <button aria-controls="modulesSidebar" aria-expanded="false" aria-label="Open modules menu" class="mobile-menu-toggle mobile-menu-toggle--left" id="modulesMenuToggle" style="left:12px;right:auto;" type="button">
+    <button aria-controls="modulesSidebar" aria-expanded="false" aria-label="Open modules menu" class="mobile-menu-toggle mobile-menu-toggle--left" id="modulesMenuToggle" type="button">
       <span aria-hidden="true"></span>
     </button>
-    <button aria-controls="courseSidebar" aria-expanded="false" aria-label="Open course menu" class="mobile-menu-toggle mobile-menu-toggle--right" id="courseMenuToggle" style="right:12px;left:auto;" type="button">
+    <button aria-controls="courseSidebar" aria-expanded="false" aria-label="Open course menu" class="mobile-menu-toggle mobile-menu-toggle--right" id="courseMenuToggle" type="button">
       <span aria-hidden="true"></span>
     </button>
     <div aria-hidden="true" class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
@@ -54,7 +54,17 @@
       </aside>
 
       <main class="content" role="main">
-        <!-- Content will be populated by module menus -->
+        <section class="module-card" id="homeIntro">
+          <div class="module-top">
+            <div class="module-focus-title">English in Tourism</div>
+            <div class="module-focus-sub">Welcome to the course</div>
+          </div>
+          <div aria-label="Home intro" class="focus-box" role="region">
+            <h2 class="focus-h">Start Here</h2>
+            <p class="focus-p">Select a module from the left menu to begin.</p>
+            <p class="focus-p">Use the right menu to navigate sections inside each module.</p>
+          </div>
+        </section>
       </main>
     </div>
 

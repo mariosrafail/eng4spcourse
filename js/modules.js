@@ -3,7 +3,7 @@
   const modulesSidebar = document.querySelector('.modules-sidebar');
   if(!modulesSidebar) return;
 
-  const moduleButtons = Array.from(modulesSidebar.querySelectorAll('.module-btn'));
+  const moduleButtons = Array.from(modulesSidebar.querySelectorAll('.module-btn[data-module]'));
   const sidebar = document.querySelector('.sidebar');
   const modulesMenuToggle = document.querySelector('#modulesMenuToggle');
   const courseMenuToggle = document.querySelector('#courseMenuToggle');
@@ -265,6 +265,12 @@
   document.addEventListener('mousemove', (e) => {
     handlePointerProximity(e.clientX, e.clientY);
   });
+
+
+  const moduleFromQuery = Number(new URLSearchParams(window.location.search).get('module'));
+  if(Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 8){
+    setActive(moduleFromQuery);
+  }
 
   modulesMenuToggle?.addEventListener('click', () => toggleMobileDrawer('modules'));
   courseMenuToggle?.addEventListener('click', () => toggleMobileDrawer('course'));

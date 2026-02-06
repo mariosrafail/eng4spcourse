@@ -926,7 +926,7 @@ h1{
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    position:fixed;
+    position:absolute;
     top:14px;
     width:44px;
     height:44px;
@@ -939,22 +939,28 @@ h1{
   }
 
   .mobile-menu-toggle--left{
-    left:12px;
+    top:14px;
+    left:0;
     right:auto;
   }
   .mobile-menu-toggle--right{
-    right:12px;
+    top:14px;
+    right:0;
     left:auto;
   }
   #modulesMenuToggle{
-    left:12px !important;
-    right:auto !important;
-    margin:0;
+    position: fixed !important;
+    top: 14px !important;
+    left: 10px !important;
+    right: auto !important;
+    z-index: 1600 !important;
   }
   #courseMenuToggle{
-    right:12px !important;
-    left:auto !important;
-    margin:0;
+    position: fixed !important;
+    top: 14px !important;
+    right: 10px !important;
+    left: auto !important;
+    z-index: 1600 !important;
   }
 
   .mobile-menu-toggle span,
@@ -1001,6 +1007,7 @@ h1{
     z-index:1300;
     margin:0;
     transition: transform .28s ease, opacity .28s ease;
+    background: rgba(255,255,255,.985);
   }
 
   .modules-sidebar{
