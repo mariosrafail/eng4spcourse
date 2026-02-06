@@ -14,6 +14,16 @@
 
     let selectedToken = null;
 
+    async function checkDndOnServer(exerciseId, answers){
+      const res = await fetch('/api/check-dnd', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ exerciseId, answers })
+      });
+      if(!res.ok) throw new Error(`DnD check failed with status ${res.status}`);
+      return res.json();
+    }
+
     function setFeedback(msg){
       if(feedback) feedback.textContent = msg || '';
     }
@@ -126,19 +136,16 @@
       setFeedback('');
     });
 
-    checkBtn?.addEventListener('click', () => {
+    checkBtn?.addEventListener('click', async () => {
       clearMarks();
       let allFilled = true;
-      let correct = 0;
+      const answers = [];
 
       blanks.forEach((b) => {
         const t = getTokenInBlank(b);
         if(!t) allFilled = false;
-        const expected = (b.dataset.answer || '').trim();
         const got = tokenText(t);
-        const ok = !!t && got === expected;
-        b.classList.add(ok ? 'is-correct' : 'is-wrong');
-        if(ok) correct += 1;
+        answers.push(got);
       });
 
       if(!allFilled){
@@ -146,10 +153,21 @@
         return;
       }
 
-      if(correct === blanks.length){
-        setFeedback('Correct. Well done.');
-      }else{
-        setFeedback('Some answers are incorrect. Try again.');
+      try{
+        const result = await checkDndOnServer('module2_h2_writing_task1', answers);
+        let correct = 0;
+        blanks.forEach((b, i) => {
+          const ok = !!result?.correctByIndex?.[i];
+          b.classList.add(ok ? 'is-correct' : 'is-wrong');
+          if(ok) correct += 1;
+        });
+        if(correct === blanks.length){
+          setFeedback('Correct. Well done.');
+        }else{
+          setFeedback('Some answers are incorrect. Try again.');
+        }
+      }catch(_e){
+        setFeedback('Cannot validate answers now. Try again in a moment.');
       }
     });
 

@@ -146,10 +146,39 @@ window.initializeApp = function initializeApp() {
 	});
 
 // Quiz (bind multiple quizzes with scoped marking)
+  async function checkQuizOnServer(quizId, answers){
+    const res = await fetch('/api/check-quiz', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ quizId, answers })
+    });
+
+    if (!res.ok){
+      throw new Error(`Quiz check failed with status ${res.status}`);
+    }
+
+    return res.json();
+  }
+
+  async function checkDndOnServer(exerciseId, answers){
+    const res = await fetch('/api/check-dnd', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ exerciseId, answers })
+    });
+
+    if (!res.ok){
+      throw new Error(`DnD check failed with status ${res.status}`);
+    }
+
+    return res.json();
+  }
+
   function bindQuiz(cfg){
     const form = document.getElementById(cfg.formId);
     const feedback = document.getElementById(cfg.feedbackId);
     const resetBtn = document.getElementById(cfg.resetId);
+    const questionIds = Array.isArray(cfg.questionIds) ? cfg.questionIds : [];
 
     function clearMarks(){
       if (!form) return;
@@ -167,32 +196,47 @@ window.initializeApp = function initializeApp() {
       return checked ? checked.value : null;
     }
 
-    form?.addEventListener('submit', (e) => {
+    form?.addEventListener('submit', async (e) => {
       e.preventDefault();
       clearMarks();
 
       let wrongCount = 0;
+      const submittedAnswers = {};
 
-      Object.keys(cfg.answers).forEach((key) => {
+      questionIds.forEach((key) => {
         const val = readValue(key);
         const qEl = form.querySelector(`.q[data-q="${key}"]`);
         if (!qEl) return;
 
         if (!val){
+          submittedAnswers[key] = null;
           wrongCount += 1;
           qEl.classList.add('is-wrong');
           return;
         }
 
-        if (val === cfg.answers[key]){
-          qEl.classList.add('is-right');
-        }else{
-          wrongCount += 1;
-          qEl.classList.add('is-wrong');
-        }
+        submittedAnswers[key] = val;
       });
 
       if (!feedback) return;
+
+      if (wrongCount === 0){
+        try{
+          const result = await checkQuizOnServer(cfg.serverQuizId, submittedAnswers);
+          questionIds.forEach((key) => {
+            const qEl = form.querySelector(`.q[data-q="${key}"]`);
+            if (!qEl) return;
+            const ok = !!result?.correctByQuestion?.[key];
+            qEl.classList.add(ok ? 'is-right' : 'is-wrong');
+            if (!ok) wrongCount += 1;
+          });
+        }catch(_err){
+          feedback.className = 'feedback is-bad';
+          feedback.textContent = 'Cannot validate answers now. Try again in a moment.';
+          if (cfg.onNotAllCorrect) cfg.onNotAllCorrect();
+          return;
+        }
+      }
 
       if (wrongCount === 0){
         feedback.className = 'feedback is-good';
@@ -219,7 +263,8 @@ window.initializeApp = function initializeApp() {
     formId: 'quizForm',
     feedbackId: 'feedback',
     resetId: 'resetBtn',
-    answers: { q1:'a', q2:'a', q3:'a' },
+    serverQuizId: 'module2_useful_language',
+    questionIds: ['q1', 'q2', 'q3'],
     goodText: 'All answers are correct. Well done.',
     badText: 'Incorrect. Listen again and try again.',
     onReset: () => {
@@ -245,7 +290,8 @@ window.initializeApp = function initializeApp() {
     formId: 'listeningForm',
     feedbackId: 'liFeedback',
     resetId: 'liResetBtn',
-    answers: { lq1:'b', lq2:'a', lq3:'b' },
+    serverQuizId: 'module2_listening',
+    questionIds: ['lq1', 'lq2', 'lq3'],
     goodText: 'All answers are correct. Well done.',
     badText: 'Incorrect. Listen again and try again.',
     onClear: () => {
@@ -274,7 +320,8 @@ window.initializeApp = function initializeApp() {
 	  formId: 'h2ListeningForm',
 	  feedbackId: 'h2liFeedback',
 	  resetId: 'h2liResetBtn',
-	  answers: { h2lq1:'b', h2lq2:'c', h2lq3:'a' },
+	  serverQuizId: 'module2_h2_listening',
+	  questionIds: ['h2lq1', 'h2lq2', 'h2lq3'],
 	  goodText: 'All answers are correct. Well done.',
 	  badText: 'Incorrect. Listen again and try again.',
 	  onClear: () => {
@@ -304,7 +351,8 @@ window.initializeApp = function initializeApp() {
     formId: 'readingForm',
     feedbackId: 'readingFeedback',
     resetId: 'readingReset',
-    answers: { r1: 'c', r2: 'c', r3: 'c' },
+    serverQuizId: 'module2_reading',
+    questionIds: ['r1', 'r2', 'r3'],
     goodText: 'All answers are correct. Well done.',
     badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
   });
@@ -314,7 +362,8 @@ bindQuiz({
   formId: 'h2ReadingForm',
   feedbackId: 'h2ReadingFeedback',
   resetId: 'h2ReadingReset',
-  answers: { h2r1: 'a', h2r2: 'b', h2r3: 'a' },
+  serverQuizId: 'module2_h2_reading',
+  questionIds: ['h2r1', 'h2r2', 'h2r3'],
   goodText: 'All answers are correct. Well done.',
   badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
 });
@@ -514,19 +563,16 @@ bindQuiz({
       setFeedback('');
     });
 
-    checkBtn?.addEventListener('click', () => {
+    checkBtn?.addEventListener('click', async () => {
       clearMarks();
       let allFilled = true;
-      let correct = 0;
+      const answers = [];
 
       blanks.forEach((b) => {
         const t = getTokenInBlank(b);
-        const expected = (b.dataset.answer || '').trim();
         const got = t ? (t.dataset.word || t.textContent || '').trim() : '';
+        answers.push(got);
         if(!t) allFilled = false;
-        const isCorrect = t && got === expected;
-        b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
-        if(isCorrect) correct += 1;
       });
 
       if(!allFilled){
@@ -534,10 +580,21 @@ bindQuiz({
         return;
       }
 
-      if(correct === blanks.length){
-        setFeedback('Correct. Well done.');
-      }else{
-        setFeedback('Some answers are incorrect. Try again.');
+      try{
+        const result = await checkDndOnServer('module2_practice', answers);
+        let correct = 0;
+        blanks.forEach((b, i) => {
+          const isCorrect = !!result?.correctByIndex?.[i];
+          b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+          if(isCorrect) correct += 1;
+        });
+        if(correct === blanks.length){
+          setFeedback('Correct. Well done.');
+        }else{
+          setFeedback('Some answers are incorrect. Try again.');
+        }
+      }catch(_e){
+        setFeedback('Cannot validate answers now. Try again in a moment.');
       }
     });
 
@@ -678,20 +735,17 @@ bindQuiz({
       selectedToken = null;
     }
 
-    function check(){
+    async function check(){
       clearMarks();
 
       let allFilled = true;
-      let correct = 0;
+      const answers = [];
 
       blanks.forEach((b) => {
         const t = getTokenInBlank(b);
-        const expected = (b.dataset.answer || '').trim();
         const got = t ? (t.dataset.word || t.textContent || '').trim() : '';
+        answers.push(got);
         if(!t) allFilled = false;
-        const isCorrect = t && got === expected;
-        b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
-        if(isCorrect) correct += 1;
       });
 
       if(!allFilled){
@@ -699,10 +753,21 @@ bindQuiz({
         return;
       }
 
-      if(correct === blanks.length){
-        setFeedback('All correct. Well done.');
-      }else{
-        setFeedback('Some answers are wrong. Try again.');
+      try{
+        const result = await checkDndOnServer('module2_speaking', answers);
+        let correct = 0;
+        blanks.forEach((b, i) => {
+          const isCorrect = !!result?.correctByIndex?.[i];
+          b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+          if(isCorrect) correct += 1;
+        });
+        if(correct === blanks.length){
+          setFeedback('All correct. Well done.');
+        }else{
+          setFeedback('Some answers are wrong. Try again.');
+        }
+      }catch(_e){
+        setFeedback('Cannot validate answers now. Try again in a moment.');
       }
     }
 
@@ -838,20 +903,17 @@ bindQuiz({
       selectedToken = null;
     }
 
-    function check(){
+    async function check(){
       clearMarks();
 
       let allFilled = true;
-      let correct = 0;
+      const answers = [];
 
       blanks.forEach((b) => {
         const t = getTokenInBlank(b);
-        const expected = (b.dataset.answer || '').trim();
         const got = t ? (t.dataset.word || t.textContent || '').trim() : '';
+        answers.push(got);
         if(!t) allFilled = false;
-        const isCorrect = t && got === expected;
-        b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
-        if(isCorrect) correct += 1;
       });
 
       if(!allFilled){
@@ -859,10 +921,21 @@ bindQuiz({
         return;
       }
 
-      if(correct === blanks.length){
-        setFeedback('All correct. Well done.');
-      }else{
-        setFeedback('Some answers are wrong. Try again.');
+      try{
+        const result = await checkDndOnServer('module2_h2_keywords', answers);
+        let correct = 0;
+        blanks.forEach((b, i) => {
+          const isCorrect = !!result?.correctByIndex?.[i];
+          b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+          if(isCorrect) correct += 1;
+        });
+        if(correct === blanks.length){
+          setFeedback('All correct. Well done.');
+        }else{
+          setFeedback('Some answers are wrong. Try again.');
+        }
+      }catch(_e){
+        setFeedback('Cannot validate answers now. Try again in a moment.');
       }
     }
 

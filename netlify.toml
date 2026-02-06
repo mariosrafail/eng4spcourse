@@ -1,0 +1,13 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/check-quiz"
+  to = "/.netlify/functions/check-quiz"
+  status = 200
+
+[[redirects]]
+  from = "/api/check-dnd"
+  to = "/.netlify/functions/check-dnd"
+  status = 200
