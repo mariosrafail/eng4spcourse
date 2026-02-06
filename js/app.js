@@ -1,8 +1,9 @@
 // Wrap everything in a function that can be called multiple times (for dynamic module loading)
 window.initializeApp = function initializeApp() {
-  // Tabs
-  const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
-  const panels = Array.from(document.querySelectorAll('.tab-panel'));
+  // Tabs (scoped to active module only)
+  const activeModulePanel = document.querySelector('.module-panel.is-active');
+  const tabButtons = activeModulePanel ? Array.from(activeModulePanel.querySelectorAll('.tab-btn')) : [];
+  const panels = Array.from(document.querySelectorAll('main.content .tab-panel'));
 
   function setActiveTab(key){
     tabButtons.forEach((b) => {
@@ -30,13 +31,18 @@ window.initializeApp = function initializeApp() {
     }catch(_e){}
   }
 
-  tabButtons.forEach((btn) => {
-    btn.addEventListener('click', () => setActiveTab(btn.dataset.tab));
-  });
+  if (tabButtons.length){
+    tabButtons.forEach((btn) => {
+      btn.addEventListener('click', () => setActiveTab(btn.dataset.tab));
+    });
 
-  // Initial state
-  const initiallyActive = tabButtons.find((b) => b.classList.contains('is-active'))?.dataset.tab || 'info';
-  setActiveTab(initiallyActive);
+    // Initial state
+    const initiallyActive =
+      tabButtons.find((b) => b.classList.contains('is-active'))?.dataset.tab ||
+      tabButtons[0]?.dataset.tab ||
+      'info';
+    setActiveTab(initiallyActive);
+  }
 
   // Hover highlight position for buttons and tabs
   function updateRadialVars(el, clientX, clientY){
