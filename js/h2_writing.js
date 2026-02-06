@@ -330,9 +330,17 @@
   }
 
   function init(){
+    const root = document.getElementById('tabHour2Writing');
+    if(!root) return;
+    if(root.dataset.h2wInitialized === '1') return;
+    root.dataset.h2wInitialized = '1';
+
     setupWritingTaskOne();
     setupWritingTaskTwo();
   }
+
+  // Expose re-init for dynamically injected module content
+  window.initializeH2Writing = init;
 
   if(document.readyState === 'loading'){
     document.addEventListener('DOMContentLoaded', init);

@@ -93,6 +93,9 @@
       if (window.initializeApp) {
         window.initializeApp();
       }
+      if (window.initializeH2Writing) {
+        window.initializeH2Writing();
+      }
       return; 
     }
     
@@ -124,6 +127,9 @@
       // Also reinitialize all app functionality (audio, quizzes, drag-drop, etc.)
       if (window.initializeApp) {
         window.initializeApp();
+      }
+      if (window.initializeH2Writing) {
+        window.initializeH2Writing();
       }
     }catch(e){
       panel.innerHTML = '<!-- failed to load module -->';
