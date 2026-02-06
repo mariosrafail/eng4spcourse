@@ -359,6 +359,14 @@ h1{
   padding:18px;
 }
 
+.mobile-menu-toggle{
+  display:none;
+}
+
+.mobile-drawer-backdrop{
+  display:none;
+}
+
 .sidebar{
   width:290px;
   flex:0 0 290px;
@@ -903,6 +911,148 @@ h1{
   .layout{padding:12px; gap:12px;}
   .sidebar{width:260px; flex-basis:260px;}
   .exercise-shell{grid-template-columns: 1fr; }
+
+  .layout{
+    display:block;
+    padding:12px;
+    padding-top:72px;
+  }
+
+  .content{
+    width:100%;
+  }
+
+  .mobile-menu-toggle{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    position:fixed;
+    top:14px;
+    width:44px;
+    height:44px;
+    border:2px solid rgba(122,103,201,.35);
+    border-radius:12px;
+    background: rgba(255,255,255,.94);
+    box-shadow: var(--shadow);
+    cursor:pointer;
+    z-index:1500;
+  }
+
+  .mobile-menu-toggle--left{
+    left:12px;
+    right:auto;
+  }
+  .mobile-menu-toggle--right{
+    right:12px;
+    left:auto;
+  }
+  #modulesMenuToggle{
+    left:12px !important;
+    right:auto !important;
+    margin:0;
+  }
+  #courseMenuToggle{
+    right:12px !important;
+    left:auto !important;
+    margin:0;
+  }
+
+  .mobile-menu-toggle span,
+  .mobile-menu-toggle span::before,
+  .mobile-menu-toggle span::after{
+    display:block;
+    width:18px;
+    height:2px;
+    border-radius:999px;
+    background: var(--purple-700);
+    content:'';
+    position:relative;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+
+  .mobile-menu-toggle span::before{position:absolute; top:-6px; left:0;}
+  .mobile-menu-toggle span::after{position:absolute; top:6px; left:0;}
+
+  .mobile-drawer-backdrop{
+    display:block;
+    position:fixed;
+    inset:0;
+    background: rgba(28,27,34,.28);
+    opacity:0;
+    pointer-events:none;
+    transition: opacity .22s ease;
+    z-index:1200;
+  }
+
+  body.mobile-modules-open .mobile-drawer-backdrop,
+  body.mobile-course-open .mobile-drawer-backdrop{
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  .modules-sidebar,
+  .sidebar{
+    position:fixed;
+    top:0;
+    bottom:0;
+    height:100vh;
+    max-height:100vh;
+    overflow:auto;
+    z-index:1300;
+    margin:0;
+    transition: transform .28s ease, opacity .28s ease;
+  }
+
+  .modules-sidebar{
+    left:0;
+    width:min(82vw, 320px);
+    flex:0 0 auto;
+    border-radius:0 18px 18px 0;
+    transform: translateX(-108%);
+  }
+
+  .sidebar{
+    right:0;
+    width:min(86vw, 340px);
+    flex:0 0 auto;
+    border-radius:18px 0 0 18px;
+    display:flex;
+    transform: translateX(108%);
+  }
+
+  body.mobile-modules-open .modules-sidebar{
+    transform: translateX(0);
+  }
+
+  body.mobile-course-open .sidebar{
+    transform: translateX(0);
+  }
+
+  .modules-sidebar.is-collapsed{
+    width:min(82vw, 320px);
+    flex:0 0 auto;
+    padding:10px;
+    border-width:2px;
+    overflow:auto;
+  }
+
+  .modules-sidebar.is-collapsed .logo-image{
+    opacity:1;
+    width:80px;
+    height:80px;
+  }
+
+  .modules-sidebar.is-collapsed .modules-label{
+    opacity:1;
+    height:auto;
+    padding:12px 10px;
+    margin:0;
+  }
+
+  .modules-sidebar.is-collapsed .modules-nav{
+    opacity:1;
+    pointer-events:auto;
+  }
 }
 
 /* Instructions card */

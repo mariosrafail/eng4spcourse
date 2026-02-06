@@ -10,8 +10,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
+    <button aria-controls="modulesSidebar" aria-expanded="false" aria-label="Open modules menu" class="mobile-menu-toggle mobile-menu-toggle--left" id="modulesMenuToggle" style="left:12px;right:auto;" type="button">
+      <span aria-hidden="true"></span>
+    </button>
+    <button aria-controls="courseSidebar" aria-expanded="false" aria-label="Open course menu" class="mobile-menu-toggle mobile-menu-toggle--right" id="courseMenuToggle" style="right:12px;left:auto;" type="button">
+      <span aria-hidden="true"></span>
+    </button>
+    <div aria-hidden="true" class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
     <div class="layout">
-      <aside aria-label="Modules" class="modules-sidebar">
+      <aside aria-label="Modules" class="modules-sidebar" id="modulesSidebar">
         <div class="side-brand">
           <img src="img/e4sp_logo.png" alt="E4SP Logo" class="logo-image">
           <div class="modules-label">Modules</div>
@@ -28,7 +35,7 @@
         </nav>
       </aside>
 
-      <aside aria-label="Course navigation" class="sidebar">
+      <aside aria-label="Course navigation" class="sidebar" id="courseSidebar">
         <div class="welcome-panel">
           <h2 class="side-title" id="activeModuleTitle"></h2>
           <!-- <p>Select a module from the left to get started.</p> -->

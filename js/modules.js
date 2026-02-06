@@ -5,6 +5,9 @@
 
   const moduleButtons = Array.from(modulesSidebar.querySelectorAll('.module-btn'));
   const sidebar = document.querySelector('.sidebar');
+  const modulesMenuToggle = document.querySelector('#modulesMenuToggle');
+  const courseMenuToggle = document.querySelector('#courseMenuToggle');
+  const mobileDrawerBackdrop = document.querySelector('#mobileDrawerBackdrop');
   const activeModuleTitle = document.querySelector('#activeModuleTitle');
   const mainContent = document.querySelector('main.content');
   const modulePanels = Array.from(document.querySelectorAll('.module-panel'));
@@ -13,6 +16,39 @@
   const COLLAPSE_DISTANCE_PX = 140;
   const COLLAPSE_FADE_MS = 220;
   let collapseTimer = null;
+  const MOBILE_BREAKPOINT_QUERY = '(max-width: 980px)';
+
+  function isMobileViewport(){
+    return window.matchMedia(MOBILE_BREAKPOINT_QUERY).matches;
+  }
+
+  function syncMobileToggleState(){
+    const modulesOpen = document.body.classList.contains('mobile-modules-open');
+    const courseOpen = document.body.classList.contains('mobile-course-open');
+    modulesMenuToggle?.setAttribute('aria-expanded', modulesOpen ? 'true' : 'false');
+    courseMenuToggle?.setAttribute('aria-expanded', courseOpen ? 'true' : 'false');
+  }
+
+  function closeMobileDrawers(){
+    document.body.classList.remove('mobile-modules-open', 'mobile-course-open');
+    syncMobileToggleState();
+  }
+
+  function toggleMobileDrawer(which){
+    if(!isMobileViewport()) return;
+    const modulesClass = 'mobile-modules-open';
+    const courseClass = 'mobile-course-open';
+    if(which === 'modules'){
+      const willOpen = !document.body.classList.contains(modulesClass);
+      document.body.classList.toggle(modulesClass, willOpen);
+      document.body.classList.toggle(courseClass, false);
+    }else if(which === 'course'){
+      const willOpen = !document.body.classList.contains(courseClass);
+      document.body.classList.toggle(courseClass, willOpen);
+      document.body.classList.toggle(modulesClass, false);
+    }
+    syncMobileToggleState();
+  }
 
   function getActiveModulePanel(){
     return modulePanels.find((p) => p.classList.contains('is-active'));
@@ -63,7 +99,12 @@
     const freshTabButtons = Array.from(activeModulePanel.querySelectorAll('.tab-btn'));
     tabButtons = freshTabButtons;
     freshTabButtons.forEach((btn) => {
-      btn.addEventListener('click', () => setActiveTab(btn.dataset.tab));
+      btn.addEventListener('click', () => {
+        setActiveTab(btn.dataset.tab);
+        if(isMobileViewport()){
+          closeMobileDrawers();
+        }
+      });
     });
 
     // Set initial active tab
@@ -154,6 +195,11 @@
     }
     modulesSidebar.classList.remove('is-collapsing');
     modulesSidebar.classList.remove('is-collapsed');
+    if(isMobileViewport()){
+      document.body.classList.remove('mobile-modules-open');
+      document.body.classList.add('mobile-course-open');
+      syncMobileToggleState();
+    }
     loadModule(id, { forceFirstTab: true, focusActiveTab: true });
   }
 
@@ -179,6 +225,7 @@
   }
 
   function handlePointerProximity(x, y){
+    if(isMobileViewport()) return;
     if(!hasActiveModule()) return;
     const rect = modulesSidebar.getBoundingClientRect();
     const distance = distanceFromRect(x, y, rect);
@@ -218,5 +265,16 @@
   document.addEventListener('mousemove', (e) => {
     handlePointerProximity(e.clientX, e.clientY);
   });
+
+  modulesMenuToggle?.addEventListener('click', () => toggleMobileDrawer('modules'));
+  courseMenuToggle?.addEventListener('click', () => toggleMobileDrawer('course'));
+  mobileDrawerBackdrop?.addEventListener('click', closeMobileDrawers);
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') closeMobileDrawers();
+  });
+  window.addEventListener('resize', () => {
+    if(!isMobileViewport()) closeMobileDrawers();
+  });
+  syncMobileToggleState();
 
 })();
