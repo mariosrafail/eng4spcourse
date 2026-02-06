@@ -1,5 +1,11 @@
-/* Global Comic Sans override */
-* { font-family: "Comic Sans MS", "Comic Sans", cursive !important; }
+/* Global font imports */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+
+/* Global font defaults */
+* { font-family: 'Poppins', sans-serif; }
+h1, h2, h3, h4, h5, h6, .unit-title, .module-focus-title, .card-title, .side-title, .kw-title, .reading-section-title, .writing-task-head {
+  font-family: 'Playfair Display', serif;
+}
 
 /* ==========================================================================
    CSS Structure (order preserved to avoid cascade changes)
@@ -70,7 +76,6 @@ body{
     var(--bg);
   background-repeat: no-repeat;
   color:var(--ink);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
 }
 
 /* Accessibility and motion preferences */
@@ -362,12 +367,48 @@ h1{
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding:16px;
+  display:none;
+  flex-direction:column;
+}
+
+/* Modules sidebar (left-most column) */
+.modules-sidebar{
+  width:160px;
+  flex:0 0 160px;
+  background: rgba(255,255,255,.95);
+  border: 2px solid rgba(205,191,232,.78);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding:10px;
   display:flex;
   flex-direction:column;
+  gap:12px;
+}
+.modules-nav{display:flex;flex-direction:column;gap:8px}
+.module-btn{padding:8px 10px; font-size:13px; text-align:left; border-radius:12px; background: rgba(255,255,255,.9); border:1px solid rgba(205,191,232,.85); cursor:pointer}
+
+/* Module submenu placeholders inside the main sidebar */
+.welcome-panel{padding:12px 0; text-align:center; color:var(--muted)}
+.welcome-panel h2{margin:6px 0; font-size:18px; color:var(--ink)}
+.welcome-panel p{margin:8px 0; font-size:14px}
+.module-submenu{padding:6px 0 12px 0}
+.module-panel{display:none}
+.module-panel.is-active{display:block}
+
+/* When modules-sidebar has hover or pinned classes, show the main sidebar */
+.modules-sidebar.is-hover + .sidebar,
+.modules-sidebar.is-pinned + .sidebar{
+  width:290px;
+  flex:0 0 290px;
+  padding:16px;
+  display:flex;
+  opacity:1;
+  pointer-events:auto;
 }
 
 .side-brand{
   display:flex;
+  flex-direction:column;
   gap:12px;
   align-items:center;
   padding:10px 10px 14px 10px;
@@ -375,23 +416,31 @@ h1{
   margin-bottom:14px;
 }
 
-.side-mark{
-  width:46px;
-  height:46px;
-  border-radius: 16px;
-  background: radial-gradient(circle at top left, rgba(122,103,201,.45), rgba(122,103,201,.10));
-  border: 1px solid rgba(205,191,232,.9);
+.logo-image{
+  width:80px;
+  height:80px;
+  object-fit:contain;
 }
 
-.side-title{
-  font-weight:800;
-  letter-spacing:.2px;
+.modules-label{
+  width:100%;
+  padding:12px 10px;
+  text-align:center;
+  font-weight:700;
+  letter-spacing:.3px;
   color: var(--purple-700);
+  background: rgba(122,103,201,.12);
+  border: 2px solid rgba(122,103,201,.25);
+  border-radius: 12px;
+  font-size:14px;
 }
-.side-subtitle{
-  color: var(--muted);
-  font-size: 13px;
-  margin-top:2px;
+
+.side-mark{
+  display:none;
+}
+
+.side-text{
+  display:none;
 }
 
 .tabs{
@@ -629,12 +678,6 @@ h1{
 
 /* Panels */
 .tab-panel{
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity .22s ease, transform .22s ease;
-  will-change: opacity, transform;
-}
-.tab-panel.is-visible{
   opacity: 1;
   transform: translateY(0);
 }

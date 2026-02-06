@@ -1,4 +1,5 @@
-(() => {
+// Wrap everything in a function that can be called multiple times (for dynamic module loading)
+window.initializeApp = function initializeApp() {
   // Tabs
   const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
   const panels = Array.from(document.querySelectorAll('.tab-panel'));
@@ -16,12 +17,10 @@
       p.hidden = true;
     });
 
-    // Show target panel with a small enter animation
+    // Show target panel without animation
     const target = panels.find((p) => p.dataset.panel === key);
     if (target){
       target.hidden = false;
-      // Force a frame so CSS transitions can kick in
-      requestAnimationFrame(() => target.classList.add('is-visible'));
     }
 
     // Scroll to top of content when switching tabs
@@ -232,9 +231,9 @@
   const liShowAnswersBtn = document.getElementById('liShowAnswers');
   const liAnswersBox = document.getElementById('liAnswersBox');
 
-		// Second Hour - III. Listening
-		const h2liShowAnswersBtn = document.getElementById('h2liShowAnswers');
-		const h2liAnswersBox = document.getElementById('h2liAnswersBox');
+	// Second Hour - III. Listening
+	const h2liShowAnswersBtn = document.getElementById('h2liShowAnswers');
+	const h2liAnswersBox = document.getElementById('h2liAnswersBox');
 
   bindQuiz({
     formId: 'listeningForm',
@@ -294,9 +293,6 @@
 	  }
 	});
 
-		
-
-
   // VI. Reading
   bindQuiz({
     formId: 'readingForm',
@@ -316,8 +312,6 @@ bindQuiz({
   goodText: 'All answers are correct. Well done.',
   badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
 });
-
-
 
   liShowAnswersBtn?.addEventListener('click', () => {
     if (liShowAnswersBtn.hasAttribute('disabled')) return;
@@ -361,10 +355,6 @@ bindQuiz({
   hideAllBtn?.addEventListener('click', () => {
     kwRows.forEach((row) => setKwRow(row, false));
   });
-
-  
-
-  
 
   // Pronunciation buttons (KEY WORDS speakers)
   function setupPronunciation(){
@@ -557,7 +547,6 @@ bindQuiz({
     });
   }
 
-
   // Speaking (Tab VII) matching drag and drop
   function setupSpeakingMatchDnD(){
     const root = document.querySelector('#tabSpeaking');
@@ -620,7 +609,6 @@ bindQuiz({
 
     tokens.forEach((t, idx) => {
       if(!t.id) t.id = `sptok_${idx}_${Math.random().toString(16).slice(2)}`;
-
       t.addEventListener('click', () => onTokenClick(t));
 
       t.addEventListener('keydown', (e) => {
@@ -717,7 +705,6 @@ bindQuiz({
 
     reset();
   }
-
 
   // Hour 2 (Tab II) Key Words matching drag and drop
   function setupHour2KeywordsMatchDnD(){
@@ -890,10 +877,11 @@ bindQuiz({
 
   // Enable Hour 2, II. Key Words matching
   setupHour2KeywordsMatchDnD();
+};
 
-
-// Init
-  setActiveTab('info');
-  setStatus('Ready');
-  updateProgress();
-})();
+// Call on page load
+if (document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', window.initializeApp);
+} else {
+  window.initializeApp();
+}
