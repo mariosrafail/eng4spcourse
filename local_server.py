@@ -8,19 +8,34 @@ PORT = 8000
 
 # Keep answer keys server-side only.
 QUIZ_ANSWERS = {
+    "module1_useful_language": {"m1q1": "a", "m1q2": "a", "m1q3": "a", "m1q4": "a", "m1q5": "a"},
+    "module1_listening": {"lq1": "b", "lq2": "b", "lq3": "b"},
+    "module1_reading": {"r1": "b", "r2": "a", "r3": "a"},
+    "module1_h2_listening": {"h2lq1": "a", "h2lq2": "c", "h2lq3": "a"},
+    "module1_h2_reading": {"h2r1": "b", "h2r2": "a", "h2r3": "c"},
     "module2_useful_language": {"q1": "a", "q2": "a", "q3": "a"},
     "module2_listening": {"lq1": "b", "lq2": "a", "lq3": "b"},
     "module2_h2_listening": {"h2lq1": "b", "h2lq2": "c", "h2lq3": "a"},
     "module2_reading": {"r1": "c", "r2": "c", "r3": "c"},
     "module2_h2_reading": {"h2r1": "a", "h2r2": "b", "h2r3": "a"},
+    "mini_mock_listening_1a": {"mq1": "b", "mq2": "c"},
+    "mini_mock_listening_1b": {"mq3": "a", "mq4": "b", "mq5": "c"},
+    "mini_mock_reading_1": {"mqr1": "b", "mqr2": "a", "mqr3": "b", "mqr4": "b"},
+    "mini_mock_reading_2": {"mqrb5": "a", "mqrb6": "c", "mqrb7": "b", "mqrb8": "a"},
 }
 
 # Drag-and-drop / gap-fill answers server-side only.
 DND_ANSWERS = {
-    "module2_practice": ["doesn't like", "She", "likes", "Do", "flies"],
+    "module1_practice": ["are", "in", "like", "prefer", "she", "this", "glad"],
+    "module1_speaking": ["d", "f", "a", "b", "c", "e"],
+    "module1_h2_keywords": ["F", "C", "E", "A", "D", "B"],
+    "module1_h2_writing_task1": ["flight", "visit", "island", "travel", "ferry"],
+    "module3_activity2": ["C", "F", "A", "D", "E", "B"],
+    "module2_practice": ["doesn't like", "she", "likes", "do", "flies"],
     "module2_speaking": ["c", "d", "b", "f", "a", "e"],
     "module2_h2_keywords": ["E", "C", "B", "D", "F", "A"],
     "module2_h2_writing_task1": ["rates", "reservations", "beginning", "prices"],
+    "mini_mock_writing_1": ["manners", "warm", "respect", "team"],
 }
 
 
@@ -29,6 +44,13 @@ def json_bytes(payload):
 
 
 class AppHandler(SimpleHTTPRequestHandler):
+    def end_headers(self):
+        # Dev mode: always serve latest files (avoid stale browser cache).
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
+        super().end_headers()
+
     def _send_json(self, status_code, payload):
         body = json_bytes(payload)
         self.send_response(status_code)

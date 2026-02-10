@@ -11,8 +11,13 @@
     const checkBtn = root.querySelector('#h2wCheck');
     const resetBtn = root.querySelector('#h2wReset');
     const feedback = root.querySelector('#h2wFeedback');
+    const writingExerciseId = root.dataset.writingExerciseId || 'module2_h2_writing_task1';
 
     let selectedToken = null;
+
+    function clearDragHints(){
+      root.classList.remove('drag-from-bank', 'drag-from-blank');
+    }
 
     async function checkDndOnServer(exerciseId, answers){
       const res = await fetch('/api/check-dnd', {
@@ -30,6 +35,7 @@
 
     function clearMarks(){
       blanks.forEach(b => b.classList.remove('is-correct','is-wrong','is-over'));
+      tokens.forEach(t => t.classList.remove('is-correct','is-wrong'));
     }
 
     function tokenText(token){
@@ -73,6 +79,14 @@
       if(!t.id) t.id = `h2w_tok_${idx}_${Math.random().toString(16).slice(2)}`;
 
       t.addEventListener('click', () => onTokenClick(t));
+      t.addEventListener('dblclick', () => {
+        if(t.parentElement?.classList?.contains('blank')){
+          moveTokenToBank(t);
+          clearMarks();
+          setFeedback('');
+          clearDragHints();
+        }
+      });
       t.addEventListener('keydown', (e) => {
         if(e.key === 'Enter' || e.key === ' '){
           e.preventDefault();
@@ -83,12 +97,16 @@
       t.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('text/plain', t.id);
         e.dataTransfer.effectAllowed = 'move';
+        const fromBank = t.parentElement === bank;
+        root.classList.toggle('drag-from-bank', !!fromBank);
+        root.classList.toggle('drag-from-blank', !fromBank);
         window.requestAnimationFrame(() => t.classList.add('is-dragging'));
       });
 
       t.addEventListener('dragend', () => {
         t.classList.remove('is-dragging');
         blanks.forEach(b => b.classList.remove('is-over'));
+        clearDragHints();
       });
     });
 
@@ -134,31 +152,27 @@
       if(token) moveTokenToBank(token);
       clearMarks();
       setFeedback('');
+      clearDragHints();
     });
 
     checkBtn?.addEventListener('click', async () => {
       clearMarks();
-      let allFilled = true;
       const answers = [];
 
       blanks.forEach((b) => {
         const t = getTokenInBlank(b);
-        if(!t) allFilled = false;
         const got = tokenText(t);
         answers.push(got);
       });
 
-      if(!allFilled){
-        setFeedback('Fill all blanks first.');
-        return;
-      }
-
       try{
-        const result = await checkDndOnServer('module2_h2_writing_task1', answers);
+        const result = await checkDndOnServer(writingExerciseId, answers);
         let correct = 0;
         blanks.forEach((b, i) => {
+          const t = getTokenInBlank(b);
           const ok = !!result?.correctByIndex?.[i];
           b.classList.add(ok ? 'is-correct' : 'is-wrong');
+          if(t) t.classList.add(ok ? 'is-correct' : 'is-wrong');
           if(ok) correct += 1;
         });
         if(correct === blanks.length){
@@ -180,20 +194,24 @@
       selectedToken = null;
       clearMarks();
       setFeedback('');
+      clearDragHints();
     });
   }
 
-  // Task 2: 50-word email checker (offline heuristic)
+  // Task 2: writing checker (offline heuristic)
   function setupWritingTaskTwo(){
     const root = document.getElementById('tabHour2Writing');
     if(!root) return;
 
+    const writingTaskTwoType = root.dataset.writingTaskTwoType || 'hotel_request';
     const textarea = root.querySelector('#h2EmailText');
     const countEl = root.querySelector('#h2EmailCount');
     const checkBtn = root.querySelector('#h2EmailCheck');
     const resetBtn = root.querySelector('#h2EmailReset');
     const scoreEl = root.querySelector('#h2EmailScore');
     const fbEl = root.querySelector('#h2EmailFeedback');
+
+    if(!textarea || !countEl || !checkBtn || !resetBtn || !scoreEl || !fbEl) return;
 
     function words(text){
       return (text || '')
@@ -204,20 +222,18 @@
     }
 
     function setCount(n){
-      if(countEl) countEl.textContent = `Words: ${n}/50`;
+      countEl.textContent = `Words: ${n}/50`;
     }
 
     function setScore(text){
-      if(scoreEl) scoreEl.textContent = text || '';
+      scoreEl.textContent = text || '';
     }
 
     function setFeedback(html){
-      if(!fbEl) return;
       fbEl.innerHTML = html || '';
     }
 
     function enforceMaxWords(){
-      if(!textarea) return;
       const w = words(textarea.value);
       if(w.length > 50){
         textarea.value = w.slice(0, 50).join(' ');
@@ -227,7 +243,7 @@
       }
     }
 
-    textarea?.addEventListener('input', enforceMaxWords);
+    textarea.addEventListener('input', enforceMaxWords);
     enforceMaxWords();
 
     function hasAny(text, list){
@@ -237,7 +253,6 @@
 
     function hasDateLike(text){
       const t = text || '';
-      // common patterns: 12/07, 12-07, July 12, 12 July, from ... to ...
       const month = /(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|january|february|march|april|june|july|august|september|october|november|december)/i;
       const dmy = /\b\d{1,2}[\/\-]\d{1,2}([\/\-]\d{2,4})?\b/;
       const dayMonth = new RegExp(`\\b\\d{1,2}\\s+${month.source}\\b`, 'i');
@@ -251,58 +266,84 @@
       return /\b\d+\s*(day|days|night|nights)\b/i.test(t);
     }
 
-    function basicGrammarFlags(text){
+    function basicGrammarFlags(text, opts = {}){
+      const requireGreeting = opts.requireGreeting !== false;
+      const requireThanks = opts.requireThanks !== false;
+      const requireClosing = opts.requireClosing !== false;
       const issues = [];
       const t = (text || '').trim();
       if(!t) return issues;
 
       if(!/[.!?]$/.test(t)) issues.push('Add a full stop at the end.');
-      if(/\bi\b/.test(t) && !/\bI\b/.test(t)) issues.push('Use capital “I”.');
+      if(/\bi\b/.test(t) && !/\bI\b/.test(t)) issues.push('Use capital "I".');
       if(/\s{2,}/.test(t)) issues.push('Remove extra spaces.');
-      if(!/\b(dear|hello|hi)\b/i.test(t)) issues.push('Add a greeting (e.g., Dear Sir/Madam).');
-      if(!/\b(thank|thanks)\b/i.test(t)) issues.push('Add a closing thanks.');
-      if(!/\b(sincerely|kind regards|regards)\b/i.test(t)) issues.push('Add a polite closing (Kind regards, ...).');
+      if(requireGreeting && !/\b(dear|hello|hi)\b/i.test(t)) issues.push('Add a greeting (e.g., Dear Sir/Madam).');
+      if(requireThanks && !/\b(thank|thanks)\b/i.test(t)) issues.push('Add a closing thanks.');
+      if(requireClosing && !/\b(sincerely|kind regards|regards)\b/i.test(t)) issues.push('Add a polite closing (Kind regards, ...).');
       return issues;
     }
 
-    function scoreEmail(text){
+    function scoreWritingTaskText(text){
       const w = words(text);
       const wc = w.length;
-
-      const req = {
-        rethymno: hasAny(text, ['rethymno']),
-        crete: hasAny(text, ['crete']),
-        familyRoom: hasAny(text, ['family room','family-room','family accommodation','family']),
-        breakfastRates: hasAny(text, ['breakfast rates','breakfast','rates','price','prices']),
-        dates: hasDateLike(text),
-        days: hasDaysCount(text)
-      };
-
       let score = 0;
       const notes = [];
+      let issues = [];
+      let minGoodWords = 35;
+      let firstStepMsg = 'Write your email first.';
 
-      // Content (0-6)
-      if(req.rethymno && req.crete){ score += 1; } else { notes.push('Mention: Rethymno, Crete.'); }
-      if(req.familyRoom){ score += 1; } else { notes.push('Mention: family room.'); }
-      if(req.breakfastRates){ score += 1; } else { notes.push('Ask for: breakfast rates.'); }
-      if(req.dates){ score += 1; } else { notes.push('Include: dates (from ... to ...).'); }
-      if(req.days){ score += 1; } else { notes.push('Include: number of days or nights.'); }
-      if(hasAny(text, ['would like','could you','please','i would like'])){ score += 1; } else { notes.push('Use a polite request phrase (e.g., “Could you please...”).'); }
+      if(writingTaskTwoType === 'memo_kitchen'){
+        const req = {
+          kitchenStaff: hasAny(text, ['kitchen staff','kitchen team','kitchen','staff','colleague']),
+          specialRequest: hasAny(text, ['special request','customer asks','customer request','customer']),
+          glutenFree: hasAny(text, ['gluten-free meal','gluten free meal','gluten-free','gluten free']),
+          extraKetchup: hasAny(text, ['extra ketchup','ketchup']),
+          lemonade: hasAny(text, ['lemonade']),
+          action: hasAny(text, ['please','prepare','include','inform','tell','pass on'])
+        };
 
-      // Word count (0-2)
+        minGoodWords = 20;
+        firstStepMsg = 'Write your memo first.';
+
+        if(req.kitchenStaff){ score += 1; } else { notes.push('Mention: kitchen staff / colleague.'); }
+        if(req.specialRequest){ score += 1; } else { notes.push('Mention: this is a customer special request.'); }
+        if(req.glutenFree){ score += 1; } else { notes.push('Include: gluten-free meal.'); }
+        if(req.extraKetchup){ score += 1; } else { notes.push('Include: extra ketchup.'); }
+        if(req.lemonade){ score += 1; } else { notes.push('Include: lemonade.'); }
+        if(req.action){ score += 1; } else { notes.push('Use a clear action phrase (e.g., please prepare/include).'); }
+
+        issues = basicGrammarFlags(text, { requireGreeting: false, requireThanks: false, requireClosing: false });
+      }else{
+        const req = {
+          rethymno: hasAny(text, ['rethymno']),
+          crete: hasAny(text, ['crete']),
+          familyRoom: hasAny(text, ['family room','family-room','family accommodation','family']),
+          breakfastRates: hasAny(text, ['breakfast rates','breakfast','rates','price','prices']),
+          dates: hasDateLike(text),
+          days: hasDaysCount(text)
+        };
+
+        if(req.rethymno && req.crete){ score += 1; } else { notes.push('Mention: Rethymno, Crete.'); }
+        if(req.familyRoom){ score += 1; } else { notes.push('Mention: family room.'); }
+        if(req.breakfastRates){ score += 1; } else { notes.push('Ask for: breakfast rates.'); }
+        if(req.dates){ score += 1; } else { notes.push('Include: dates (from ... to ...).'); }
+        if(req.days){ score += 1; } else { notes.push('Include: number of days or nights.'); }
+        if(hasAny(text, ['would like','could you','please','i would like'])){ score += 1; } else { notes.push('Use a polite request phrase (e.g., "Could you please...").'); }
+
+        issues = basicGrammarFlags(text, { requireGreeting: true, requireThanks: true, requireClosing: true });
+      }
+
       if(wc === 0){
-        notes.push('Write your email first.');
-      }else if(wc <= 50 && wc >= 35){
+        notes.push(firstStepMsg);
+      }else if(wc <= 50 && wc >= minGoodWords){
         score += 2;
       }else if(wc <= 50){
         score += 1;
-        notes.push('Try to write a bit more (aim for ~35-50 words).');
+        notes.push(`Try to write a bit more (aim for ~${minGoodWords}-50 words).`);
       }else{
         notes.push('Over 50 words (trim your email).');
       }
 
-      // Form & basic writing (0-2)
-      const issues = basicGrammarFlags(text);
       if(issues.length === 0){
         score += 2;
       }else if(issues.length <= 2){
@@ -312,10 +353,10 @@
       return { score, wc, notes, issues };
     }
 
-    checkBtn?.addEventListener('click', () => {
-      const text = textarea?.value || '';
+    checkBtn.addEventListener('click', () => {
+      const text = textarea.value || '';
       enforceMaxWords();
-      const r = scoreEmail(text);
+      const r = scoreWritingTaskText(text);
 
       setScore(`Score: ${r.score}/10`);
 
@@ -339,14 +380,13 @@
       );
     });
 
-    resetBtn?.addEventListener('click', () => {
-      if(textarea) textarea.value = '';
+    resetBtn.addEventListener('click', () => {
+      textarea.value = '';
       setCount(0);
       setScore('');
       setFeedback('');
     });
   }
-
   function init(){
     const root = document.getElementById('tabHour2Writing');
     if(!root) return;

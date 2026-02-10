@@ -1,0 +1,46 @@
+﻿/* Listening (Tab III) */
+.tab-btn[data-tab="listening"]{background: rgba(140,91,150,.10);}
+.tab-btn[data-tab="m1_listening"]{background: rgba(140,91,150,.10);}
+.tab-btn[data-tab="listening"]:hover,
+.tab-btn[data-tab="m1_listening"]:hover{background: rgba(140,91,150,.14);}
+.tab-btn[data-tab="listening"].is-active{
+  background: linear-gradient(180deg, rgba(140,91,150,.22), rgba(140,91,150,.10));
+  border-color: rgba(140,91,150,.45);
+}
+.tab-btn[data-tab="m1_listening"].is-active{
+  background: linear-gradient(180deg, rgba(140,91,150,.22), rgba(140,91,150,.10));
+  border-color: rgba(140,91,150,.45);
+}
+.tab-btn[data-tab="listening"] .tab-dot{
+  background: var(--purple-600);
+  box-shadow: 0 0 0 4px rgba(122,103,201,.14);
+}
+.tab-btn[data-tab="m1_listening"] .tab-dot{
+  background: var(--purple-600);
+  box-shadow: 0 0 0 4px rgba(122,103,201,.14);
+}
+
+.unit-icon--purple{
+  background: rgba(140,91,150,.10);
+  border-color: rgba(140,91,150,.35);
+}
+
+/* Listening audio card tint */
+.li-audio{
+  border-color: rgba(140,91,150,.35);
+}
+
+
+/* Questions header */
+.questions-head{
+  margin-top: 16px;
+  font-weight: 900;
+  letter-spacing: .3px;
+  font-size: 20px;
+}
+
+/* Listening quiz tweaks */
+.li-quiz .opt input{accent-color: rgba(95,55,106,.95)}
+.li-btn{background: rgba(140,91,150,.92) !important; border-color: rgba(95,55,106,.45) !important;}
+.li-btn:hover{filter: brightness(1.03);}
+

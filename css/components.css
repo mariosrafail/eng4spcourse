@@ -1,0 +1,232 @@
+﻿/* ==========================================================================
+   4) Cards + common components
+   ======================================================================= */
+h1{
+  margin: 12px 0 6px;
+  font-size: 41px;
+  letter-spacing:.2px;
+}
+
+.card{
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(205,191,232,.8);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+.card + .card{margin-top: 16px}
+.who{font-weight: 800; color: var(--purple-700)}
+
+.audio-card{padding: 12px}
+.audio-wrap{
+  display:grid;
+  grid-template-columns: 110px 1fr;
+  gap: 14px;
+  align-items:center;
+}
+@media (max-width: 760px){
+  .audio-wrap{grid-template-columns:1fr}
+  .robot{justify-self:center}
+}
+.robot img{
+  width:110px;
+  height:auto;
+  filter: drop-shadow(0 10px 24px rgba(30,18,60,.12));
+}
+
+.audio-title{font-weight: 900; font-size: 16px}
+.audio-subtitle{color: var(--muted); font-size: 13px; margin-top: 2px}
+
+/* ==========================================================================
+   5) Buttons + controls
+   ======================================================================= */
+.btn-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  margin-top: 12px;
+}
+
+.btn{
+  border:1px solid rgba(205,191,232,.9);
+  background: rgba(255,255,255,.8);
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-weight: 800;
+  cursor:pointer;
+  box-shadow: 0 10px 24px rgba(30,18,60,.08);
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: transform .16s ease, background .16s ease, border-color .16s ease;
+}
+.btn:hover{
+  background:#fff;
+  transform: translateY(-1px);
+  box-shadow: none;
+}
+.btn:active{
+  transform: translateY(0);
+  box-shadow: none;
+}
+.btn:disabled{opacity:.55; cursor:not-allowed}
+
+.btn.primary{
+  border-color: rgba(122,103,201,.55);
+  background: linear-gradient(180deg, rgba(122,103,201,.25), rgba(122,103,201,.12));
+  color: var(--purple-700);
+}
+
+
+.status{
+  color: var(--muted);
+  font-size: 13px;
+  padding-left: 2px;
+}
+
+.progress{
+  margin-top: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(205,191,232,.35);
+  border: 1px solid rgba(205,191,232,.65);
+  overflow:hidden;
+}
+.progress-bar{
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(95,74,167,.85), rgba(122,103,201,.75));
+}
+
+/* ==========================================================================
+   6) Exercises: quiz / options / feedback / modal
+   ======================================================================= */
+.q{padding: 14px 0}
+.q + .q{border-top: 1px dashed rgba(205,191,232,.8)}
+/* Practice blanks override the earlier quiz-style .blank */
+.blank{
+  display:inline-block;
+  min-width: 120px;
+  border-bottom: 2px solid rgba(122,103,201,.55);
+  transform: translateY(-1px);
+}
+
+.opt{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(205,191,232,.8);
+  background: rgba(255,255,255,.72);
+  cursor:pointer;
+  position: relative;
+  transition: transform .16s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+.opt:hover{background:#fff; transform: translateY(-1px); box-shadow: 0 12px 26px rgba(30,18,60,.08)}
+.opt:active{transform: translateY(0); box-shadow: none}
+
+/* Listening (Hour 1) spacing fix */
+.li-quiz .opt + .opt{ margin-top: 10px; }
+
+/* Reliable radio controls across browsers */
+.opt input{
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 999px;
+  border: 2px solid rgba(122,103,201,.55);
+  background: #fff;
+  display: inline-grid;
+  place-content: center;
+  cursor: pointer;
+  transition: border-color .18s ease, background-color .18s ease, box-shadow .18s ease;
+}
+
+.opt input::before{
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--purple-600);
+  transform: scale(0);
+  opacity: 1;
+}
+
+.opt input:checked{
+  border-color: rgba(95,74,167,.92);
+  background: #fff;
+  animation: radioRingFlat 240ms ease-out both;
+}
+
+.opt input:checked::before{
+  animation: radioFillFlat 220ms ease-out forwards;
+}
+
+.opt input:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(122,103,201,.18);
+}
+
+@supports selector(:has(*)){
+  .opt:has(input:checked){
+    background: rgba(122,103,201,.06);
+    border-color: rgba(122,103,201,.55);
+    box-shadow: 0 10px 22px rgba(30,18,60,.10);
+  }
+  .opt:has(input:focus-visible){
+    box-shadow: 0 0 0 4px rgba(122,103,201,.18);
+  }
+}
+
+@keyframes radioFillFlat{
+  0%{ transform: scale(0); }
+  65%{ transform: scale(1.12); }
+  100%{ transform: scale(1); }
+}
+@keyframes radioRingFlat{
+  0%{ box-shadow: 0 0 0 0 rgba(122,103,201,0); }
+  55%{ box-shadow: 0 0 0 6px rgba(122,103,201,.24); }
+  100%{ box-shadow: 0 0 0 4px rgba(122,103,201,.16); }
+}
+
+.q-hint{
+  margin-top: 10px;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.actions{
+  display:flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.feedback{
+  margin-top: 14px;
+  border-radius: 18px;
+  padding: 14px 14px;
+  border: 1px solid rgba(205,191,232,.8);
+  background: rgba(217,207,243,.40);
+  font-weight: 900;
+  display:none;
+}
+.feedback.is-good{
+  display:block;
+  border-color: rgba(18,133,77,.58);
+  background: rgba(18,133,77,.18);
+  color: var(--ok-strong);
+}
+.feedback.is-bad{
+  display:block;
+  border-color: rgba(209,42,42,.58);
+  background: rgba(209,42,42,.18);
+  color: var(--bad-strong);
+}
+

@@ -1,0 +1,120 @@
+/* Audio badge theming by section */
+
+:root{
+  --audio-accent-rgb: var(--theme-purple-rgb);
+}
+
+#tabListening,
+#tab1Listening,
+#tabHour2Listening,
+#tab1Hour2Listening{
+  --audio-accent-rgb: var(--theme-listening-rgb);
+}
+
+#tabReading,
+#tab1Reading,
+#tabHour2Reading,
+#tab1Hour2Reading{
+  --audio-accent-rgb: var(--theme-red-rgb);
+}
+
+#tabMockListening1,
+#tabMockListening2,
+#tabMockReading{
+  --audio-accent-rgb: var(--theme-olive-rgb);
+}
+
+#tabSpeaking,
+#tab1Speaking,
+#tabHour2Writing,
+#tab1Hour2Writing{
+  --audio-accent-rgb: var(--theme-green-rgb);
+}
+
+#tabPractice,
+#tab1Practice{
+  --audio-accent-rgb: var(--theme-brown-rgb);
+}
+
+#tabKeywords,
+#tab1Keywords,
+#tabHour2Keywords,
+#tab1Hour2Keywords{
+  --audio-accent-rgb: var(--theme-blue-rgb);
+}
+
+.audio-badge{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 78px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-weight: 900;
+  letter-spacing: .6px;
+  color: #fff;
+  background: rgba(var(--audio-accent-rgb), .90);
+  border: 2px solid rgba(var(--audio-accent-rgb), .45);
+  box-shadow: 0 10px 20px rgba(30,18,60,.10);
+}
+
+/* Themed controls inside audio boxes */
+:is(
+  #tabListening, #tab1Listening, #tabHour2Listening, #tab1Hour2Listening,
+  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading,
+  #tabMockListening1, #tabMockListening2, #tabMockReading,
+  #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
+  #tabPractice, #tab1Practice,
+  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords
+) .audio-card .btn{
+  border-color: rgba(var(--audio-accent-rgb), .38);
+  color: rgba(var(--audio-accent-rgb), .96);
+}
+
+:is(
+  #tabListening, #tab1Listening, #tabHour2Listening, #tab1Hour2Listening,
+  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading,
+  #tabMockListening1, #tabMockListening2, #tabMockReading,
+  #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
+  #tabPractice, #tab1Practice,
+  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords
+) .audio-card .btn.primary{
+  background: linear-gradient(180deg, rgba(var(--audio-accent-rgb), .24), rgba(var(--audio-accent-rgb), .10));
+  border-color: rgba(var(--audio-accent-rgb), .52);
+  color: rgba(var(--audio-accent-rgb), .98);
+}
+
+:is(
+  #tabListening, #tab1Listening, #tabHour2Listening, #tab1Hour2Listening,
+  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading,
+  #tabMockListening1, #tabMockListening2, #tabMockReading,
+  #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
+  #tabPractice, #tab1Practice,
+  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords
+) .audio-card .status{
+  color: rgba(var(--audio-accent-rgb), .95);
+}
+
+:is(
+  #tabListening, #tab1Listening, #tabHour2Listening, #tab1Hour2Listening,
+  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading,
+  #tabMockListening1, #tabMockListening2, #tabMockReading,
+  #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
+  #tabPractice, #tab1Practice,
+  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords
+) .audio-card .progress{
+  border-color: rgba(var(--audio-accent-rgb), .30);
+  background: rgba(var(--audio-accent-rgb), .14);
+}
+
+:is(
+  #tabListening, #tab1Listening, #tabHour2Listening, #tab1Hour2Listening,
+  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading,
+  #tabMockListening1, #tabMockListening2, #tabMockReading,
+  #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
+  #tabPractice, #tab1Practice,
+  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords
+) .audio-card .progress-bar{
+  background: linear-gradient(90deg, rgba(var(--audio-accent-rgb), .92), rgba(var(--audio-accent-rgb), .72));
+}

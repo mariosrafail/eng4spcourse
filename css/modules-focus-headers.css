@@ -1,0 +1,222 @@
+﻿   8) Module-specific sections
+   ======================================================================= */
+/* ---------- Tab 1 (Module Focus) ---------- */
+.module-card{
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px 8px 18px 8px;
+}
+
+.module-top{
+  text-align:center;
+  padding: 10px 10px 16px 10px;
+}
+
+.module-focus-title{
+  font-weight:900;
+  color: var(--purple-700);
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.module-focus-sub{
+  font-weight:800;
+  color: var(--ink);
+  font-size: 19px;
+}
+
+.focus-box{
+  background: rgba(255,255,255,.72);
+  border: 2px solid rgba(122,103,201,.45);
+  border-radius: 24px;
+  padding: 18px 18px 14px 18px;
+  box-shadow: 0 10px 26px rgba(30,18,60,.08);
+}
+
+.focus-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.focus-h{
+  margin: 0 0 8px 0;
+  color: rgba(122,103,201,.85);
+  font-size: 22px;
+  letter-spacing:.2px;
+}
+
+.focus-ul{
+  margin: 0;
+  padding-left: 18px;
+  color: var(--ink);
+}
+
+.focus-p{
+  margin: 8px 0;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+/* ---------- Tab 2 header ---------- */
+.page-title{
+  max-width: 980px;
+  margin: 0 auto 12px auto;
+  text-align:center;
+  padding: 6px 10px 0 10px;
+}
+
+.week-chip{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius: 999px;
+  border: 2px solid rgba(122,103,201,.40);
+  background: rgba(122,103,201,.10);
+  font-weight: 800;
+  color: var(--purple-700);
+  font-size: 13px;
+}
+
+.unit-title{
+  margin: 10px 0 6px 0;
+  font-size: 34px;
+  color: var(--purple-700);
+  letter-spacing:.3px;
+}
+
+.unit-head{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+
+.unit-icon{
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  background: rgba(122,103,201,.12);
+  border: 2px solid rgba(122,103,201,.30);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color: var(--purple-700);
+  box-shadow: 0 10px 24px rgba(30,18,60,.08);
+}
+
+.unit-icon img{
+  width: 26px;
+  height: 26px;
+  display:block;
+}
+
+/* Header theme colors by tab (title + icon) */
+#tabExercise .unit-title,
+#tab1Exercise .unit-title,
+#tabHour2Exercise .unit-title,
+#tab1Hour2Exercise .unit-title{
+  color: var(--purple-700);
+}
+#tabExercise .unit-icon,
+#tab1Exercise .unit-icon,
+#tabHour2Exercise .unit-icon,
+#tab1Hour2Exercise .unit-icon{
+  background: rgba(122,103,201,.12);
+  border-color: rgba(122,103,201,.30);
+  color: var(--purple-700);
+}
+
+#tabListening .unit-title,
+#tab1Listening .unit-title,
+#tabHour2Listening .unit-title{
+  color: rgba(95,55,106,.98);
+}
+#tabMockListening1 .unit-title,
+#tabMockListening2 .unit-title{
+  color: rgba(85,107,63,.98);
+}
+#tabMockReading .unit-title{
+  color: rgba(85,107,63,.98);
+}
+#tabMockReadingB .unit-title{
+  color: rgba(85,107,63,.98);
+}
+#tabMockWriting .unit-title{
+  color: rgba(85,107,63,.98);
+}
+#tabListening .unit-icon,
+#tab1Listening .unit-icon,
+#tabHour2Listening .unit-icon{
+  background: rgba(140,91,150,.10);
+  border-color: rgba(140,91,150,.35);
+  color: rgba(95,55,106,.95);
+}
+#tabMockListening1 .unit-icon,
+#tabMockListening2 .unit-icon{
+  background: rgba(85,107,63,.14);
+  border-color: rgba(85,107,63,.40);
+  color: rgba(85,107,63,.98);
+}
+#tabMockReading .unit-icon{
+  background: rgba(85,107,63,.14);
+  border-color: rgba(85,107,63,.40);
+  color: rgba(85,107,63,.98);
+}
+#tabMockReadingB .unit-icon{
+  background: rgba(85,107,63,.14);
+  border-color: rgba(85,107,63,.40);
+  color: rgba(85,107,63,.98);
+}
+#tabMockWriting .unit-icon{
+  background: rgba(85,107,63,.14);
+  border-color: rgba(85,107,63,.40);
+  color: rgba(85,107,63,.98);
+}
+
+#tabPractice .unit-title{
+  color: rgba(126,78,58,.98);
+}
+#tabPractice .unit-icon{
+  background: rgba(126,78,58,.10);
+  border-color: rgba(126,78,58,.28);
+  color: rgba(126,78,58,.95);
+}
+
+#tabReading .unit-title,
+#tabHour2Reading .unit-title{
+  color: rgba(123,59,82,.98);
+}
+#tabReading .unit-icon,
+#tabHour2Reading .unit-icon{
+  background: rgba(123,59,82,.10);
+  border-color: rgba(123,59,82,.30);
+  color: rgba(123,59,82,.95);
+}
+
+#tabSpeaking .unit-title{
+  color: rgba(47,107,87,.98);
+}
+#tabSpeaking .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.30);
+  color: rgba(47,107,87,.95);
+}
+
+#tabHour2Keywords .unit-title{
+  color: rgba(47,79,138,.98);
+}
+#tabHour2Keywords .unit-icon{
+  background: rgba(47,79,138,.10);
+  border-color: rgba(47,79,138,.30);
+  color: rgba(47,79,138,.95);
+}
+
+#tabHour2Writing .unit-title{
+  color: rgba(18,72,58,.98);
+}
+#tabHour2Writing .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.35);
+  color: rgba(18,72,58,.95);
+}
+

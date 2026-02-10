@@ -1,0 +1,412 @@
+<!-- Mini Mock Test menu (tabs navigation) -->
+<nav aria-label="Mini Mock Test Tabs" class="tabs">
+  <button aria-controls="tabMockListening1" aria-selected="true" class="tab-btn is-active" data-tab="mock_listening_1" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">Listening: Dialogue 1</span>
+  </button>
+  <button aria-controls="tabMockListening2" aria-selected="false" class="tab-btn" data-tab="mock_listening_2" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">Listening: Dialogue 2</span>
+  </button>
+  <button aria-controls="tabMockReading" aria-selected="false" class="tab-btn" data-tab="mock_reading" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">Reading: Exercise A</span>
+  </button>
+  <button aria-controls="tabMockReadingB" aria-selected="false" class="tab-btn" data-tab="mock_reading_b" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">Reading: Exercise B</span>
+  </button>
+  <button aria-controls="tabMockWriting" aria-selected="false" class="tab-btn" data-tab="mock_writing" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">Writing</span>
+  </button>
+</nav>
+
+<!-- TAB 1: Listening Dialogue 1 -->
+<section class="tab-panel" data-panel="mock_listening_1" hidden="" id="tabMockListening1">
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon unit-icon--mock">
+        <img alt="" src="img/icon-headphones.svg">
+      </div>
+      <h1 class="unit-title">Listening: Dialogue 1</h1>
+    </div>
+  </div>
+  <div class="exercise-shell">
+    <div class="exercise-left">
+      <div class="questions-head">DIALOGUE 1</div>
+      <div class="card audio-card li-audio">
+        <div class="audio-wrap">
+          <div aria-hidden="true" class="audio-badge">AUDIO</div>
+          <div>
+            <div class="audio-title">Mini Mock Listening</div>
+            <div class="audio-subtitle">Play the recording and answer the questions.</div>
+            <div class="btn-row">
+              <button class="btn" id="mockPlayBtn" type="button">Play</button>
+              <button class="btn" id="mockPauseBtn" type="button">Pause</button>
+              <button class="btn" id="mockRestartBtn" type="button">Restart</button>
+              <span aria-live="polite" class="status" id="mockAudioStatus" role="status">Ready</span>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" id="mockProgressBar" style="width:0%"></div>
+            </div>
+            <audio id="mockListeningAudio" preload="auto">
+              <source src="sound/mock_l_1.mp3" type="audio/mpeg"></source>
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="questions-head">Questions:</div>
+    <form aria-label="Mini mock listening dialogue 1 questions" class="quiz li-quiz" id="mockListening1Form">
+      <div class="q" data-q="mq1">
+        <div class="q-head">
+          <div class="q-num">1</div>
+          <div class="q-text">How long is the reservation for?</div>
+        </div>
+        <label class="opt"><input name="mq1" type="radio" value="a"> Two nights.</label>
+        <label class="opt"><input name="mq1" type="radio" value="b"> One night.</label>
+        <label class="opt"><input name="mq1" type="radio" value="c"> Three nights.</label>
+      </div>
+
+      <div class="q" data-q="mq2">
+        <div class="q-head">
+          <div class="q-num">2</div>
+          <div class="q-text">Where does she want to go?</div>
+        </div>
+        <label class="opt"><input name="mq2" type="radio" value="a"> To the taverna.</label>
+        <label class="opt"><input name="mq2" type="radio" value="b"> To the church.</label>
+        <label class="opt"><input name="mq2" type="radio" value="c"> To the old town.</label>
+      </div>
+
+      <div class="quiz-actions">
+        <button class="btn ghost" type="submit">Submit</button>
+        <button class="btn" id="mock1ResetBtn" type="button">Reset</button>
+        <span aria-live="polite" class="status" id="mock1Feedback" role="status"></span>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- TAB 5: Writing -->
+<section class="tab-panel" data-panel="mock_writing" hidden="" id="tabMockWriting">
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon unit-icon--mock">
+        <img alt="" src="img/pencil.png">
+      </div>
+      <h1 class="unit-title">Writing</h1>
+    </div>
+  </div>
+
+  <div class="exercise-shell">
+    <div class="exercise-left">
+      <div class="writing-card practice-card" data-exercise-id="mini_mock_writing_1" role="region" aria-label="Mini mock writing task">
+        <div class="writing-task">
+          <div class="writing-task-head">TASK ONE</div>
+          <div class="writing-instructions">
+            <div class="writing-instr-title">INSTRUCTIONS:</div>
+            <div class="writing-instr-text">Choose the correct word to fill the gaps in the text below. Mark its letter, A to F, on your Answer Sheet. You will use only four of the letters.</div>
+          </div>
+          <div class="writing-bank-wrap">
+            <div class="practice-bank writing-bank" id="mockwBank" aria-label="Word bank" role="list">
+              <span class="token" draggable="true" tabindex="0" role="listitem" data-word="for">for</span>
+              <span class="token" draggable="true" tabindex="0" role="listitem" data-word="respect">respect</span>
+              <span class="token" draggable="true" tabindex="0" role="listitem" data-word="warm">warm</span>
+              <span class="token" draggable="true" tabindex="0" role="listitem" data-word="clerk">clerk</span>
+              <span class="token" draggable="true" tabindex="0" role="listitem" data-word="manners">manners</span>
+              <span class="token" draggable="true" tabindex="0" role="listitem" data-word="team">team</span>
+            </div>
+          </div>
+          <div class="writing-gap-text" aria-label="Gap fill text">
+            In Greek hospitality, polite <span class="blank" tabindex="0" role="button" aria-label="Blank 1"></span> include formal address,
+            <span class="blank" tabindex="0" role="button" aria-label="Blank 2"></span> but not very familiar language, and
+            <span class="blank" tabindex="0" role="button" aria-label="Blank 3"></span> for personal space. The
+            <span class="blank" tabindex="0" role="button" aria-label="Blank 4"></span> should support each other and show coordination and professionalism.
+          </div>
+          <div class="actions">
+            <button class="btn ghost" id="mockwCheck" type="button">Submit</button>
+            <button class="btn" id="mockwReset" type="button">Reset</button>
+          </div>
+          <div aria-live="polite" class="feedback" id="mockwFeedback"></div>
+        </div>
+        <div class="writing-task">
+          <div class="writing-task-head">TASK TWO</div>
+          <div class="writing-instructions">
+            <div class="writing-instr-title">INSTRUCTIONS:</div>
+            <div class="writing-instr-text">Write a 50-word e-mail confirmation to a hotel guest. Include the dates you are expecting her, and reassure her regarding her dietary requests and private beach privileges.</div>
+          </div>
+          <div class="writing-compose">
+            <div class="writing-meta">
+              <div class="wordcount" id="mockEmailCount" aria-live="polite">Words: 0/50</div>
+              <div class="hint">Tip: include arrival/departure dates, dietary request reassurance, and private beach access confirmation.</div>
+            </div>
+            <textarea class="writing-textarea" id="mockEmailText" rows="7" placeholder="Write your e-mail confirmation here..." aria-label="E-mail confirmation text (max 50 words)"></textarea>
+            <div class="actions">
+              <button class="btn ghost" id="mockEmailCheck" type="button">Submit</button>
+              <button class="btn" id="mockEmailReset" type="button">Clear</button>
+            </div>
+            <div class="writing-score" id="mockEmailScore" aria-live="polite"></div>
+            <div class="writing-feedback" id="mockEmailFeedback" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 2: Listening Dialogue 2 -->
+<section class="tab-panel" data-panel="mock_listening_2" hidden="" id="tabMockListening2">
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon unit-icon--mock">
+        <img alt="" src="img/icon-headphones.svg">
+      </div>
+      <h1 class="unit-title">Listening: Dialogue 2</h1>
+    </div>
+  </div>
+  <div class="exercise-shell">
+    <div class="exercise-left">
+      <div class="questions-head">DIALOGUE 2</div>
+      <div class="card audio-card li-audio">
+        <div class="audio-wrap">
+          <div aria-hidden="true" class="audio-badge">AUDIO</div>
+          <div>
+            <div class="audio-title">Mini Mock Listening</div>
+            <div class="audio-subtitle">Play the recording and answer the questions.</div>
+            <div class="btn-row">
+              <button class="btn" id="mock2PlayBtn" type="button">Play</button>
+              <button class="btn" id="mock2PauseBtn" type="button">Pause</button>
+              <button class="btn" id="mock2RestartBtn" type="button">Restart</button>
+              <span aria-live="polite" class="status" id="mock2AudioStatus" role="status">Ready</span>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" id="mock2ProgressBar" style="width:0%"></div>
+            </div>
+            <audio id="mock2ListeningAudio" preload="auto">
+              <source src="sound/mock_l_2.mp3" type="audio/mpeg"></source>
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="questions-head">Questions:</div>
+    <form aria-label="Mini mock listening dialogue 2 questions" class="quiz li-quiz" id="mockListening2Form">
+      <div class="q" data-q="mq3">
+        <div class="q-head">
+          <div class="q-num">3</div>
+          <div class="q-text">Which locations are included in the tour?</div>
+        </div>
+        <label class="opt"><input name="mq3" type="radio" value="a"> The old harbour with the Venetian lighthouse, the Archaeological Museum, and the Chania Market.</label>
+        <label class="opt"><input name="mq3" type="radio" value="b"> The old harbour, the White Tower, and the Chania Beach.</label>
+        <label class="opt"><input name="mq3" type="radio" value="c"> The Archaeological Museum, the Market, and the Botanical Gardens.</label>
+      </div>
+
+      <div class="q" data-q="mq4">
+        <div class="q-head">
+          <div class="q-num">4</div>
+          <div class="q-text">What can visitors expect to see at the Archaeological Museum?</div>
+        </div>
+        <label class="opt"><input name="mq4" type="radio" value="a"> Modern Greek paintings and sculptures.</label>
+        <label class="opt"><input name="mq4" type="radio" value="b"> Minoan-era pottery, bronze tools, and frescos.</label>
+        <label class="opt"><input name="mq4" type="radio" value="c"> Ancient Roman coins and mosaics.</label>
+      </div>
+
+      <div class="q" data-q="mq5">
+        <div class="q-head">
+          <div class="q-num">5</div>
+          <div class="q-text">How long is the walk to the harbour and how long is the walk to the market?</div>
+        </div>
+        <label class="opt"><input name="mq5" type="radio" value="a"> About an hour to the harbour, and a ten-minute walk to the market.</label>
+        <label class="opt"><input name="mq5" type="radio" value="b"> About thirty minutes to the harbour; about a five-minute walk to the market.</label>
+        <label class="opt"><input name="mq5" type="radio" value="c"> About a short walk to the harbour; about a ten-minute walk to the market.</label>
+      </div>
+
+      <div class="quiz-actions">
+        <button class="btn ghost" type="submit">Submit</button>
+        <button class="btn" id="mock2ResetBtn" type="button">Reset</button>
+        <span aria-live="polite" class="status" id="mock2Feedback" role="status"></span>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- TAB 3: Reading Exercise B -->
+<section class="tab-panel" data-panel="mock_reading_b" hidden="" id="tabMockReadingB">
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon unit-icon--mock">
+        <img alt="" src="img/reading.png">
+      </div>
+      <h1 class="unit-title">Reading: Exercise B</h1>
+    </div>
+  </div>
+
+  <div class="exercise-shell">
+    <div class="exercise-left">
+      <aside aria-label="Instructions" class="exercise-right">
+        <div class="sticky-card" style="border-color: rgba(85,107,63,.45); background: rgba(236,244,230,.82);">
+          <div class="card-title" style="color: rgba(85,107,63,.98);">Exercise B: Numbers 5 to 8</div>
+          <p class="card-p"><strong>INSTRUCTIONS:</strong></p>
+          <p class="card-p">Read this text. Then, answer questions 5 to 8 below.</p>
+        </div>
+      </aside>
+      <br>
+
+      <div aria-label="Reading activity exercise B" class="reading-card" role="region">
+        <div class="reading-text-body" style="font-size: 1.15rem; font-style: italic; line-height: 1.42;">
+          <p>A compact Crete-to-Athens itinerary starts with an early flight from Heraklion to Athens, arriving by mid-morning. In Athens, visit the Acropolis and the accompanying museum, then return to Crete by late afternoon or evening. If you prefer, take a short ferry leg to Rafina or Piraeus for a quick lookout over the Saronic Gulf before the return flight. For guests who stay on Crete, a half-day tour to Knossos with a beach stop makes a well-rounded day.</p>
+        </div>
+
+        <div class="reading-section-title" style="text-align: left; margin-top: 18px;">Questions:</div>
+
+        <form aria-label="Mini mock reading exercise B questions" class="quiz-form" id="mockReadingBForm">
+          <div class="q" data-q="mqrb5">
+            <div class="q-head">
+              <div class="q-num">5</div>
+              <div class="q-text">What is the recommended timing for an early flight from Heraklion to Athens?</div>
+            </div>
+            <div aria-label="Question 5 options" class="opts" role="radiogroup">
+              <label class="opt"><input name="mqrb5" type="radio" value="a"> Arriving by mid-morning.</label>
+              <label class="opt"><input name="mqrb5" type="radio" value="b"> Arriving by noon.</label>
+              <label class="opt"><input name="mqrb5" type="radio" value="c"> Arriving in the evening.</label>
+            </div>
+          </div>
+
+          <div class="q" data-q="mqrb6">
+            <div class="q-head">
+              <div class="q-num">6</div>
+              <div class="q-text">Which sites are suggested to visit in Athens according to the itinerary?</div>
+            </div>
+            <div aria-label="Question 6 options" class="opts" role="radiogroup">
+              <label class="opt"><input name="mqrb6" type="radio" value="a"> The Temple of Olympian Zeus and the National Archaeological Museum.</label>
+              <label class="opt"><input name="mqrb6" type="radio" value="b"> The Ancient Agora and Monastiraki Flea Market.</label>
+              <label class="opt"><input name="mqrb6" type="radio" value="c"> The Parthenon and the Acropolis Museum.</label>
+            </div>
+          </div>
+
+          <div class="q" data-q="mqrb7">
+            <div class="q-head">
+              <div class="q-num">7</div>
+              <div class="q-text">What is an optional short ferry leg mentioned in the passage?</div>
+            </div>
+            <div aria-label="Question 7 options" class="opts" role="radiogroup">
+              <label class="opt"><input name="mqrb7" type="radio" value="a"> Crete's Heraklion port for a coastal cruise.</label>
+              <label class="opt"><input name="mqrb7" type="radio" value="b"> Rafina or Piraeus for a quick lookout over the Saronic Gulf.</label>
+              <label class="opt"><input name="mqrb7" type="radio" value="c"> Santorini for a sunset view.</label>
+            </div>
+          </div>
+
+          <div class="q" data-q="mqrb8">
+            <div class="q-head">
+              <div class="q-num">8</div>
+              <div class="q-text">For guests staying on Crete, what does the half-day tour include?</div>
+            </div>
+            <div aria-label="Question 8 options" class="opts" role="radiogroup">
+              <label class="opt"><input name="mqrb8" type="radio" value="a"> A Knossos visit with a beach stop.</label>
+              <label class="opt"><input name="mqrb8" type="radio" value="b"> A Rethymno old town stroll.</label>
+              <label class="opt"><input name="mqrb8" type="radio" value="c"> A boat trip to Spinalonga Island.</label>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn ghost" type="submit">Submit</button>
+            <button class="btn" id="mockReadingBReset" type="button">Reset</button>
+          </div>
+          <div aria-live="polite" class="feedback" id="mockReadingBFeedback"></div>
+        </form>
+
+        <div class="reading-answer-key">[ANSWERS: 5. Arriving by mid-morning, 6. The Parthenon and the Acropolis Museum, 7. Rafina or Piraeus for a quick lookout over the Saronic Gulf, 8. A Knossos visit with a beach stop]</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 2: Reading -->
+<section class="tab-panel" data-panel="mock_reading" hidden="" id="tabMockReading">
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon unit-icon--mock">
+        <img alt="" src="img/reading.png">
+      </div>
+      <h1 class="unit-title">Reading</h1>
+    </div>
+  </div>
+
+  <div class="exercise-shell">
+    <div class="exercise-left">
+      <aside aria-label="Instructions" class="exercise-right">
+        <div class="sticky-card" style="border-color: rgba(85,107,63,.45); background: rgba(236,244,230,.82);">
+          <div class="card-title" style="color: rgba(85,107,63,.98);">Exercise A: Numbers 1 to 4</div>
+          <p class="card-p"><strong>INSTRUCTIONS:</strong></p>
+          <p class="card-p">Read this text about activities in Crete.</p>
+          <p class="card-p">Decide whether the statements are True or False, (A=TRUE, B=FALSE).</p>
+        </div>
+      </aside>
+      <br>
+
+      <div aria-label="Reading activity" class="reading-card" role="region">
+        <div class="reading-text-body" style="font-size: 1.15rem; font-style: italic; line-height: 1.42;">
+          <p><strong>Wine and Olive Oil:</strong> A tasting with an olive oil lesson. You try three small wines, learn about olive oil, and eat a small snack. Price: from 45 euros per person.</p>
+          <p><strong>Cooking Class at Sunset:</strong> You cook with a local chef. You eat what you make while watching the sunset. Price: from 60 euros per person.</p>
+        </div>
+
+        <div class="reading-section-title" style="text-align: left; margin-top: 18px;">Statements:</div>
+
+        <form aria-label="Mini mock reading true or false questions" class="quiz-form" id="mockReadingForm">
+          <div class="q" data-q="mqr1">
+            <div class="q-head">
+              <div class="q-num">1</div>
+              <div class="q-text">You try various flavors of olive oil.</div>
+            </div>
+            <div aria-label="Question 1 options" class="opts" role="radiogroup">
+              <label class="opt"><input name="mqr1" type="radio" value="a"> A. True</label>
+              <label class="opt"><input name="mqr1" type="radio" value="b"> B. False</label>
+            </div>
+          </div>
+
+          <div class="q" data-q="mqr2">
+            <div class="q-head">
+              <div class="q-num">2</div>
+              <div class="q-text">You eat a small snack.</div>
+            </div>
+            <div aria-label="Question 2 options" class="opts" role="radiogroup">
+              <label class="opt"><input name="mqr2" type="radio" value="a"> A. True</label>
+              <label class="opt"><input name="mqr2" type="radio" value="b"> B. False</label>
+            </div>
+          </div>
+
+          <div class="q" data-q="mqr3">
+            <div class="q-head">
+              <div class="q-num">3</div>
+              <div class="q-text">You attend Wine and Honey tasting.</div>
+            </div>
+            <div aria-label="Question 3 options" class="opts" role="radiogroup">
+              <label class="opt"><input name="mqr3" type="radio" value="a"> A. True</label>
+              <label class="opt"><input name="mqr3" type="radio" value="b"> B. False</label>
+            </div>
+          </div>
+
+          <div class="q" data-q="mqr4">
+            <div class="q-head">
+              <div class="q-num">4</div>
+              <div class="q-text">Both activities cost 60 euros.</div>
+            </div>
+            <div aria-label="Question 4 options" class="opts" role="radiogroup">
+              <label class="opt"><input name="mqr4" type="radio" value="a"> A. True</label>
+              <label class="opt"><input name="mqr4" type="radio" value="b"> B. False</label>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn ghost" type="submit">Submit</button>
+            <button class="btn" id="mockReadingReset" type="button">Reset</button>
+          </div>
+          <div aria-live="polite" class="feedback" id="mockReadingFeedback"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

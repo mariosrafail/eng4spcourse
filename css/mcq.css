@@ -1,0 +1,95 @@
+/* Multiple choice shared theming (color-only differences by section) */
+
+/* Defaults */
+:is(.quiz, .quiz-form, .li-quiz){
+  --mcq-accent-rgb: var(--theme-purple-rgb);
+}
+
+/* Listening family: soft purple */
+#tabListening :is(.quiz, .quiz-form, .li-quiz),
+#tab1Listening :is(.quiz, .quiz-form, .li-quiz),
+#tabHour2Listening :is(.quiz, .quiz-form, .li-quiz),
+#tab1Hour2Listening :is(.quiz, .quiz-form, .li-quiz){
+  --mcq-accent-rgb: var(--theme-listening-rgb);
+}
+
+/* All MCQ blocks: number badges + separators follow section theme */
+:is(.quiz, .quiz-form, .li-quiz) .q-num{
+  background: rgba(var(--mcq-accent-rgb), .16);
+  border-color: rgba(var(--mcq-accent-rgb), .40);
+  color: rgba(var(--mcq-accent-rgb), .95);
+}
+
+:is(.quiz, .quiz-form, .li-quiz) .q + .q{
+  border-top-color: rgba(var(--mcq-accent-rgb), .30);
+}
+
+/* Reading family: soft red/burgundy */
+#tabReading :is(.quiz, .quiz-form, .li-quiz),
+#tab1Reading :is(.quiz, .quiz-form, .li-quiz),
+#tabHour2Reading :is(.quiz, .quiz-form, .li-quiz){
+  --mcq-accent-rgb: var(--theme-red-rgb);
+}
+
+/* Mini mock family: olive */
+#tabMockListening1 :is(.quiz, .quiz-form, .li-quiz),
+#tabMockListening2 :is(.quiz, .quiz-form, .li-quiz),
+#tabMockReading :is(.quiz, .quiz-form, .li-quiz),
+#tabMockReadingB :is(.quiz, .quiz-form, .li-quiz){
+  --mcq-accent-rgb: var(--theme-olive-rgb);
+}
+
+/* Native radio accent */
+:is(.quiz, .quiz-form, .li-quiz) .opt input[type="radio"]{
+  accent-color: rgba(var(--mcq-accent-rgb), .95);
+}
+
+/* Option card outlines follow section theme */
+:is(.quiz, .quiz-form, .li-quiz) .opt{
+  border-color: rgba(var(--mcq-accent-rgb), .36);
+}
+
+:is(.quiz, .quiz-form, .li-quiz) .opt:hover{
+  border-color: rgba(var(--mcq-accent-rgb), .52);
+  background: rgba(var(--mcq-accent-rgb), .07);
+}
+
+/* Custom radio circle theming (base styles are in style.css) */
+:is(.quiz, .quiz-form, .li-quiz) .opt input{
+  border-color: rgba(var(--mcq-accent-rgb), .55);
+}
+
+:is(.quiz, .quiz-form, .li-quiz) .opt input::before{
+  background: rgba(var(--mcq-accent-rgb), .92);
+}
+
+:is(.quiz, .quiz-form, .li-quiz) .opt input:checked{
+  border-color: rgba(var(--mcq-accent-rgb), .92);
+}
+
+:is(.quiz, .quiz-form, .li-quiz) .opt input:focus-visible{
+  box-shadow: 0 0 0 4px rgba(var(--mcq-accent-rgb), .18);
+}
+
+/* Selected option tint (supported in modern browsers) */
+:is(.quiz, .quiz-form, .li-quiz) .opt:has(input[type="radio"]:checked){
+  border-color: rgba(var(--mcq-accent-rgb), .50);
+  background: rgba(var(--mcq-accent-rgb), .10);
+}
+
+/* Result coloring: only selected option for answered questions */
+:is(.quiz, .quiz-form, .li-quiz) .opt.is-right{
+  border-color: rgba(18,133,77,.72) !important;
+  background: rgba(18,133,77,.18) !important;
+}
+
+:is(.quiz, .quiz-form, .li-quiz) .opt.is-wrong{
+  border-color: rgba(209,42,42,.72) !important;
+  background: rgba(209,42,42,.18) !important;
+}
+
+/* Unanswered question: mark all options red */
+:is(.quiz, .quiz-form, .li-quiz) .opt.is-unanswered{
+  border-color: rgba(209,42,42,.58) !important;
+  background: rgba(209,42,42,.12) !important;
+}

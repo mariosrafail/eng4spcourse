@@ -1,0 +1,135 @@
+﻿/* VII. Speaking */
+.speaking-card .kw-body{
+  display:flex;
+  flex-direction:column;
+  gap: 14px;
+}
+
+/* Make Speaking exercise match the Practice (V) layout but with green accents */
+#tabSpeaking .practice-card--green{
+  border-color: rgba(47,107,87,.35);
+  background: rgba(255,255,255,.86);
+}
+
+#tabSpeaking .speaking-bank{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.22);
+}
+
+#tabSpeaking .token{
+  border-color: rgba(47,107,87,.30);
+  max-width: 100%;
+  white-space: normal;
+}
+
+
+#tabSpeaking .blank{
+  width: 420px;
+  min-width: 420px;
+  max-width: 420px;
+  min-height: 52px;
+  border-radius: 16px;
+  border-color: rgba(47,107,87,.45);
+  background: rgba(47,107,87,.10);
+  padding: 4px;
+  margin-left: auto;
+  transition: none !important;
+  animation: none !important;
+}
+
+#tabSpeaking .blank.is-over{
+  border-color: rgba(47,107,87,.75);
+  background: rgba(47,107,87,.16);
+  box-shadow: 0 0 0 4px rgba(47,107,87,.14);
+}
+
+.speaking-phrases{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+  background: var(--green-200);
+  border: 2px solid rgba(47,107,87,.35);
+  border-radius: 18px;
+  padding: 14px 14px;
+}
+
+.speaking-phrase{
+  font-weight: 800;
+  color: rgba(26,90,72,.95);
+  font-style: italic;
+  text-align:center;
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(47,107,87,.25);
+  border-radius: 14px;
+  padding: 10px 10px;
+}
+
+.speaking-match{
+  display:flex;
+  flex-direction:column;
+  gap: 12px;
+}
+
+.speaking-match .practice-bank{
+  justify-content:flex-start;
+}
+
+#tabSpeaking .speaking-qs li{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+#tabSpeaking .blank .token{
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  min-height: 42px;
+  margin: 0;
+  padding: 6px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 999px;
+}
+
+
+@media (max-width: 860px){
+  .speaking-phrases{
+    grid-template-columns: 1fr;
+  }
+
+  #tabSpeaking .speaking-qs li{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  #tabSpeaking .blank{
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  #tabHour2Keywords .h2kw-qs li{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  #tabHour2Keywords .blank{
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+  }
+}
+
+

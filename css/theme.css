@@ -1,0 +1,18 @@
+/* Shared theme tokens for feature-level styles (DnD, MCQ, etc.) */
+:root{
+  --theme-purple-rgb: 122,103,201;
+  --theme-blue-rgb: 47,79,138;
+  --theme-green-rgb: 47,107,87;
+  --theme-brown-rgb: 126,78,58;
+  --theme-red-rgb: 183,52,73;
+  --theme-listening-rgb: 140,91,150;
+  --theme-olive-rgb: 85,107,63;
+}
+
+/* Defaults used by feature styles */
+:root{
+  --dnd-accent-rgb: var(--theme-brown-rgb);
+  --dnd-accent-ink-rgb: 28,27,34;
+
+  --mcq-accent-rgb: var(--theme-purple-rgb);
+}

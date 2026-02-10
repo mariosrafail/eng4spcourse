@@ -1,0 +1,185 @@
+﻿/* ---------- Tab 3 (Key Words) ---------- */
+.kw-wrap{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 6px 10px 18px 10px;
+}
+
+.kw-card{
+  background: rgba(255,255,255,.76);
+  border: 2px solid rgba(138,162,216,.75);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+.kw-head{
+  background: var(--blue-500);
+  padding: 18px 18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.kw-icon{
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(255,255,255,.18);
+  border: 2px solid rgba(255,255,255,.32);
+  color: #fff;
+}
+
+.kw-icon img{
+  width: 30px;
+  height: 30px;
+  display:block;
+  color: #fff;
+}
+
+.kw-title{
+  font-weight: 900;
+  font-size: 34px;
+  letter-spacing: .4px;
+  color: #fff;
+}
+
+.kw-title-small{
+  display: block;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 1.6px;
+  opacity: .95;
+  margin-top: 2px;
+}
+
+
+.kw-body{padding: 18px 18px 20px 18px;}
+
+.kw-instructions{
+  border: 2px solid rgba(138,162,216,.95);
+  background: rgba(231,239,255,.85);
+  border-radius: 18px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+
+.kw-instr-title{
+  font-weight: 900;
+  letter-spacing: .4px;
+  color: rgba(47,79,138,.95);
+  margin-bottom: 6px;
+}
+
+.kw-instr-text{color: var(--ink); font-weight: 700;}
+
+/* Theme-aware instruction boxes */
+.kw-card[data-theme="green"] .kw-instructions{
+  border-color: rgba(47,107,87,.45);
+  background: rgba(230,244,238,.88);
+}
+.kw-card[data-theme="green"] .kw-instr-title{
+  color: rgba(26,90,72,.95);
+}
+
+.kw-card[data-theme="purple"] .kw-instructions{
+  border-color: rgba(122,103,201,.45);
+  background: rgba(239,233,253,.90);
+}
+.kw-card[data-theme="purple"] .kw-instr-title{
+  color: rgba(95,74,167,.95);
+}
+
+.kw-card[data-theme="brown"] .kw-instructions{
+  border-color: rgba(126,78,58,.45);
+  background: rgba(255,245,238,.88);
+}
+.kw-card[data-theme="brown"] .kw-instr-title{
+  color: rgba(88,50,34,.95);
+}
+
+/* Module 2, Second Hour, II. Key Words instructions */
+.h2kw-instr-text{
+  color: #111;
+  font-weight: 400;
+}
+.h2kw-instr-label{
+  color: rgba(47,79,138,.95);
+  font-weight: 900;
+}
+
+.kw-list{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  padding: 4px 2px;
+}
+
+.kw-row{
+  display:grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items:start;
+  padding: 10px 10px;
+  border-radius: 16px;
+}
+
+.kw-list .kw-word{
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+  font-style: normal;
+}
+
+.kw-list .kw-word em{font-style: normal;}
+
+.kw-reveal{
+  border: 2px solid rgba(138,162,216,.95);
+  background: rgba(255,255,255,.75);
+  border-radius: 14px;
+  padding: 8px 12px;
+  font-weight: 900;
+  cursor: pointer;
+  color: rgba(47,79,138,.95);
+  position: relative;
+  overflow:hidden;
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+}
+
+.kw-reveal:hover{background:#fff; transform: translateY(-1px); box-shadow: 0 12px 26px rgba(30,18,60,.08)}
+.kw-reveal:active{transform: translateY(0); box-shadow:none}
+
+.kw-reveal::after{
+  content:"";
+  position:absolute;
+  inset: -24px;
+  background: radial-gradient(circle at var(--rx, 50%) var(--ry, 50%), rgba(111,143,203,.28), transparent 45%);
+  opacity:0;
+  transition: opacity .18s ease;
+  pointer-events:none;
+}
+.kw-reveal:hover::after{opacity:.9}
+
+.kw-list .kw-meaning{
+  margin-top: 8px;
+  color: rgba(88,88,110,.92);
+  font-weight: 700;
+  font-style: italic;
+  padding-left: 2px;
+}
+
+.kw-row.is-revealed{
+  background: rgba(231,239,255,.55);
+  border: 1px solid rgba(138,162,216,.55);
+}
+
+.kw-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+

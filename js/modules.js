@@ -12,11 +12,25 @@
   const mainContent = document.querySelector('main.content');
   const modulePanels = Array.from(document.querySelectorAll('.module-panel'));
   const _cache = Object.create(null);
+  const _inflight = Object.create(null);
   const EXPAND_PROXIMITY_PX = 72;
   const COLLAPSE_DISTANCE_PX = 140;
   const COLLAPSE_FADE_MS = 220;
   let collapseTimer = null;
+  let loadIndicatorTimer = null;
   const MOBILE_BREAKPOINT_QUERY = '(max-width: 980px)';
+  const MODULE_TITLES = {
+    '9': 'Mini Mock Test'
+  };
+
+  function getModuleTitle(id){
+    const key = String(id);
+    const fromMap = MODULE_TITLES[key];
+    if(fromMap) return fromMap;
+    const btn = moduleButtons.find((b) => b.dataset.module === key);
+    const fromButton = btn?.textContent?.trim();
+    return fromButton || `Module ${id}`;
+  }
 
   function isMobileViewport(){
     return window.matchMedia(MOBILE_BREAKPOINT_QUERY).matches;
@@ -54,6 +68,64 @@
     return modulePanels.find((p) => p.classList.contains('is-active'));
   }
 
+  function showModuleLoading(){
+    if(!mainContent) return;
+    if(mainContent.querySelector('.module-loading')) return;
+    mainContent.innerHTML = `
+      <section class="module-loading" aria-live="polite" role="status">
+        <div class="module-loading-spinner" aria-hidden="true"></div>
+        <div class="module-loading-text">Loading module...</div>
+      </section>
+    `;
+  }
+
+  function hideModuleLoading(){
+    if(loadIndicatorTimer){
+      clearTimeout(loadIndicatorTimer);
+      loadIndicatorTimer = null;
+    }
+    const loadingEl = mainContent?.querySelector('.module-loading');
+    if(loadingEl) loadingEl.remove();
+  }
+
+  function scheduleModuleLoading(){
+    hideModuleLoading();
+    loadIndicatorTimer = setTimeout(showModuleLoading, 140);
+  }
+
+  function parseModuleHTML(html){
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+
+    const navElement = tempDiv.querySelector('nav');
+    const tabPanels = Array.from(tempDiv.querySelectorAll('section.tab-panel'));
+
+    return {
+      menu: navElement ? navElement.outerHTML : '',
+      content: tabPanels.map((p) => p.outerHTML).join('')
+    };
+  }
+
+  async function fetchAndCacheModule(id){
+    if(_cache[id]) return _cache[id];
+    if(_inflight[id]) return _inflight[id];
+
+    _inflight[id] = (async () => {
+      const res = await fetch(`modules/module-${id}.html`, { cache: 'no-store' });
+      if(!res.ok) throw new Error('fetch failed');
+      const html = await res.text();
+      const parsed = parseModuleHTML(html);
+      _cache[id] = parsed;
+      return parsed;
+    })();
+
+    try{
+      return await _inflight[id];
+    }finally{
+      delete _inflight[id];
+    }
+  }
+
   // Initialize tab switching for dynamically loaded content
   function initTabs(options = {}){
     const { forceFirstTab = false, focusActiveTab = false } = options;
@@ -82,6 +154,7 @@
         target.hidden = false;
         requestAnimationFrame(() => target.classList.add('is-visible'));
       }
+      window.updateAmbientThemeForTab?.(key);
 
       // Scroll to top
       try{
@@ -141,26 +214,12 @@
     }
     
     try{
-      const res = await fetch(`modules/module-${id}.html`, { cache: 'no-cache' });
-      if(!res.ok) throw new Error('fetch failed');
-      const html = await res.text();
-      
-      // Parse the HTML to separate menu (nav) and content (tab-panels)
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = html;
-      
-      const navElement = tempDiv.querySelector('nav');
-      const tabPanels = Array.from(tempDiv.querySelectorAll('section.tab-panel'));
-      
-      const menuHTML = navElement ? navElement.outerHTML : '';
-      const contentHTML = tabPanels.map(p => p.outerHTML).join('');
-      
-      // Cache both parts
-      _cache[id] = { menu: menuHTML, content: contentHTML };
+      scheduleModuleLoading();
+      const parsed = await fetchAndCacheModule(id);
       
       // Inject into DOM
-      panel.innerHTML = menuHTML;
-      mainContent.innerHTML = contentHTML;
+      panel.innerHTML = parsed.menu;
+      mainContent.innerHTML = parsed.content;
       
       // Initialize tabs after injection
       initTabs({ forceFirstTab, focusActiveTab });
@@ -175,7 +234,18 @@
     }catch(e){
       panel.innerHTML = '<!-- failed to load module -->';
       mainContent.innerHTML = '<!-- failed to load module content -->';
+    }finally{
+      hideModuleLoading();
     }
+  }
+
+  function prefetchModules(exceptId){
+    moduleButtons.forEach((btn) => {
+      const id = btn.dataset.module;
+      if(!id || id === String(exceptId)) return;
+      if(_cache[id] || _inflight[id]) return;
+      fetchAndCacheModule(id).catch(() => {});
+    });
   }
 
   function setActive(id){
@@ -187,7 +257,9 @@
     });
     // Show the sidebar when a module is activated
     if(sidebar) sidebar.style.display = 'flex';
-    if(activeModuleTitle) activeModuleTitle.textContent = `Module ${id}`;
+    if(activeModuleTitle){
+      activeModuleTitle.textContent = getModuleTitle(id);
+    }
     // Keep modules sidebar open on click; collapse only after cursor moves far away.
     if(collapseTimer){
       clearTimeout(collapseTimer);
@@ -201,6 +273,7 @@
       syncMobileToggleState();
     }
     loadModule(id, { forceFirstTab: true, focusActiveTab: true });
+    setTimeout(() => prefetchModules(id), 220);
   }
 
   moduleButtons.forEach(btn => {
@@ -266,9 +339,12 @@
     handlePointerProximity(e.clientX, e.clientY);
   });
 
+  const miniMockBtn = moduleButtons.find((b) => b.dataset.module === '9');
+  if(miniMockBtn) miniMockBtn.textContent = getModuleTitle(9);
+
 
   const moduleFromQuery = Number(new URLSearchParams(window.location.search).get('module'));
-  if(Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 8){
+  if(Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 9){
     setActive(moduleFromQuery);
   }
 

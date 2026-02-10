@@ -1,0 +1,238 @@
+﻿/* Second Hour: Writing (green) */
+.tab-btn[data-tab="h2_writing"]{background: rgba(47,107,87,.10);}
+.tab-btn[data-tab="m1_h2_writing"]{background: rgba(47,107,87,.10);}
+.tab-btn[data-tab="h2_writing"]:hover{background: rgba(47,107,87,.14);}
+.tab-btn[data-tab="m1_h2_writing"]:hover{background: rgba(47,107,87,.14);}
+.tab-btn[data-tab="h2_writing"].is-active{
+  background: linear-gradient(180deg, rgba(47,107,87,.22), rgba(47,107,87,.10));
+  border-color: rgba(47,107,87,.45);
+}
+.tab-btn[data-tab="m1_h2_writing"].is-active{
+  background: linear-gradient(180deg, rgba(47,107,87,.22), rgba(47,107,87,.10));
+  border-color: rgba(47,107,87,.45);
+}
+.tab-btn[data-tab="h2_writing"] .tab-dot{
+  background: var(--green-700);
+  box-shadow: 0 0 0 4px rgba(47,107,87,.12);
+}
+.tab-btn[data-tab="m1_h2_writing"] .tab-dot{
+  background: var(--green-700);
+  box-shadow: 0 0 0 4px rgba(47,107,87,.12);
+}
+
+.unit-icon--green{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.35);
+}
+
+
+.writing-card{
+  border: 2px solid rgba(47,107,87,.35);
+  background: rgba(255,255,255,.86);
+  border-radius: 22px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.writing-task{margin-bottom: 16px;}
+.writing-task:last-child{margin-bottom: 0;}
+
+.writing-task-head{
+  font-weight: 900;
+  letter-spacing: .4px;
+  font-size: 18px;
+  color: rgba(18,72,58,.95);
+  margin-bottom: 10px;
+}
+
+.writing-instructions{
+  border: 2px solid rgba(47,107,87,.45);
+  background: rgba(239,250,246,.75);
+  border-radius: 18px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+.writing-instr-title{font-weight: 900; color: rgba(18,72,58,.95); margin-bottom: 6px;}
+.writing-instr-text{font-weight: 700; color: rgba(28,27,34,.88);}
+
+.writing-bank-wrap{margin: 10px 0 12px 0;}
+.writing-bank{border-color: rgba(47,107,87,.28) !important;}
+
+.writing-gap-text{
+  font-size: 17px;
+  line-height: 1.7;
+  font-weight: 700;
+  color: rgba(28,27,34,.92);
+  padding: 10px 6px;
+}
+
+.writing-compose{margin-top: 6px;}
+.writing-meta{display:flex; flex-direction:column; gap:6px; margin-bottom: 10px;}
+.wordcount{font-weight: 900; color: rgba(18,72,58,.95);}
+.hint{color: rgba(28,27,34,.75); font-weight: 700;}
+
+.writing-textarea{
+  width: 100%;
+  border: 2px solid rgba(47,107,87,.28);
+  background: rgba(255,255,255,.9);
+  border-radius: 18px;
+  padding: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 140px;
+}
+.writing-textarea:focus{outline: none; box-shadow: 0 0 0 4px rgba(47,107,87,.12); border-color: rgba(47,107,87,.45);}
+
+.writing-score{margin-top: 10px; font-weight: 900; color: rgba(18,72,58,.95);}
+.writing-feedback{margin-top: 8px;}
+.writing-feedback ul{margin: 6px 0 0 18px;}
+.writing-feedback li{margin: 4px 0;}
+
+.wf-block{margin-top: 10px;}
+.wf-title{font-weight: 900; color: rgba(18,72,58,.95); margin-bottom: 4px;}
+.wf-small{margin-top: 8px; color: rgba(28,27,34,.75); font-weight: 700;}
+.wf-ok{padding: 10px 12px; border-radius: 14px; border: 2px solid rgba(47,107,87,.35); background: rgba(239,250,246,.70); font-weight: 900; color: rgba(18,72,58,.95);}
+.wf-mid{padding: 10px 12px; border-radius: 14px; border: 2px solid rgba(126,78,58,.35); background: rgba(255,245,238,.75); font-weight: 900; color: rgba(88,50,34,.95);}
+.wf-bad{padding: 10px 12px; border-radius: 14px; border: 2px solid rgba(175,74,74,.35); background: rgba(255,240,240,.78); font-weight: 900; color: rgba(130,35,35,.95);}
+
+/* Second Hour - V. Writing: keep all inner DnD visuals in green theme */
+#tabHour2Writing .writing-bank{
+  background: rgba(47,107,87,.12);
+  border-color: rgba(47,107,87,.28) !important;
+}
+#tabHour2Writing .writing-bank .token{
+  border-color: rgba(47,107,87,.30);
+  background: rgba(255,255,255,.92);
+  color: rgba(18,72,58,.95);
+}
+#tabHour2Writing .writing-gap-text .blank{
+  width: 140px;
+  min-width: 140px;
+  max-width: 140px;
+  min-height: 42px;
+  padding: 4px 6px;
+  border-radius: 999px;
+  border-color: rgba(47,107,87,.42);
+  background: rgba(47,107,87,.10);
+}
+#tabHour2Writing .writing-gap-text .blank .token{
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  min-height: 42px;
+  margin: 0;
+  padding: 6px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 999px;
+  border-color: rgba(47,107,87,.34);
+  background: rgba(255,255,255,.94);
+  color: rgba(18,72,58,.95);
+}
+#tabHour2Writing .writing-gap-text .blank .token,
+#tabHour2Writing .writing-gap-text .blank .token:hover,
+#tabHour2Writing .writing-gap-text .blank .token:active,
+#tabHour2Writing .writing-gap-text .blank .token.is-dragging{
+  transform: none !important;
+}
+#tabHour2Writing .writing-gap-text .blank.is-correct{
+  border-color: rgba(18,133,77,.70);
+  background: rgba(18,133,77,.20);
+}
+#tabHour2Writing .writing-gap-text .blank.is-wrong{
+  border-color: rgba(209,42,42,.70);
+  background: rgba(209,42,42,.20);
+}
+
+/* Mini Mock - Writing (olive) */
+#tabMockWriting .writing-card{
+  border-color: rgba(85,107,63,.40);
+  background: rgba(255,255,255,.88);
+}
+#tabMockWriting .writing-task-head{
+  color: rgba(85,107,63,.98);
+}
+#tabMockWriting .writing-instructions{
+  border-color: rgba(85,107,63,.42);
+  background: rgba(236,244,230,.82);
+}
+#tabMockWriting .writing-instr-title{
+  color: rgba(85,107,63,.98);
+}
+#tabMockWriting .writing-bank{
+  background: rgba(85,107,63,.12);
+  border-color: rgba(85,107,63,.32) !important;
+}
+#tabMockWriting .writing-bank .token{
+  border-color: rgba(85,107,63,.34);
+  color: rgba(85,107,63,.96);
+}
+#tabMockWriting .writing-gap-text .blank{
+  width: 140px;
+  min-width: 140px;
+  max-width: 140px;
+  min-height: 42px;
+  padding: 4px 6px;
+  border-radius: 999px;
+  border-color: rgba(85,107,63,.46);
+  background: rgba(85,107,63,.10);
+}
+#tabMockWriting .writing-gap-text .blank .token{
+  width: 100%;
+  max-width: 100%;
+  min-height: 42px;
+  margin: 0;
+  padding: 6px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 999px;
+}
+
+/* Second Hour - VI. Learning Recall: keep inner card in brown theme */
+#tabHour2Recall .rev-box{
+  border-color: rgba(183,52,73,.52);
+  background: rgba(255,245,248,.84);
+}
+#tabHour2Recall .rev-text{
+  color: rgba(74,33,45,.94);
+}
+
+[data-panel="h2_recall"] .kw-card[data-theme="brown"]{
+  border-color: rgba(183,52,73,.46);
+}
+[data-panel="h2_recall"] .kw-card[data-theme="brown"] .kw-head{
+  background: rgba(183,52,73,.88);
+  color: #fff;
+}
+[data-panel="h2_recall"] .kw-card[data-theme="brown"] .kw-title{
+  color: #fff;
+}
+
+[data-panel="m1_h2_recall"] .kw-card[data-theme="recall"]{
+  border-color: rgba(183,52,73,.46);
+}
+[data-panel="m1_h2_recall"] .kw-card[data-theme="recall"] .kw-head{
+  background: rgba(183,52,73,.88);
+  color: #fff;
+}
+[data-panel="m1_h2_recall"] .kw-card[data-theme="recall"] .kw-title{
+  color: #fff;
+}
+[data-panel="m1_h2_recall"] .rev-box{
+  border-color: rgba(183,52,73,.52);
+  background: rgba(255,245,248,.84);
+}
+[data-panel="m1_h2_recall"] .rev-text{
+  color: rgba(74,33,45,.94);
+}
+
+

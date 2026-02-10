@@ -1,0 +1,104 @@
+/* Drag & Drop shared behavior + theme by panel */
+
+/* Theme assignment by panel */
+#tabPractice{
+  --dnd-accent-rgb: var(--theme-brown-rgb);
+  --dnd-accent-ink-rgb: 88,50,34;
+}
+
+#tab3Exercise .m3a2-card{
+  --dnd-accent-rgb: var(--theme-purple-rgb);
+  --dnd-accent-ink-rgb: 95,74,167;
+}
+
+#tabSpeaking,
+#tabHour2Writing{
+  --dnd-accent-rgb: var(--theme-green-rgb);
+  --dnd-accent-ink-rgb: 18,72,58;
+}
+
+#tabHour2Keywords{
+  --dnd-accent-rgb: var(--theme-blue-rgb);
+  --dnd-accent-ink-rgb: 34,58,103;
+}
+
+#tabMockWriting{
+  --dnd-accent-rgb: var(--theme-olive-rgb);
+  --dnd-accent-ink-rgb: 85,107,63;
+}
+
+/* Shared DnD visuals */
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .token{
+  border-color: rgba(var(--dnd-accent-rgb), .30);
+}
+
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting)
+:is(.practice-bank, .writing-bank, #h2wBank, #mockwBank) .token{
+  color: rgba(var(--dnd-accent-ink-rgb), .96);
+}
+
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .token.is-selected{
+  outline: 3px solid rgba(var(--dnd-accent-rgb), .35);
+}
+
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .blank{
+  border-style: dashed !important;
+  border-width: 2px !important;
+  border-color: rgba(var(--dnd-accent-rgb), .45);
+  background: rgba(var(--dnd-accent-rgb), .10);
+}
+
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .blank.is-over{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .72);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .12);
+  background: rgba(var(--dnd-accent-rgb), .16);
+}
+
+#tabPractice.drag-from-blank .practice-bank,
+#tab3Exercise.drag-from-blank #m3a2Bank,
+#tabSpeaking.drag-from-blank .speaking-bank,
+#tabHour2Keywords.drag-from-blank .h2kw-bank,
+#tabHour2Writing.drag-from-blank #h2wBank,
+#tabMockWriting.drag-from-blank #mockwBank{
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .14), 0 12px 24px rgba(30,18,60,.12);
+  border-color: rgba(var(--dnd-accent-rgb), .45) !important;
+  background: rgba(var(--dnd-accent-rgb), .18);
+}
+
+#tabPractice.drag-from-bank .blank,
+#tab3Exercise.drag-from-bank .blank,
+#tabSpeaking.drag-from-bank .blank,
+#tabHour2Keywords.drag-from-bank .blank,
+#tabHour2Writing.drag-from-bank .blank,
+#tabMockWriting.drag-from-bank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .68);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .12);
+  background: rgba(var(--dnd-accent-rgb), .16);
+}
+
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .blank.is-correct,
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .blank.is-wrong{
+  border-style: dashed !important;
+}
+
+/* Keep placed tokens stable in blanks (no hover scale jitter) */
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .blank .token,
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .blank .token:hover,
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .blank .token:active,
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .blank .token.is-dragging{
+  transform: none !important;
+  color: rgba(28,27,34,.94) !important;
+}
+
+/* Result coloring for tokens after Submit */
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .blank .token.is-correct{
+  border-color: rgba(18,133,77,.72) !important;
+  background: rgba(18,133,77,.18) !important;
+}
+
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .blank .token.is-wrong{
+  border-color: rgba(209,42,42,.72) !important;
+  background: rgba(209,42,42,.18) !important;
+}

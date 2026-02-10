@@ -1,0 +1,141 @@
+/* Instruction color system by section theme */
+
+/* Default instruction accent */
+:root{
+  --instr-accent-rgb: var(--theme-purple-rgb);
+  --instr-accent-ink-rgb: 95,74,167;
+}
+
+#tab3Exercise .m3a2-card{
+  --instr-accent-rgb: var(--theme-purple-rgb);
+  --instr-accent-ink-rgb: 95,74,167;
+}
+
+/* Panel/theme mapping */
+#tabPractice,
+#tab1Practice,
+#tabHour2Recall,
+#tab1Hour2Recall,
+[data-panel="h2_recall"],
+[data-panel="m1_h2_recall"]{
+  --instr-accent-rgb: var(--theme-brown-rgb);
+  --instr-accent-ink-rgb: 126,78,58;
+}
+
+#tabHour2Recall[data-panel="m1_h2_recall"],
+[data-panel="m1_h2_recall"]{
+  --instr-accent-rgb: var(--theme-red-rgb);
+  --instr-accent-ink-rgb: 183,52,73;
+}
+
+#tabSpeaking,
+#tab1Speaking,
+#tabHour2Writing,
+#tab1Hour2Writing,
+#tabRevision,
+#tab1Revision{
+  --instr-accent-rgb: var(--theme-green-rgb);
+  --instr-accent-ink-rgb: 47,107,87;
+}
+
+#tabHour2Keywords,
+#tab1Hour2Keywords,
+#tabKeywords,
+#tab1Keywords{
+  --instr-accent-rgb: var(--theme-blue-rgb);
+  --instr-accent-ink-rgb: 47,79,138;
+}
+
+#tabReading,
+#tab1Reading,
+#tabHour2Reading,
+#tab1Hour2Reading{
+  --instr-accent-rgb: var(--theme-red-rgb);
+  --instr-accent-ink-rgb: 123,59,82;
+}
+
+#tabListening,
+#tab1Listening,
+#tabHour2Listening,
+#tab1Hour2Listening{
+  --instr-accent-rgb: var(--theme-listening-rgb);
+  --instr-accent-ink-rgb: 140,91,150;
+}
+
+#tabMockListening1,
+#tabMockListening2,
+#tabMockReading,
+#tabMockReadingB,
+#tabMockWriting{
+  --instr-accent-rgb: var(--theme-olive-rgb);
+  --instr-accent-ink-rgb: 85,107,63;
+}
+
+/* Apply accent to instruction labels/titles */
+:is(.tab-panel, [data-panel]) .sticky-card .card-title,
+:is(.tab-panel, [data-panel]) .practice-instr-title,
+:is(.tab-panel, [data-panel]) .writing-instr-title,
+:is(.tab-panel, [data-panel]) .kw-instr-title,
+:is(.tab-panel, [data-panel]) .reading-instr-inline strong,
+:is(.tab-panel, [data-panel]) .h2kw-instr-label{
+  color: rgba(var(--instr-accent-ink-rgb), .95) !important;
+}
+
+/* Instruction containers get subtle border tint */
+:is(.tab-panel, [data-panel]) .sticky-card,
+:is(.tab-panel, [data-panel]) .practice-instructions,
+:is(.tab-panel, [data-panel]) .writing-instructions,
+:is(.tab-panel, [data-panel]) .reading-instr-inline,
+:is(.tab-panel, [data-panel]) .kw-instructions{
+  border-color: rgba(var(--instr-accent-rgb), .35) !important;
+}
+
+/* Action buttons (Submit/Reset/Clear): white fill + themed border */
+:is(.tab-panel, [data-panel]) :is(.actions, .practice-actions, .quiz-actions, .kw-actions) .btn{
+  background: #fff !important;
+  border-color: rgba(var(--instr-accent-rgb), .45) !important;
+  color: rgba(var(--instr-accent-ink-rgb), .96) !important;
+}
+
+:is(.tab-panel, [data-panel]) :is(.actions, .practice-actions, .quiz-actions, .kw-actions) .btn:hover{
+  background: rgba(var(--instr-accent-rgb), .08) !important;
+  border-color: rgba(var(--instr-accent-rgb), .58) !important;
+}
+
+/* Reveal buttons follow section theme too */
+:is(.tab-panel, [data-panel]) .kw-reveal{
+  background: #fff !important;
+  border-color: rgba(var(--instr-accent-rgb), .55) !important;
+  color: rgba(var(--instr-accent-ink-rgb), .96) !important;
+  box-shadow: none !important;
+}
+
+:is(.tab-panel, [data-panel]) .kw-reveal:hover{
+  background: rgba(var(--instr-accent-rgb), .08) !important;
+  border-color: rgba(var(--instr-accent-rgb), .62) !important;
+  box-shadow: none !important;
+}
+
+:is(.tab-panel, [data-panel]) .kw-reveal::after{
+  display: none !important;
+}
+
+/* Typography rules:
+   - INSTRUCTIONS / EXAMPLE labels stay bold
+   - instruction body text is normal
+   - example bodies are italic (not bold) */
+:is(.tab-panel, [data-panel]) :is(.card-p, .practice-instr-text, .writing-instr-text, .kw-instr-text, .h2kw-instr-text){
+  font-weight: 400 !important;
+  font-style: normal;
+}
+
+:is(.tab-panel, [data-panel]) .instr-example{
+  font-weight: 400 !important;
+  font-style: italic;
+}
+
+:is(.tab-panel, [data-panel]) .instr-example :is(strong, .h2kw-instr-label){
+  font-weight: 900 !important;
+  font-style: normal !important;
+  color: rgba(var(--instr-accent-ink-rgb), .95) !important;
+}

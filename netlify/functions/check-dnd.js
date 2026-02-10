@@ -1,8 +1,14 @@
 const DND_ANSWERS = {
-  module2_practice: ["doesn't like", "She", "likes", "Do", "flies"],
+  module1_practice: ["are", "in", "like", "prefer", "she", "this", "glad"],
+  module1_speaking: ["d", "f", "a", "b", "c", "e"],
+  module1_h2_keywords: ["F", "C", "E", "A", "D", "B"],
+  module1_h2_writing_task1: ["flight", "visit", "island", "travel", "ferry"],
+  module3_activity2: ["C", "F", "A", "D", "E", "B"],
+  module2_practice: ["doesn't like", "she", "likes", "do", "flies"],
   module2_speaking: ["c", "d", "b", "f", "a", "e"],
   module2_h2_keywords: ["E", "C", "B", "D", "F", "A"],
-  module2_h2_writing_task1: ["rates", "reservations", "beginning", "prices"]
+  module2_h2_writing_task1: ["rates", "reservations", "beginning", "prices"],
+  mini_mock_writing_1: ["manners", "warm", "respect", "team"]
 };
 
 function json(status, payload) {
