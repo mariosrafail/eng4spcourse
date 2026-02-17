@@ -30,15 +30,42 @@
 /* Shared DnD visuals */
 :is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .token{
   border-color: rgba(var(--dnd-accent-rgb), .30);
+  font-weight: 400;
 }
 
 :is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting)
 :is(.practice-bank, .writing-bank, #h2wBank, #mockwBank) .token{
-  color: rgba(var(--dnd-accent-ink-rgb), .96);
+  color: #000 !important;
+}
+
+/* Keep DnD prompt text regular (not bold). */
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords) .practice-qs{
+  font-weight: 400;
+  color: #000 !important;
+}
+
+:is(#tabHour2Writing, #tabMockWriting) .writing-gap-text{
+  font-weight: 400;
+  color: #000 !important;
 }
 
 :is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .token.is-selected{
   outline: 3px solid rgba(var(--dnd-accent-rgb), .35);
+}
+
+/* DnD token interaction: keep only scale animation, no dark hover/drag shadow. */
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .token:hover{
+  transform: scale(1.04);
+  box-shadow: none !important;
+}
+
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .token:active{
+  transform: scale(.96);
+  box-shadow: none !important;
+}
+
+:is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .token.is-dragging{
+  box-shadow: none !important;
 }
 
 :is(#tabPractice, #tab3Exercise, #tabSpeaking, #tabHour2Keywords, #tabHour2Writing, #tabMockWriting) .blank{
@@ -64,6 +91,22 @@
   box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .14), 0 12px 24px rgba(30,18,60,.12);
   border-color: rgba(var(--dnd-accent-rgb), .45) !important;
   background: rgba(var(--dnd-accent-rgb), .18);
+}
+
+/* In Practice, dragging a placed token should also keep other blanks visually active. */
+#tabPractice.drag-from-blank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
+/* In Speaking, dragging a placed token should also keep other blanks visually active. */
+#tabSpeaking.drag-from-blank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
 }
 
 #tabPractice.drag-from-bank .blank,

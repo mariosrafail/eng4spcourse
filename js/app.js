@@ -96,7 +96,24 @@ window.initializeApp = function initializeApp() {
   const tabButtons = activeModulePanel ? Array.from(activeModulePanel.querySelectorAll('.tab-btn')) : [];
   const panels = Array.from(document.querySelectorAll('main.content .tab-panel'));
 
+  function pausePlayableMedia(root){
+    const scope = root || document.querySelector('main.content') || document;
+    const media = Array.from(scope.querySelectorAll('audio, video'));
+    media.forEach((el) => {
+      try{
+        if(!el.paused){
+          el.pause();
+        }
+      }catch(_e){}
+    });
+  }
+
   function setActiveTab(key){
+    const prevActive = tabButtons.find((b) => b.classList.contains('is-active'))?.dataset.tab || '';
+    if(prevActive !== key){
+      pausePlayableMedia(document.querySelector('main.content'));
+    }
+
     tabButtons.forEach((b) => {
       const isActive = b.dataset.tab === key;
       b.classList.toggle('is-active', isActive);
@@ -237,6 +254,15 @@ window.initializeApp = function initializeApp() {
     restartId: 'm1h2RestartBtn',
     statusId: 'm1h2AudioStatus',
     progressId: 'm1h2ProgressBar'
+  });
+
+  const m2h2UlPlayer = bindAudioPlayer({
+    audioId: 'm2h2UlAudio',
+    playId: 'm2h2UlPlayBtn',
+    pauseId: 'm2h2UlPauseBtn',
+    restartId: 'm2h2UlRestartBtn',
+    statusId: 'm2h2UlAudioStatus',
+    progressId: 'm2h2UlProgressBar'
   });
 
   const liPlayer = bindAudioPlayer({

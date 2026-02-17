@@ -46,9 +46,8 @@
   100% { transform: translateY(0) scale(1); opacity:1; }
 }
 @keyframes springIn {
-  0% { transform: translateY(4px) scale(.992); opacity:.78; }
-  60% { transform: translateY(-1px) scale(1.002); opacity:1; }
-  100% { transform: translateY(0) scale(1); }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 @keyframes springHover {
   0% { transform: translateY(0) scale(1); }

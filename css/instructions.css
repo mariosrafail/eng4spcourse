@@ -81,6 +81,18 @@
   color: rgba(var(--instr-accent-ink-rgb), .95) !important;
 }
 
+/* Keep all INSTRUCTIONS labels at a consistent, compact size across sections. */
+:is(.tab-panel, [data-panel]) :is(.sticky-card .card-title, .practice-instr-title, .writing-instr-title, .kw-instr-title, .reading-instr-inline strong){
+  font-size: 16px !important;
+  line-height: 1.2;
+}
+
+/* In inline reading instruction boxes, force text to start on next line after INSTRUCTIONS. */
+:is(.tab-panel, [data-panel]) .reading-instr-inline strong{
+  display: block;
+  margin-bottom: 4px;
+}
+
 /* Instruction containers get subtle border tint */
 :is(.tab-panel, [data-panel]) .sticky-card,
 :is(.tab-panel, [data-panel]) .practice-instructions,
@@ -129,6 +141,15 @@
   font-style: normal;
 }
 
+/* Reading: keep body copy after INSTRUCTIONS and reading text paragraphs non-bold. */
+:is(.tab-panel, [data-panel]) .reading-instr-inline{
+  font-weight: 400 !important;
+}
+
+:is(.tab-panel, [data-panel]) .reading-text-body{
+  font-weight: 400 !important;
+}
+
 :is(.tab-panel, [data-panel]) .instr-example{
   font-weight: 400 !important;
   font-style: italic;
@@ -137,5 +158,11 @@
 :is(.tab-panel, [data-panel]) .instr-example :is(strong, .h2kw-instr-label){
   font-weight: 900 !important;
   font-style: normal !important;
+  color: rgba(var(--instr-accent-ink-rgb), .95) !important;
+}
+
+/* EXAMPLE label should follow the same accent color as INSTRUCTIONS. */
+:is(.tab-panel, [data-panel]) :is(.instr-example-label, .h2kw-instr-label){
+  font-weight: 900 !important;
   color: rgba(var(--instr-accent-ink-rgb), .95) !important;
 }

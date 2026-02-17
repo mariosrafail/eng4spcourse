@@ -4,12 +4,14 @@
   if(!modulesSidebar) return;
 
   const moduleButtons = Array.from(modulesSidebar.querySelectorAll('.module-btn[data-module]'));
+  const homeBtn = document.querySelector('#homeBtn');
   const sidebar = document.querySelector('.sidebar');
   const modulesMenuToggle = document.querySelector('#modulesMenuToggle');
   const courseMenuToggle = document.querySelector('#courseMenuToggle');
   const mobileDrawerBackdrop = document.querySelector('#mobileDrawerBackdrop');
   const activeModuleTitle = document.querySelector('#activeModuleTitle');
   const mainContent = document.querySelector('main.content');
+  const homeIntroSection = document.querySelector('#homeIntro');
   const modulePanels = Array.from(document.querySelectorAll('.module-panel'));
   const _cache = Object.create(null);
   const _inflight = Object.create(null);
@@ -22,6 +24,34 @@
   const MODULE_TITLES = {
     '9': 'Mini Mock Test'
   };
+  const MODULE_SEQUENCE = ['1', '2', '3', '4', '9', '5', '6', '7', '8'];
+  const PARTS_PER_MODULE = Object.freeze({
+    '1': 13,
+    '2': 13,
+    '3': 13,
+    '4': 13,
+    '5': 13,
+    '6': 13,
+    '7': 13,
+    '8': 13,
+    '9': 5
+  });
+  const TOTAL_PARTS = MODULE_SEQUENCE.reduce((sum, id) => sum + (PARTS_PER_MODULE[id] || 0), 0);
+  const PART_PERCENT = 100 / TOTAL_PARTS;
+  const TOKEN_KEY = 'e4sp_auth_token';
+  const MODULE_START_UNITS = (() => {
+    const out = {};
+    let cursor = 0;
+    MODULE_SEQUENCE.forEach((id) => {
+      out[id] = cursor;
+      cursor += PARTS_PER_MODULE[id] || 0;
+    });
+    return out;
+  })();
+  let currentProgress = 0;
+  let currentCompletedParts = 0;
+  let unlockNextInFlight = false;
+  const unlockNextButton = ensureGlobalUnlockNextButton();
 
   function getModuleTitle(id){
     const key = String(id);
@@ -30,6 +60,173 @@
     const btn = moduleButtons.find((b) => b.dataset.module === key);
     const fromButton = btn?.textContent?.trim();
     return fromButton || `Module ${id}`;
+  }
+
+  function clampProgress(value){
+    const numeric = Number(value);
+    if(!Number.isFinite(numeric)) return 0;
+    return Math.max(0, Math.min(100, numeric));
+  }
+
+  function getCompletedParts(progress = currentProgress){
+    const clamped = clampProgress(progress);
+    if(clamped >= 100) return TOTAL_PARTS;
+    return Math.max(0, Math.min(TOTAL_PARTS, Math.round(clamped / PART_PERCENT)));
+  }
+
+  function getModuleStartUnit(moduleId){
+    return MODULE_START_UNITS[String(moduleId)] ?? 0;
+  }
+
+  function getModulePartCount(moduleId){
+    return PARTS_PER_MODULE[String(moduleId)] ?? 0;
+  }
+
+  function getProgressForUnit(unitIndex){
+    const safeUnit = Math.max(0, Math.min(TOTAL_PARTS, unitIndex));
+    return (safeUnit / TOTAL_PARTS) * 100;
+  }
+
+  function syncProgressState(nextProgress){
+    currentProgress = clampProgress(nextProgress);
+    currentCompletedParts = getCompletedParts(currentProgress);
+  }
+
+  function isModuleUnlockedByProgress(moduleId, progress){
+    const requiredUnit = getModuleStartUnit(moduleId);
+    return getCompletedParts(progress) >= requiredUnit;
+  }
+
+  function isTabUnlockedByProgress(moduleId, tabIndex, progress){
+    const id = String(moduleId);
+    const partCount = getModulePartCount(id);
+    if(partCount <= 0) return true;
+    const completedParts = getCompletedParts(progress);
+    const moduleStart = getModuleStartUnit(id);
+    if(tabIndex === 0){
+      return completedParts >= moduleStart;
+    }
+    const requiredUnit = moduleStart + Math.min(tabIndex, partCount);
+    return completedParts >= requiredUnit;
+  }
+
+  function applyChapterLocks(moduleId, tabButtons){
+    const id = String(moduleId);
+    const partCount = getModulePartCount(id);
+    const moduleStart = getModuleStartUnit(id);
+    tabButtons.forEach((btn, index) => {
+      const unlocked = isTabUnlockedByProgress(id, index, currentProgress);
+      btn.disabled = !unlocked;
+      btn.classList.toggle('is-locked', !unlocked);
+      btn.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
+      if(!unlocked){
+        const requiredUnit = index === 0
+          ? moduleStart
+          : moduleStart + Math.min(index, partCount);
+        btn.title = `Locked until ${Math.ceil(getProgressForUnit(requiredUnit))}%`;
+      }else{
+        btn.removeAttribute('title');
+      }
+    });
+  }
+
+  function pausePlayableMedia(root){
+    const scope = root || mainContent || document;
+    const media = Array.from(scope.querySelectorAll('audio, video'));
+    media.forEach((el) => {
+      try{
+        if(!el.paused){
+          el.pause();
+        }
+      }catch(_e){}
+    });
+  }
+
+  async function setProgressOnServer(nextProgress){
+    const token = localStorage.getItem(TOKEN_KEY) || '';
+    if(!token) throw new Error('Missing session token.');
+
+    const res = await fetch('/api/progress-set', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ progress: nextProgress })
+    });
+
+    let payload = {};
+    try{
+      payload = await res.json();
+    }catch(_e){}
+
+    if(!res.ok){
+      throw new Error(payload?.error || `Progress update failed (${res.status})`);
+    }
+
+    return payload;
+  }
+
+  function updateUnlockNextButtonsState(){
+    const isAuth = isAuthenticated();
+    const wrap = unlockNextButton?.closest('.unlock-next-wrap');
+    if(wrap){
+      wrap.hidden = !isAuth;
+    }
+    if(!isAuth || !unlockNextButton) return;
+
+    const done = currentCompletedParts >= TOTAL_PARTS;
+    unlockNextButton.disabled = done || unlockNextInFlight;
+    unlockNextButton.textContent = done ? 'All Unlocked (testing)' : (unlockNextInFlight ? 'Updating... (testing)' : 'Unlock Next (testing)');
+  }
+
+  async function unlockNextPart(){
+    if(unlockNextInFlight) return;
+    if(!isAuthenticated()) return;
+    if(currentCompletedParts >= TOTAL_PARTS){
+      updateUnlockNextButtonsState();
+      return;
+    }
+
+    unlockNextInFlight = true;
+    updateUnlockNextButtonsState();
+
+    try{
+      const targetProgress = getProgressForUnit(currentCompletedParts + 1);
+      const result = await setProgressOnServer(targetProgress);
+      syncProgressState(result?.progress ?? targetProgress);
+
+      const safeProgress = Math.max(0, Math.min(100, Number(Number(currentProgress).toFixed(4))));
+      document.dispatchEvent(new CustomEvent('progress:updated', { detail: { progress: safeProgress } }));
+      document.dispatchEvent(new CustomEvent('auth:statechange', { detail: { authenticated: true, progress: safeProgress } }));
+    }catch(_e){
+      // no-op: auth panel feedback handles explicit controls, this is a quick unlock helper
+    }finally{
+      unlockNextInFlight = false;
+      updateUnlockNextButtonsState();
+    }
+  }
+
+  function ensureGlobalUnlockNextButton(){
+    let wrap = document.querySelector('body > .unlock-next-wrap.unlock-next-global');
+    if(!wrap){
+      wrap = document.createElement('div');
+      wrap.className = 'unlock-next-wrap unlock-next-global';
+      wrap.hidden = true;
+      document.body.appendChild(wrap);
+    }
+
+    let button = wrap.querySelector('.unlock-next-btn');
+    if(!button){
+      button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'btn unlock-next-btn';
+      button.textContent = 'Unlock Next (testing)';
+      button.addEventListener('click', unlockNextPart);
+      wrap.appendChild(button);
+    }
+
+    return button;
   }
 
   function isMobileViewport(){
@@ -95,7 +292,10 @@
 
   function parseModuleHTML(html){
     const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html;
+    const normalizedHtml = window.rewriteCourseAssetPathsInHTML
+      ? window.rewriteCourseAssetPathsInHTML(html)
+      : html;
+    tempDiv.innerHTML = normalizedHtml;
 
     const navElement = tempDiv.querySelector('nav');
     const tabPanels = Array.from(tempDiv.querySelectorAll('section.tab-panel'));
@@ -136,6 +336,12 @@
     const panels = Array.from(document.querySelectorAll('main.content .tab-panel'));
 
     function setActiveTab(key){
+      const prevActive = tabButtons.find((b) => b.classList.contains('is-active'))?.dataset.tab || '';
+      const tabChanged = prevActive !== key;
+      if(tabChanged){
+        pausePlayableMedia(mainContent);
+      }
+
       tabButtons.forEach((b) => {
         const isActive = b.dataset.tab === key;
         b.classList.toggle('is-active', isActive);
@@ -170,9 +376,12 @@
     
     // Get fresh references after cloning
     const freshTabButtons = Array.from(activeModulePanel.querySelectorAll('.tab-btn'));
+    const moduleId = String(activeModulePanel.dataset.module || '');
+    applyChapterLocks(moduleId, freshTabButtons);
     tabButtons = freshTabButtons;
     freshTabButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
+        if(btn.disabled) return;
         setActiveTab(btn.dataset.tab);
         if(isMobileViewport()){
           closeMobileDrawers();
@@ -182,13 +391,13 @@
 
     // Set initial active tab
     const initiallyActive =
-      (forceFirstTab ? freshTabButtons[0]?.dataset.tab : null) ||
-      freshTabButtons.find((b) => b.classList.contains('is-active'))?.dataset.tab ||
-      freshTabButtons[0]?.dataset.tab ||
+      (forceFirstTab ? freshTabButtons.find((b) => !b.disabled)?.dataset.tab : null) ||
+      freshTabButtons.find((b) => b.classList.contains('is-active') && !b.disabled)?.dataset.tab ||
+      freshTabButtons.find((b) => !b.disabled)?.dataset.tab ||
       'info';
     setActiveTab(initiallyActive);
     if(focusActiveTab){
-      const activeBtn = freshTabButtons.find((b) => b.classList.contains('is-active'));
+      const activeBtn = freshTabButtons.find((b) => b.classList.contains('is-active') && !b.disabled);
       activeBtn?.focus({ preventScroll: true });
     }
   }
@@ -249,6 +458,9 @@
   }
 
   function setActive(id){
+    if(!document.body.classList.contains('is-authenticated')) return;
+    const moduleButton = moduleButtons.find((b) => b.dataset.module === String(id));
+    if(!moduleButton || moduleButton.disabled) return;
     moduleButtons.forEach(b => b.classList.toggle('is-active', b.dataset.module === String(id)));
     modulePanels.forEach(p => {
       const match = p.dataset.module === String(id);
@@ -260,6 +472,7 @@
     if(activeModuleTitle){
       activeModuleTitle.textContent = getModuleTitle(id);
     }
+    pausePlayableMedia(mainContent);
     // Keep modules sidebar open on click; collapse only after cursor moves far away.
     if(collapseTimer){
       clearTimeout(collapseTimer);
@@ -276,6 +489,59 @@
     setTimeout(() => prefetchModules(id), 220);
   }
 
+  function showHome(){
+    if(!document.body.classList.contains('is-authenticated')) return;
+    pausePlayableMedia(mainContent);
+
+    moduleButtons.forEach((b) => b.classList.remove('is-active'));
+    modulePanels.forEach((p) => {
+      p.classList.remove('is-active');
+      p.hidden = true;
+    });
+
+    if(sidebar) sidebar.style.display = 'none';
+    if(activeModuleTitle) activeModuleTitle.textContent = '';
+
+    if(mainContent && homeIntroSection){
+      mainContent.innerHTML = '';
+      mainContent.appendChild(homeIntroSection);
+    }
+
+    if(isMobileViewport()){
+      closeMobileDrawers();
+    }
+
+    // Reset ambient/nav theme to the default Home purple.
+    if(typeof window.updateAmbientThemeForTab === 'function'){
+      window.updateAmbientThemeForTab('info');
+    }else{
+      document.documentElement?.style.setProperty('--ambient-rgb', '122,103,201');
+      document.documentElement?.style.setProperty('--nav-accent-rgb', '122,103,201');
+    }
+  }
+
+  function applyModuleLocks(){
+    moduleButtons.forEach((btn) => {
+      const id = String(btn.dataset.module || '');
+      const unlocked = isModuleUnlockedByProgress(id, currentProgress);
+      btn.disabled = !unlocked;
+      btn.classList.toggle('is-locked', !unlocked);
+      btn.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
+      if(!unlocked){
+        const requiredUnit = getModuleStartUnit(id);
+        btn.title = `Locked until ${Math.ceil(getProgressForUnit(requiredUnit))}%`;
+      }else{
+        btn.removeAttribute('title');
+      }
+    });
+
+    const activeButton = moduleButtons.find((btn) => btn.classList.contains('is-active'));
+    if(activeButton?.disabled){
+      showHome();
+    }
+    updateUnlockNextButtonsState();
+  }
+
   moduleButtons.forEach(btn => {
     // Only click activates the module
     btn.addEventListener('click', () => {
@@ -289,6 +555,10 @@
 
   function hasActiveModule(){
     return moduleButtons.some((b) => b.classList.contains('is-active'));
+  }
+
+  function isAuthenticated(){
+    return document.body.classList.contains('is-authenticated');
   }
 
   function distanceFromRect(x, y, rect){
@@ -339,14 +609,42 @@
     handlePointerProximity(e.clientX, e.clientY);
   });
 
+  homeBtn?.addEventListener('click', showHome);
+  homeBtn?.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      showHome();
+    }
+  });
+
   const miniMockBtn = moduleButtons.find((b) => b.dataset.module === '9');
   if(miniMockBtn) miniMockBtn.textContent = getModuleTitle(9);
 
 
   const moduleFromQuery = Number(new URLSearchParams(window.location.search).get('module'));
-  if(Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 9){
+  if(isAuthenticated() && Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 9){
     setActive(moduleFromQuery);
   }
+
+  document.addEventListener('auth:statechange', (event) => {
+    const isAuth = !!event?.detail?.authenticated;
+    syncProgressState(isAuth ? event?.detail?.progress : 0);
+    if(!isAuth){
+      updateUnlockNextButtonsState();
+      return;
+    }
+
+    applyModuleLocks();
+
+    if(hasActiveModule()){
+      initTabs({ forceFirstTab: false, focusActiveTab: false });
+      return;
+    }
+
+    if(Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 9){
+      setActive(moduleFromQuery);
+    }
+  });
 
   modulesMenuToggle?.addEventListener('click', () => toggleMobileDrawer('modules'));
   courseMenuToggle?.addEventListener('click', () => toggleMobileDrawer('course'));
@@ -358,5 +656,6 @@
     if(!isMobileViewport()) closeMobileDrawers();
   });
   syncMobileToggleState();
+  updateUnlockNextButtonsState();
 
 })();

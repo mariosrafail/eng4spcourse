@@ -165,8 +165,8 @@
 
 .kw-list .kw-meaning{
   margin-top: 8px;
-  color: rgba(88,88,110,.92);
-  font-weight: 700;
+  color: #000;
+  font-weight: 400;
   font-style: italic;
   padding-left: 2px;
 }

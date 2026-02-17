@@ -5,11 +5,14 @@
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1" name="viewport">
     <title>English Course</title>
-    <link href="img/e4sp_logo.png" rel="icon" type="image/png">
+    <link href="https://nextcloud.stinis.ddns.net/public.php/dav/files/4jqtp8mSzbeKsLM/e4sp_logo.png" rel="icon" type="image/png">
     <link href="css/style.css?v=20260209-6" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
   </head>
-  <body>
+  <body class="auth-loading">
+    <div class="auth-boot-loader" id="authBootLoader" role="status" aria-live="polite" aria-label="Loading">
+      <div class="auth-boot-spinner" aria-hidden="true"></div>
+    </div>
     <button aria-controls="modulesSidebar" aria-expanded="false" aria-label="Open modules menu" class="mobile-menu-toggle mobile-menu-toggle--left" id="modulesMenuToggle" type="button">
       <span aria-hidden="true"></span>
     </button>
@@ -20,7 +23,8 @@
     <div class="layout">
       <aside aria-label="Modules" class="modules-sidebar" id="modulesSidebar">
         <div class="side-brand">
-          <img src="img/e4sp_logo.png" alt="E4SP Logo" class="logo-image">
+          <img src="https://nextcloud.stinis.ddns.net/public.php/dav/files/4jqtp8mSzbeKsLM/e4sp_logo.png" alt="E4SP Logo" class="logo-image">
+          <button class="home-btn" id="homeBtn" type="button">Home</button>
           <div class="modules-label">Modules</div>
         </div>
         <nav class="modules-nav" aria-label="Modules list">
@@ -66,12 +70,65 @@
             <p class="focus-p">Select a module from the left menu to begin.</p>
             <p class="focus-p">Use the right menu to navigate sections inside each module.</p>
           </div>
+          <section class="auth-card" aria-label="Account">
+            <div class="auth-head">
+              <h3 class="auth-title">Account</h3>
+            </div>
+
+            <div class="auth-switch" id="authSwitch" role="tablist" aria-label="Authentication mode">
+              <button class="auth-switch-btn is-active" id="showLoginBtn" type="button" role="tab" aria-selected="true">Login</button>
+              <button class="auth-switch-btn" id="showRegisterBtn" type="button" role="tab" aria-selected="false">Register</button>
+            </div>
+
+            <form class="auth-form" id="loginForm" novalidate>
+              <label class="auth-label" for="loginEmail">Email</label>
+              <input class="auth-input" id="loginEmail" name="email" type="email" required>
+              <label class="auth-label" for="loginPassword">Password</label>
+              <input class="auth-input" id="loginPassword" name="password" type="password" required minlength="8">
+              <button class="auth-submit" type="submit">Login</button>
+            </form>
+
+            <form class="auth-form" id="registerForm" hidden novalidate>
+              <label class="auth-label" for="registerEmail">Email</label>
+              <input class="auth-input" id="registerEmail" name="email" type="email" required>
+              <label class="auth-label" for="registerPassword">Password</label>
+              <input class="auth-input" id="registerPassword" name="password" type="password" required minlength="8">
+              <div id="registerConfirmWrap">
+                <label class="auth-label" for="registerConfirmPassword">Confirm Password</label>
+                <input class="auth-input" id="registerConfirmPassword" name="confirmPassword" type="password" required minlength="8">
+              </div>
+              <div class="auth-captcha" id="registerCaptchaWrap">
+                <label class="auth-label" for="registerCaptchaAnswer">Captcha</label>
+                <div class="auth-captcha-row">
+                  <span class="auth-captcha-prompt" id="registerCaptchaPrompt">Loading captcha...</span>
+                  <button class="auth-captcha-refresh" id="registerCaptchaRefreshBtn" type="button">Refresh</button>
+                </div>
+                <input class="auth-input" id="registerCaptchaAnswer" name="captchaAnswer" type="text" required autocomplete="off">
+              </div>
+              <div class="auth-verify" id="registerVerifyWrap" hidden>
+                <label class="auth-label" for="registerCode">Verification Code</label>
+                <input class="auth-input" id="registerCode" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6">
+              </div>
+              <button class="auth-submit" id="registerSubmitBtn" type="submit">Send Verification Code (Check Spam)</button>
+            </form>
+
+            <div class="auth-user" id="authUserBox" hidden>
+              <p class="auth-user-text" id="authUserText"></p>
+              <p class="auth-progress-big" id="authProgressBig">0%</p>
+              <button class="auth-test-progress" id="changeProgressBtn" type="button">Change completion percentage (only for testing)</button>
+              <button class="auth-logout" id="logoutBtn" type="button">Logout</button>
+            </div>
+
+            <p class="auth-feedback" id="authFeedback" aria-live="polite"></p>
+          </section>
         </section>
       </main>
     </div>
 
+    <script src="js/asset-loader.js?v=20260213-1"></script>
     <script src="js/app.js?v=20260209-6"></script>
     <script src="js/modules.js?v=20260209-6"></script>
     <script src="js/h2_writing.js?v=20260209-6"></script>
+    <script src="js/auth.js?v=20260213-5"></script>
   </body>
 </html>

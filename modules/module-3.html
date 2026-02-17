@@ -1,20 +1,71 @@
-<!-- Module 3 menu (tabs navigation) -->
+﻿<!-- Module 3 menu (tabs navigation) -->
 <nav aria-label="Module 3 Tabs" class="tabs">
-  <button aria-controls="tab3Info" aria-selected="true" class="tab-btn is-active" data-tab="m3_info" type="button">
+  <button aria-controls="tab3Info" aria-selected="true" class="tab-btn is-active" data-tab="info" type="button">
     <span aria-hidden="true" class="tab-dot"></span>
     <span class="tab-label">Module Focus</span>
   </button>
   <div aria-label="First hour" class="tab-divider" role="separator">
     <span class="tab-divider-text">First Hour</span>
   </div>
-  <button aria-controls="tab3Exercise" aria-selected="false" class="tab-btn" data-tab="m3_exercise" type="button">
+  <button aria-controls="tab3Exercise" aria-selected="false" class="tab-btn" data-tab="exercise" type="button">
     <span aria-hidden="true" class="tab-dot"></span>
     <span class="tab-label">I. Useful Language</span>
+  </button>
+  <button aria-controls="tab3Keywords" aria-selected="false" class="tab-btn" data-tab="keywords" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">II. Key Words</span>
+  </button>
+  <button aria-controls="tab3Listening" aria-selected="false" class="tab-btn" data-tab="listening" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">III. Listening</span>
+  </button>
+  <button aria-controls="tab3Revision" aria-selected="false" class="tab-btn" data-tab="revision" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">IV. Language Revision</span>
+  </button>
+  <button aria-controls="tab3Practice" aria-selected="false" class="tab-btn" data-tab="practice" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">V. Language Practice</span>
+  </button>
+  <button aria-controls="tab3Reading" aria-selected="false" class="tab-btn" data-tab="reading" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">VI. Reading</span>
+  </button>
+  <button aria-controls="tab3Speaking" aria-selected="false" class="tab-btn" data-tab="speaking" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">VII. Speaking</span>
+  </button>
+  <div aria-label="Second hour" class="tab-divider" role="separator">
+    <span class="tab-divider-text">Second Hour</span>
+  </div>
+  <button aria-controls="tab3Hour2Exercise" aria-selected="false" class="tab-btn" data-tab="h2_exercise" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">I. Useful Language</span>
+  </button>
+  <button aria-controls="tab3Hour2Keywords" aria-selected="false" class="tab-btn" data-tab="h2_keywords" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">II. Key Words</span>
+  </button>
+  <button aria-controls="tab3Hour2Listening" aria-selected="false" class="tab-btn" data-tab="h2_listening" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">III. Listening</span>
+  </button>
+  <button aria-controls="tab3Hour2Reading" aria-selected="false" class="tab-btn" data-tab="h2_reading" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">IV. Reading</span>
+  </button>
+  <button aria-controls="tab3Hour2Writing" aria-selected="false" class="tab-btn" data-tab="h2_writing" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">V. Writing</span>
+  </button>
+  <button aria-controls="tab3Hour2Recall" aria-selected="false" class="tab-btn" data-tab="h2_recall" type="button">
+    <span aria-hidden="true" class="tab-dot"></span>
+    <span class="tab-label">VI. Learning Recall</span>
   </button>
 </nav>
 
 <!-- TAB 1: Module Focus -->
-<section class="tab-panel" data-panel="m3_info" hidden="" id="tab3Info">
+<section class="tab-panel" data-panel="info" hidden="" id="tab3Info">
   <div class="module-card">
     <div class="module-top">
       <br>
@@ -48,125 +99,149 @@
 </section>
 
 <!-- TAB 2: I. Useful Language -->
-<section class="tab-panel" data-panel="m3_exercise" hidden="" id="tab3Exercise">
-  <div class="page-title">
-    <div class="unit-head">
-      <div aria-hidden="true" class="unit-icon">
-        <img alt="" src="img/bubbles.png">
-      </div>
-      <h1 class="unit-title">I. Useful Language</h1>
-    </div>
-  </div>
-
-  <div class="exercise-shell">
-    <div class="exercise-left">
-      <div style="font-weight:900; font-size:18px; text-align:center; margin-bottom:12px;">Activity 1</div>
-      <aside aria-label="Instructions" class="exercise-right">
-        <div class="sticky-card">
-          <div class="card-title">INSTRUCTIONS:</div>
-          <p class="card-p">Listen to the robot's questions and say them aloud for practice.</p>
-        </div>
-      </aside>
-
+<section class="tab-panel" data-panel="exercise" hidden="" id="tab3Exercise">
+  <div class="module-card">
+    <div class="module-top">
       <br>
-      <div class="robot-card">
-        <div aria-hidden="true" class="robot-wrap">
-          <img alt="" class="robot" src="img/robot.svg">
-        </div>
-        <div class="robot-text">
-          <div class="robot-name">Robot</div>
-          <div class="robot-line">"Is there a taxi stand nearby?" "Where can I exchange currency?" "Please provide full name and contact..."</div>
-        </div>
-      </div>
-
-      <div aria-label="Audio player" class="audio-card" role="region">
-        <audio id="dialogueAudio" preload="metadata">
-          <source src="sound/mod3_ul_1.mp3" type="audio/mpeg"></source>
-        </audio>
-        <div class="audio-controls">
-          <button class="btn primary" id="playBtn" type="button">Play</button>
-          <button class="btn" id="pauseBtn" type="button">Pause</button>
-          <button class="btn" id="restartBtn" type="button">Restart</button>
-          <div aria-live="polite" class="audio-status" id="audioStatus">Ready</div>
-        </div>
-        <div class="progress">
-          <div class="progress-bar" id="progressBar" style="width:0%"></div>
-        </div>
-        <div class="note">
-          Tip: you can replay the audio anytime.
-        </div>
-      </div>
-
-      <div class="focus-box" role="region" aria-label="Useful language activity 1" style="margin-top:12px;">
-        <div class="reading-text-body" style="font-size: 1.15rem; font-style: italic; line-height: 1.4; padding: 10px 6px;">
-          <p>"Is there a taxi stand nearby?"</p>
-          <p>"Where can I exchange currency?"</p>
-          <p>"The National Gallery opens at 9:00AM, last entry at 5:00PM."</p>
-          <p>"Just to confirm, you will arrive after midnight, correct?"</p>
-          <p>"Payment has been received. Your receipt number is 8539."</p>
-          <p>"The tour will depart from the port at 8:30AM sharp.<br>Please arrive 10 minutes early."</p>
-          <p>"Please provide: full name, contact, number of travelers, date/time, special requirements."</p>
-        </div>
-      </div>
-
-      <br>
-      <div class="focus-box practice-card m3a2-card" data-exercise-id="module3_activity2" role="region" aria-label="Useful language activity 2">
-        <div style="font-weight:900; font-size:18px; text-align:center; margin-bottom:14px;">Activity 2</div>
-        <div class="robot-card" style="margin-bottom:12px;">
-          <div aria-hidden="true" class="robot-wrap">
-            <img alt="" class="robot" src="img/robot.svg">
-          </div>
-          <div class="robot-text">
-            <div class="robot-name">Robot</div>
-            <div class="robot-line">Match the correct half to complete each sentence.</div>
-          </div>
-        </div>
-
-        <div aria-label="Audio player activity 2" class="audio-card" role="region">
-          <audio id="m3a2Audio" preload="metadata">
-            <source src="sound/mod3_ul_1.mp3" type="audio/mpeg"></source>
-          </audio>
-          <div class="audio-controls">
-            <button class="btn primary" id="m3a2PlayBtn" type="button">Play</button>
-            <button class="btn" id="m3a2PauseBtn" type="button">Pause</button>
-            <button class="btn" id="m3a2RestartBtn" type="button">Restart</button>
-            <div aria-live="polite" class="audio-status" id="m3a2AudioStatus">Ready</div>
-          </div>
-          <div class="progress">
-            <div class="progress-bar" id="m3a2ProgressBar" style="width:0%"></div>
-          </div>
-        </div>
-
-        <div class="practice-instructions" style="margin:14px 0;">
-          <div class="practice-instr-title">INSTRUCTIONS:</div>
-          <div class="practice-instr-text">Read the robot's questions and match the correct half to complete the sentence appropriately.</div>
-          <div class="practice-instr-text instr-example" style="margin-top:8px;"><strong>EXAMPLE:</strong><br>Robot: <em>Is there...</em><br>You: <em>a taxi stand nearby?</em></div>
-        </div>
-
-        <ol class="practice-qs m3a2-qs" style="margin-top:14px;">
-          <li><strong>Robot:</strong> Are there... <span aria-label="Blank 1" class="blank" tabindex="0"></span></li>
-          <li><strong>Robot:</strong> Just to confirm, ... <span aria-label="Blank 2" class="blank" tabindex="0"></span></li>
-          <li><strong>Robot:</strong> What are... <span aria-label="Blank 3" class="blank" tabindex="0"></span></li>
-          <li><strong>Robot:</strong> How much is ... <span aria-label="Blank 4" class="blank" tabindex="0"></span></li>
-          <li><strong>Robot:</strong> Is there... <span aria-label="Blank 5" class="blank" tabindex="0"></span></li>
-          <li><strong>Robot:</strong> Do you prefer... <span aria-label="Blank 6" class="blank" tabindex="0"></span></li>
-        </ol>
-
-        <div aria-label="Word bank activity 2" class="practice-bank" id="m3a2Bank">
-          <div class="token" data-word="A" draggable="true" tabindex="0">You: the opening hours for museums?</div>
-          <div class="token" data-word="B" draggable="true" tabindex="0">You: email or SMS?</div>
-          <div class="token" data-word="C" draggable="true" tabindex="0">You: guided tours in Spanish?</div>
-          <div class="token" data-word="D" draggable="true" tabindex="0">You: an adult ticket?</div>
-          <div class="token" data-word="E" draggable="true" tabindex="0">You: a luggage room available?</div>
-          <div class="token" data-word="F" draggable="true" tabindex="0">You: you will arrive early in the morning on April 6th.</div>
-        </div>
-
-        <div class="practice-actions">
-          <button class="btn ghost" id="m3a2Check" type="button">Submit</button>
-          <button class="btn ghost" id="m3a2Reset" type="button">Reset</button>
-          <div aria-live="polite" class="practice-feedback" id="m3a2Feedback"></div>
-        </div>
-      </div>
+      <img alt="" src="img/robot.png" style="width:72px;height:auto;display:block;margin:0 auto 12px auto;">
+      <div class="module-focus-title">I. Useful Language</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
     </div>
   </div>
 </section>
+
+<!-- TAB 3: II. Key Words -->
+<section class="tab-panel" data-panel="keywords" hidden="" id="tab3Keywords">
+  <div class="module-card">
+    <div class="module-top">
+      <br>
+      <div class="module-focus-title">II. Key Words</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 4: III. Listening -->
+<section class="tab-panel" data-panel="listening" hidden="" id="tab3Listening">
+  <div class="module-card">
+    <div class="module-top">
+      <br>
+      <img alt="" src="img/listening.png" style="width:72px;height:auto;display:block;margin:0 auto 12px auto;">
+      <div class="module-focus-title">III. Listening</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 5: IV. Language Revision -->
+<section class="tab-panel" data-panel="revision" hidden="" id="tab3Revision">
+  <div class="module-card">
+    <div class="module-top">
+      <br>
+      <div class="module-focus-title">IV. Language Revision</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 6: V. Language Practice -->
+<section class="tab-panel" data-panel="practice" hidden="" id="tab3Practice">
+  <div class="module-card">
+    <div class="module-top">
+      <br>
+      <div class="module-focus-title">V. Language Practice</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 7: VI. Reading -->
+<section class="tab-panel" data-panel="reading" hidden="" id="tab3Reading">
+  <div class="module-card">
+    <div class="module-top">
+      <br>
+      <div class="module-focus-title">VI. Reading</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 8: VII. Speaking -->
+<section class="tab-panel" data-panel="speaking" hidden="" id="tab3Speaking">
+  <div class="module-card">
+    <div class="module-top">
+      <br>
+      <div class="module-focus-title">VII. Speaking</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 9: I. Useful Language -->
+<section class="tab-panel" data-panel="h2_exercise" hidden="" id="tab3Hour2Exercise">
+  <div class="module-card">
+    <div class="module-top">
+      <br>
+      <img alt="" src="img/robot.png" style="width:72px;height:auto;display:block;margin:0 auto 12px auto;">
+      <div class="module-focus-title">I. Useful Language</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 10: II. Key Words -->
+<section class="tab-panel" data-panel="h2_keywords" hidden="" id="tab3Hour2Keywords">
+  <div class="module-card">
+    <div class="module-top">
+      <br>
+      <div class="module-focus-title">II. Key Words</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 11: III. Listening -->
+<section class="tab-panel" data-panel="h2_listening" hidden="" id="tab3Hour2Listening">
+  <div class="module-card">
+    <div class="module-top">
+      <br>
+      <img alt="" src="img/listening.png" style="width:72px;height:auto;display:block;margin:0 auto 12px auto;">
+      <div class="module-focus-title">III. Listening</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 12: IV. Reading -->
+<section class="tab-panel" data-panel="h2_reading" hidden="" id="tab3Hour2Reading">
+  <div class="module-card">
+    <div class="module-top">
+      <br>
+      <div class="module-focus-title">IV. Reading</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 13: V. Writing -->
+<section class="tab-panel" data-panel="h2_writing" hidden="" id="tab3Hour2Writing">
+  <div class="module-card">
+    <div class="module-top">
+      <br>
+      <div class="module-focus-title">V. Writing</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 14: VI. Learning Recall -->
+<section class="tab-panel" data-panel="h2_recall" hidden="" id="tab3Hour2Recall">
+  <div class="module-card">
+    <div class="module-top">
+      <br>
+      <div class="module-focus-title">VI. Learning Recall</div>
+      <div class="module-focus-sub">Content will be added soon.</div>
+    </div>
+  </div>
+</section>
+

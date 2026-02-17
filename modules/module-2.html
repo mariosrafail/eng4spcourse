@@ -111,20 +111,24 @@
       <aside aria-label="Instructions" class="exercise-right">
         <div class="sticky-card">
           <div class="card-title">INSTRUCTIONS:</div>
-          <p class="card-p">Listen to Aris's questions and complete the sentence appropriately.</p>
+          <p class="card-p">Listen to the Robot's questions and complete the sentences appropriately.</p>
         </div>
       </aside>
       <br>
       <div class="robot-card">
         <div aria-hidden="true" class="robot-wrap">
-          <img alt="" class="robot" src="img/robot.svg">
+          <img alt="" class="robot" src="img/robot.png">
         </div>
         <div class="robot-text">
           <div class="robot-name">Robot</div>
-          <div class="robot-line">"I'd like to ask..." "I'd like to ask about..." "I'd like a room..."</div>
+          <div class="robot-line">
+            "I'd like to ask..."<br>
+            "I'd like to ask about..."<br>
+            "I'd like a room..."
+          </div>
         </div>
       </div>
-      <div aria-label="Audio player" class="audio-card" role="region">
+      <div aria-label="Audio player" role="region">
         <audio id="dialogueAudio" preload="metadata">
           <source src="sound/mod2_ul_1st.mp3" type="audio/mpeg"></source>
         </audio>
@@ -253,7 +257,7 @@
   <div class="page-title">
     <div class="unit-head">
       <div aria-hidden="true" class="unit-icon unit-icon--purple">
-        <img alt="" src="img/icon-headphones.svg">
+        <img alt="" src="img/listening.png">
       </div>
       <h1 class="unit-title">III. Listening</h1>
     </div>
@@ -275,10 +279,9 @@
       <br>
       <div class="card audio-card li-audio">
         <div class="audio-wrap">
-          <div aria-hidden="true" class="audio-badge">AUDIO</div>
+          <div aria-hidden="true" class="audio-badge"><img src="img/listening.png" alt="" style="width:24px;height:auto;"></div>
           <div>
             <div class="audio-title">Listening</div>
-            <div class="audio-subtitle">Play the recording and answer the questions.</div>
             <div class="btn-row">
               <button class="btn" id="liPlayBtn" type="button">Play</button>
               <button class="btn" id="liPauseBtn" type="button">Pause</button>
@@ -430,7 +433,10 @@
   <div class="exercise-shell">
     <div class="exercise-left">
       <div aria-label="Reading keywords" class="reading-keywords" role="region">
-        <div class="reading-kw-head">KEY WORDS:</div>
+        <div class="reading-kw-head reading-task-head">KEY WORDS</div>
+        <div class="reading-instr-inline">
+          <strong>INSTRUCTIONS:</strong> Search online for each one of the key words to find their meaning. Click the speaker icon to confirm its pronunciation.
+        </div>
         <div class="reading-kw-list">
           <button aria-label="Hear pronunciation: departure" class="speak-btn" data-word="departure" type="button">
             <span class="kw-word">departure</span>
@@ -458,16 +464,8 @@
           </button>
         </div>
       </div>
-      <aside aria-label="Instructions" class="exercise-right">
-        <div class="sticky-card sticky-card--burgundy">
-          <div class="card-title">INSTRUCTIONS:</div>
-          <p class="card-p">Search online for each one of the key words to find their meaning.</p>
-          <p class="card-p">Click the speaker icon to confirm its pronunciation.</p>
-        </div>
-      </aside>
-      <br>
       <div aria-label="Reading activity" class="reading-card" role="region">
-        <div class="reading-section-title">READING TEXT</div>
+        <div class="reading-section-title reading-task-head">READING TEXT</div>
         <div class="reading-instr-inline">
           <strong>INSTRUCTIONS:</strong> Read the text below and answer the questions.</div>
         <div class="reading-text">
@@ -476,48 +474,48 @@
             A suggested excursion: Balos Beach. Departure 08:30 from the port. Return 16:00. Cost: 40 euros per person. Includes transportation and lunch.
           </div>
         </div>
-        <div class="reading-section-title">QUESTIONS</div>
-        <form aria-label="Reading questions" class="quiz-form" id="readingForm">
-          <div class="q" data-q="r1">
-            <div class="q-head">
-              <div class="q-num">1</div>
-              <div class="q-text">What time does the bus leave?</div>
-            </div>
-            <div aria-label="Question 1 options" class="opts" role="radiogroup">
-              <label class="opt"><input name="r1" type="radio" value="a"> At 07:00 am.</label>
-              <label class="opt"><input name="r1" type="radio" value="b"> At noon.</label>
-              <label class="opt"><input name="r1" type="radio" value="c"> At 08:30 am.</label>
-            </div>
-          </div>
-          <div class="q" data-q="r2">
-            <div class="q-head">
-              <div class="q-num">2</div>
-              <div class="q-text">How much does the excursion cost?</div>
-            </div>
-            <div aria-label="Question 2 options" class="opts" role="radiogroup">
-              <label class="opt"><input name="r2" type="radio" value="a"> 40 euros per group.</label>
-              <label class="opt"><input name="r2" type="radio" value="b"> 50 euros per person.</label>
-              <label class="opt"><input name="r2" type="radio" value="c"> 40 euros per person.</label>
-            </div>
-          </div>
-          <div class="q" data-q="r3">
-            <div class="q-head">
-              <div class="q-num">3</div>
-              <div class="q-text">Where does the bus leave from?</div>
-            </div>
-            <div aria-label="Question 3 options" class="opts" role="radiogroup">
-              <label class="opt"><input name="r3" type="radio" value="a"> From the hotel.</label>
-              <label class="opt"><input name="r3" type="radio" value="b"> From the town square.</label>
-              <label class="opt"><input name="r3" type="radio" value="c"> From the port.</label>
-            </div>
-          </div>
-          <div class="actions">
-            <button class="btn ghost" type="submit">Submit</button>
-            <button class="btn" id="readingReset" type="button">Reset</button>
-          </div>
-          <div aria-live="polite" class="feedback" id="readingFeedback"></div>
-        </form>
       </div>
+      <div class="questions-head">QUESTIONS:</div>
+      <form aria-label="Reading questions" class="quiz-form" id="readingForm">
+        <div class="q" data-q="r1">
+          <div class="q-head">
+            <div class="q-num">1</div>
+            <div class="q-text">What time does the bus leave?</div>
+          </div>
+          <div aria-label="Question 1 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="r1" type="radio" value="a"> At 07:00 am.</label>
+            <label class="opt"><input name="r1" type="radio" value="b"> At noon.</label>
+            <label class="opt"><input name="r1" type="radio" value="c"> At 08:30 am.</label>
+          </div>
+        </div>
+        <div class="q" data-q="r2">
+          <div class="q-head">
+            <div class="q-num">2</div>
+            <div class="q-text">How much does the excursion cost?</div>
+          </div>
+          <div aria-label="Question 2 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="r2" type="radio" value="a"> 40 euros per group.</label>
+            <label class="opt"><input name="r2" type="radio" value="b"> 50 euros per person.</label>
+            <label class="opt"><input name="r2" type="radio" value="c"> 40 euros per person.</label>
+          </div>
+        </div>
+        <div class="q" data-q="r3">
+          <div class="q-head">
+            <div class="q-num">3</div>
+            <div class="q-text">Where does the bus leave from?</div>
+          </div>
+          <div aria-label="Question 3 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="r3" type="radio" value="a"> From the hotel.</label>
+            <label class="opt"><input name="r3" type="radio" value="b"> From the town square.</label>
+            <label class="opt"><input name="r3" type="radio" value="c"> From the port.</label>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn ghost" type="submit">Submit</button>
+          <button class="btn" id="readingReset" type="button">Reset</button>
+        </div>
+        <div aria-live="polite" class="feedback" id="readingFeedback"></div>
+      </form>
     </div>
   </div>
 </section>
@@ -546,9 +544,8 @@
           <div class="kw-instr-text">
             Choose the correct phrase or sentence to answer the questions.
             <br><br>
-            <strong>EXAMPLE:</strong><br>
-            <em>A: How much is this bottle of wine? (1)</em><br>
-            <em>B: 15 euros. (c)</em><br>
+            <strong class="instr-example-label">EXAMPLE:</strong><br>
+            <em>How much is this bottle of wine? - 15 euros.</em><br>
           </div>
         </div>
         <div class="speaking-match">
@@ -589,18 +586,55 @@
 
 <!-- TAB 9: Second Hour - I. Useful Language -->
 <section class="tab-panel" data-panel="h2_exercise" hidden="" id="tabHour2Exercise">
-  <div class="kw-wrap">
-    <div class="kw-card" data-theme="purple">
-      <div class="kw-head">
-        <div aria-hidden="true" class="kw-icon">
-          <img alt="" src="img/bubbles.png">
-        </div>
-        <div class="kw-title">I. Useful Language</div>
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon">
+        <img alt="" src="img/bubbles.png">
       </div>
-      <div class="kw-body">
-        <p class="ul-quote">
-          <em>"How can I help you?"  "We'd like to book a table for a party of 6."  "We'll order..."  "Can I have your name to confirm the booking?"  "Do you have a preferred date?"  "All set."</em>
-        </p>
+      <h1 class="unit-title">I. Useful Language</h1>
+    </div>
+  </div>
+  <div class="exercise-shell">
+    <div class="exercise-left">
+      <aside aria-label="Instructions" class="exercise-right">
+        <div class="sticky-card">
+          <div class="card-title">INSTRUCTIONS:</div>
+          <p class="card-p">Listen to the Robot say these expressions, then repeat them aloud for practice.</p>
+        </div>
+      </aside>
+      <br>
+      <div class="robot-card">
+        <div aria-hidden="true" class="robot-wrap">
+          <img alt="" class="robot" src="img/robot.png">
+        </div>
+        <div class="robot-text">
+          <div class="robot-name">Robot</div>
+          <div class="robot-line">
+            "How can I help you?"<br>
+            "We'd like to book a table for a party of 6."<br>
+            "We'll order..."<br>
+            "Can I have your name to confirm the booking?"<br>
+            "Do you have a preferred date?"<br>
+            "All set."
+          </div>
+        </div>
+      </div>
+      <div aria-label="Audio player" role="region">
+        <audio id="m2h2UlAudio" preload="metadata">
+          <source src="sound/mod2_ul_2nd.mp3" type="audio/mpeg"></source>
+        </audio>
+        <div class="audio-controls">
+          <button class="btn primary" id="m2h2UlPlayBtn" type="button">Play</button>
+          <button class="btn" id="m2h2UlPauseBtn" type="button">Pause</button>
+          <button class="btn" id="m2h2UlRestartBtn" type="button">Restart</button>
+          <div aria-live="polite" class="audio-status" id="m2h2UlAudioStatus">Ready</div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" id="m2h2UlProgressBar" style="width:0%"></div>
+        </div>
+        <div class="note">
+          Tip: you can replay the audio anytime.
+        </div>
       </div>
     </div>
   </div>
@@ -625,7 +659,7 @@
             Look at the key words and jumbled definitions below, then guess or indicate which one is correct. Match the numbers and letters. Keep notes in your notebook.
             <br><br>
             <span class="h2kw-instr-label">EXAMPLE:</span><br>
-            <em>Dietary needs - Special food requirements</em>
+            <em>Dietary needs - Special food requirements.</em>
           </div>
         </div>
         <div class="speaking-match">
@@ -674,7 +708,7 @@
   <div class="page-title">
     <div class="unit-head">
       <div aria-hidden="true" class="unit-icon unit-icon--purple">
-        <img alt="" src="img/icon-headphones.svg">
+        <img alt="" src="img/listening.png">
       </div>
       <h1 class="unit-title">III. Listening</h1>
     </div>
@@ -696,10 +730,9 @@
       <br>
       <div class="card audio-card li-audio">
         <div class="audio-wrap">
-          <div aria-hidden="true" class="audio-badge">AUDIO</div>
+          <div aria-hidden="true" class="audio-badge"><img src="https://nextcloud.stinis.ddns.net/public.php/dav/files/4jqtp8mSzbeKsLM/listening.png" alt="" style="width:24px;height:auto;"></div>
           <div>
             <div class="audio-title">Listening</div>
-            <div class="audio-subtitle">Play the recording and answer the questions.</div>
             <div class="btn-row">
               <button class="btn" id="h2liPlayBtn" type="button">Play</button>
               <button class="btn" id="h2liPauseBtn" type="button">Pause</button>
@@ -767,7 +800,10 @@
   <div class="exercise-shell">
     <div class="exercise-left">
       <div aria-label="Reading keywords" class="reading-keywords" role="region">
-        <div class="reading-kw-head">KEY WORDS:</div>
+        <div class="reading-kw-head reading-task-head">KEY WORDS</div>
+        <div class="reading-instr-inline">
+          <strong>INSTRUCTIONS:</strong> Search online for each one of the key words to find their meaning. Click the speaker icon to confirm its pronunciation.
+        </div>
         <div class="reading-kw-list">
           <button aria-label="Hear pronunciation: cancellations" class="speak-btn" data-word="cancellations" type="button">
             <span class="kw-word">cancellations</span>
@@ -787,16 +823,8 @@
           </button>
         </div>
       </div>
-      <aside aria-label="Instructions" class="exercise-right">
-        <div class="sticky-card sticky-card--burgundy">
-          <div class="card-title">INSTRUCTIONS:</div>
-          <p class="card-p">Search online for each one of the key words to find their meaning.</p>
-          <p class="card-p">Click the speaker icon to confirm its pronunciation.</p>
-        </div>
-      </aside>
-      <br>
       <div aria-label="Reading activity" class="reading-card" role="region">
-        <div class="reading-section-title">READING TEXT</div>
+        <div class="reading-section-title reading-task-head">READING TEXT</div>
         <div class="reading-instr-inline">
           <strong>INSTRUCTIONS:</strong> Now, read the text below and answer the questions.</div>
         <div class="reading-text">
@@ -807,48 +835,48 @@
             Please confirm the reservation and related costs.
           </div>
         </div>
-        <div class="reading-section-title">QUESTIONS</div>
-        <form aria-label="Second hour reading questions" class="quiz-form" id="h2ReadingForm">
-          <div class="q" data-q="h2r1">
-            <div class="q-head">
-              <div class="q-num">1</div>
-              <div class="q-text">If a guest cancels 30 hours before arrival, what is the charge?</div>
-            </div>
-            <div aria-label="Question 1 options" class="opts" role="radiogroup">
-              <label class="opt"><input name="h2r1" type="radio" value="a"> No charge.</label>
-              <label class="opt"><input name="h2r1" type="radio" value="b"> First night's charge.</label>
-              <label class="opt"><input name="h2r1" type="radio" value="c"> Half of the total reservation.</label>
-            </div>
-          </div>
-          <div class="q" data-q="h2r2">
-            <div class="q-head">
-              <div class="q-num">2</div>
-              <div class="q-text">What happens if a guest cancels within 24 hours of arrival?</div>
-            </div>
-            <div aria-label="Question 2 options" class="opts" role="radiogroup">
-              <label class="opt"><input name="h2r2" type="radio" value="a"> No charge.</label>
-              <label class="opt"><input name="h2r2" type="radio" value="b"> First night's charge.</label>
-              <label class="opt"><input name="h2r2" type="radio" value="c"> Full reservation charge.</label>
-            </div>
-          </div>
-          <div class="q" data-q="h2r3">
-            <div class="q-head">
-              <div class="q-num">3</div>
-              <div class="q-text">What action is requested regarding the reservation and costs?</div>
-            </div>
-            <div aria-label="Question 3 options" class="opts" role="radiogroup">
-              <label class="opt"><input name="h2r3" type="radio" value="a"> Confirm the reservation and related costs.</label>
-              <label class="opt"><input name="h2r3" type="radio" value="b"> Cancel the reservation.</label>
-              <label class="opt"><input name="h2r3" type="radio" value="c"> Request a refund for the booking fee.</label>
-            </div>
-          </div>
-          <div class="actions">
-            <button class="btn ghost" type="submit">Submit</button>
-            <button class="btn" id="h2ReadingReset" type="button">Reset</button>
-          </div>
-          <div aria-live="polite" class="feedback" id="h2ReadingFeedback"></div>
-        </form>
       </div>
+      <div class="questions-head">QUESTIONS:</div>
+      <form aria-label="Second hour reading questions" class="quiz-form" id="h2ReadingForm">
+        <div class="q" data-q="h2r1">
+          <div class="q-head">
+            <div class="q-num">1</div>
+            <div class="q-text">If a guest cancels 30 hours before arrival, what is the charge?</div>
+          </div>
+          <div aria-label="Question 1 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="h2r1" type="radio" value="a"> No charge.</label>
+            <label class="opt"><input name="h2r1" type="radio" value="b"> First night's charge.</label>
+            <label class="opt"><input name="h2r1" type="radio" value="c"> Half of the total reservation.</label>
+          </div>
+        </div>
+        <div class="q" data-q="h2r2">
+          <div class="q-head">
+            <div class="q-num">2</div>
+            <div class="q-text">What happens if a guest cancels within 24 hours of arrival?</div>
+          </div>
+          <div aria-label="Question 2 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="h2r2" type="radio" value="a"> No charge.</label>
+            <label class="opt"><input name="h2r2" type="radio" value="b"> First night's charge.</label>
+            <label class="opt"><input name="h2r2" type="radio" value="c"> Full reservation charge.</label>
+          </div>
+        </div>
+        <div class="q" data-q="h2r3">
+          <div class="q-head">
+            <div class="q-num">3</div>
+            <div class="q-text">What action is requested regarding the reservation and costs?</div>
+          </div>
+          <div aria-label="Question 3 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="h2r3" type="radio" value="a"> Confirm the reservation and related costs.</label>
+            <label class="opt"><input name="h2r3" type="radio" value="b"> Cancel the reservation.</label>
+            <label class="opt"><input name="h2r3" type="radio" value="c"> Request a refund for the booking fee.</label>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn ghost" type="submit">Submit</button>
+          <button class="btn" id="h2ReadingReset" type="button">Reset</button>
+        </div>
+        <div aria-live="polite" class="feedback" id="h2ReadingFeedback"></div>
+      </form>
     </div>
   </div>
 </section>
@@ -865,7 +893,7 @@
   </div>
   <div class="exercise-shell">
     <div class="exercise-left">
-      <div class="writing-card" role="region" aria-label="Writing tasks">
+      <div class="writing-card" role="region" aria-label="Writing task one">
         <div class="writing-task">
           <div class="writing-task-head">TASK ONE</div>
           <div class="writing-instructions">
@@ -894,6 +922,8 @@
           </div>
           <div aria-live="polite" class="feedback" id="h2wFeedback"></div>
         </div>
+      </div>
+      <div class="writing-card" role="region" aria-label="Writing task two">
         <div class="writing-task">
           <div class="writing-task-head">TASK TWO</div>
           <div class="writing-instructions">
@@ -938,6 +968,3 @@
     </div>
   </div>
 </section>
-
-
-

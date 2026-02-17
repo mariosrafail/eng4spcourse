@@ -101,6 +101,29 @@ body::before{
   animation: ambientDrift 24s ease-in-out infinite alternate;
 }
 
+body::after{
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .24;
+  background-image:
+    radial-gradient(rgba(var(--ambient-rgb), .28) 1.2px, transparent 1.2px),
+    repeating-linear-gradient(
+      0deg,
+      rgba(var(--ambient-rgb), .20) 0 1px,
+      transparent 1px 28px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(var(--ambient-rgb), .20) 0 1px,
+      transparent 1px 28px
+    );
+  background-size: 28px 28px, 28px 28px, 28px 28px;
+  background-position: 14px 14px, 0 0, 0 0;
+}
+
 body.theme-shift::before{
   opacity: calc(var(--ambient-opacity) + .05);
 }

@@ -154,6 +154,10 @@
   border-color: rgba(85,107,63,.40);
   background: rgba(255,255,255,.88);
 }
+#tabHour2Writing .writing-card + .writing-card,
+#tabMockWriting .writing-card + .writing-card{
+  margin-top: 14px;
+}
 #tabMockWriting .writing-task-head{
   color: rgba(85,107,63,.98);
 }

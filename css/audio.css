@@ -1,4 +1,4 @@
-/* Audio badge theming by section */
+﻿/* Audio badge theming by section */
 
 :root{
   --audio-accent-rgb: var(--theme-purple-rgb);
@@ -47,16 +47,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 78px;
-  height: 36px;
-  padding: 0 12px;
-  border-radius: 999px;
+  min-width: 52px;
+  width: 52px;
+  height: 52px;
+  padding: 12px;
+  border-radius: 12px;
   font-weight: 900;
   letter-spacing: .6px;
   color: #fff;
   background: rgba(var(--audio-accent-rgb), .90);
   border: 2px solid rgba(var(--audio-accent-rgb), .45);
   box-shadow: 0 10px 20px rgba(30,18,60,.10);
+  animation: none !important;
+  transform: none !important;
 }
 
 /* Themed controls inside audio boxes */
@@ -118,3 +121,38 @@
 ) .audio-card .progress-bar{
   background: linear-gradient(90deg, rgba(var(--audio-accent-rgb), .92), rgba(var(--audio-accent-rgb), .72));
 }
+
+/* Keep listening/audio card stable on hover (no lift/move animation). */
+.audio-card:hover{
+  transform: none !important;
+}
+
+/* Neutral audio control palette across all sections (no purple hover tint). */
+.audio-card{
+  border-color: rgba(var(--audio-accent-rgb), .34) !important;
+  background: rgba(255,255,255,.90) !important;
+}
+
+.audio-card .btn{
+  background: rgba(255,255,255,.92) !important;
+  border-color: rgba(var(--audio-accent-rgb), .42) !important;
+  color: rgba(var(--audio-accent-rgb), .96) !important;
+}
+
+.audio-card .btn.primary{
+  background: linear-gradient(180deg, rgba(var(--audio-accent-rgb), .24), rgba(var(--audio-accent-rgb), .10)) !important;
+  border-color: rgba(var(--audio-accent-rgb), .56) !important;
+  color: rgba(var(--audio-accent-rgb), .98) !important;
+}
+
+.audio-card .btn:hover{
+  background: rgba(var(--audio-accent-rgb), .10) !important;
+  border-color: rgba(var(--audio-accent-rgb), .62) !important;
+  color: rgba(var(--audio-accent-rgb), .98) !important;
+}
+
+.audio-card:hover{
+  border-color: rgba(var(--audio-accent-rgb), .44) !important;
+  background: rgba(var(--audio-accent-rgb), .07) !important;
+}
+
