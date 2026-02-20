@@ -146,7 +146,7 @@
     const token = localStorage.getItem(TOKEN_KEY) || '';
     if(!token) throw new Error('Missing session token.');
 
-    const res = await fetch('/api/progress-set', {
+    const res = await fetch('/api/progress/set', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

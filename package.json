@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/mariosrafail/eng4spcourse#readme",
   "dependencies": {
+    "dotenv": "^17.3.1",
     "express": "^4.21.2",
     "nodemailer": "^6.10.1",
     "pg": "^8.18.0"

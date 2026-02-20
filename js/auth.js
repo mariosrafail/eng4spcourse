@@ -293,7 +293,7 @@
     }
 
     try {
-      const data = await api("/api/progress-set", {
+      const data = await api("/api/progress/set", {
         method: "POST",
         body: JSON.stringify({ progress: value })
       });

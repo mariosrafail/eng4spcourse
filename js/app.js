@@ -13,8 +13,6 @@
     const shift = e.shiftKey;
 
     const blocked =
-      key === 'f11' ||
-      key === 'f12' ||
       (ctrl && key === 's') ||
       (ctrl && key === 'u') ||
       (ctrl && key === 'p') ||
