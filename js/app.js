@@ -1,30 +1,4 @@
-// Basic UI hardening (deterrent only, not real security).
-(() => {
-  if (window.__uiHardeningBound) return;
-  window.__uiHardeningBound = true;
 
-  document.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    const key = (e.key || '').toLowerCase();
-    const ctrl = e.ctrlKey || e.metaKey;
-    const shift = e.shiftKey;
-
-    const blocked =
-      (ctrl && key === 's') ||
-      (ctrl && key === 'u') ||
-      (ctrl && key === 'p') ||
-      (ctrl && shift && (key === 'i' || key === 'j' || key === 'c' || key === 'k')) ||
-      (shift && key === 'f10');
-
-    if (blocked) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }, true);
-})();
 
 // Ambient background tint by tab theme (kept intentionally subtle).
 window.updateAmbientThemeForTab = function updateAmbientThemeForTab(tabKey){
