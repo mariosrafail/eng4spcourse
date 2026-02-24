@@ -245,6 +245,24 @@ window.initializeApp = function initializeApp() {
     progressId: 'm3a2ProgressBar'
   });
 
+  const m3a1Player = bindAudioPlayer({
+    audioId: 'm3a1Audio',
+    playId: 'm3a1PlayBtn',
+    pauseId: 'm3a1PauseBtn',
+    restartId: 'm3a1RestartBtn',
+    statusId: 'm3a1AudioStatus',
+    progressId: 'm3a1ProgressBar'
+  });
+
+  const m3KwPlayer = bindAudioPlayer({
+    audioId: 'm3KwAudio',
+    playId: 'm3KwPlayBtn',
+    pauseId: 'm3KwPauseBtn',
+    restartId: 'm3KwRestartBtn',
+    statusId: 'm3KwAudioStatus',
+    progressId: 'm3KwProgressBar'
+  });
+
   const m1h2UlPlayer = bindAudioPlayer({
     audioId: 'm1h2UlAudio',
     playId: 'm1h2PlayBtn',
@@ -261,6 +279,15 @@ window.initializeApp = function initializeApp() {
     restartId: 'm2h2UlRestartBtn',
     statusId: 'm2h2UlAudioStatus',
     progressId: 'm2h2UlProgressBar'
+  });
+
+  const m3h2UlPlayer = bindAudioPlayer({
+    audioId: 'm3h2UlAudio',
+    playId: 'm3h2UlPlayBtn',
+    pauseId: 'm3h2UlPauseBtn',
+    restartId: 'm3h2UlRestartBtn',
+    statusId: 'm3h2UlAudioStatus',
+    progressId: 'm3h2UlProgressBar'
   });
 
   const liPlayer = bindAudioPlayer({
@@ -598,6 +625,43 @@ window.initializeApp = function initializeApp() {
 	  }
 	});
 
+  // Module 3 - Key Words & Listening
+  bindQuiz({
+    formId: 'm3KwListeningForm',
+    feedbackId: 'm3KwFeedback',
+    resetId: 'm3KwResetBtn',
+    serverQuizId: 'module3_keywords_listening',
+    questionIds: ['m3kq1', 'm3kq2', 'm3kq3'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Incorrect. Listen again and try again.',
+    onReset: () => {
+      const a = m3KwPlayer?.audio;
+      if (a){
+        a.pause();
+        a.currentTime = 0;
+        m3KwPlayer.setStatus('Ready');
+        m3KwPlayer.updateProgress();
+      }
+    }
+  });
+
+  (function setupModule3KeywordsHighlights(){
+    const panel = document.getElementById('tab3Keywords');
+    if(!panel) return;
+
+    const script = panel.querySelector('.m3kw-script');
+    const onBtn = panel.querySelector('#m3KwHighlightBtn');
+    const offBtn = panel.querySelector('#m3KwClearHighlightBtn');
+
+    onBtn?.addEventListener('click', () => {
+      script?.classList.add('is-highlight');
+    });
+
+    offBtn?.addEventListener('click', () => {
+      script?.classList.remove('is-highlight');
+    });
+  })();
+
   // VI. Reading
   const readingQuizId =
     document.getElementById('readingForm')?.dataset?.serverQuizId ||
@@ -700,7 +764,7 @@ bindQuiz({
 
 // Practice (Tab V) drag and drop
   function setupPracticeDnD(){
-    const root = document.querySelector('#tabPractice');
+    const root = document.querySelector('#tabPractice, #tab3Practice');
     if(!root) return;
 
     const bank = root.querySelector('.practice-bank');
@@ -709,7 +773,8 @@ bindQuiz({
     const checkBtn = root.querySelector('#practiceCheck');
     const resetBtn = root.querySelector('#practiceReset');
     const feedback = root.querySelector('#practiceFeedback');
-    const dndExerciseId = root.querySelector('.practice-card')?.dataset?.exerciseId || 'module2_practice';
+    const dndExerciseId = root.querySelector('.practice-card')?.dataset?.exerciseId
+      || (root.id === 'tab3Practice' ? 'module3_practice' : 'module2_practice');
 
     let selectedToken = null;
 
@@ -1345,7 +1410,7 @@ bindQuiz({
 
   // Speaking (Tab VII) matching drag and drop
   function setupSpeakingMatchDnD(){
-    const root = document.querySelector('#tabSpeaking');
+    const root = document.querySelector('#tabSpeaking, #tab3Speaking');
     if(!root) return;
 
     const bank = root.querySelector('.practice-bank');
@@ -1354,7 +1419,8 @@ bindQuiz({
     const checkBtn = root.querySelector('#speakingCheck');
     const resetBtn = root.querySelector('#speakingReset');
     const feedback = root.querySelector('#speakingFeedback');
-    const speakingExerciseId = root.querySelector('.practice-card')?.dataset?.exerciseId || 'module2_speaking';
+    const speakingExerciseId = root.querySelector('.practice-card')?.dataset?.exerciseId
+      || (root.id === 'tab3Speaking' ? 'module3_speaking' : 'module2_speaking');
 
     let selectedToken = null;
 
@@ -1541,7 +1607,7 @@ bindQuiz({
 
   // Hour 2 (Tab II) Key Words matching drag and drop
   function setupHour2KeywordsMatchDnD(){
-    const root = document.querySelector('#tabHour2Keywords');
+    const root = document.querySelector('#tabHour2Keywords, #tab3Hour2Keywords');
     if(!root) return;
 
     const bank = root.querySelector('.practice-bank');
@@ -1550,7 +1616,8 @@ bindQuiz({
     const checkBtn = root.querySelector('#h2kwCheck');
     const resetBtn = root.querySelector('#h2kwReset');
     const feedback = root.querySelector('#h2kwFeedback');
-    const h2kwExerciseId = root.querySelector('.practice-card')?.dataset?.exerciseId || 'module2_h2_keywords';
+    const h2kwExerciseId = root.querySelector('.practice-card')?.dataset?.exerciseId
+      || (root.id === 'tab3Hour2Keywords' ? 'module3_h2_keywords' : 'module2_h2_keywords');
 
     let selectedToken = null;
 

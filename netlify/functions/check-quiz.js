@@ -8,6 +8,7 @@ const QUIZ_ANSWERS = {
   module2_listening: { lq1: "b", lq2: "a", lq3: "b" },
   module2_h2_listening: { h2lq1: "b", h2lq2: "c", h2lq3: "a" },
   module2_reading: { r1: "c", r2: "c", r3: "c" },
+  module3_reading: { r1: "b", r2: "c", r3: "b" },
   module2_h2_reading: { h2r1: "a", h2r2: "b", h2r3: "a" },
   mini_mock_listening_1a: { mq1: "b", mq2: "c" },
   mini_mock_listening_1b: { mq3: "a", mq4: "b", mq5: "c" },

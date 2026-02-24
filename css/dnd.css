@@ -101,6 +101,14 @@
   background: rgba(var(--dnd-accent-rgb), .14);
 }
 
+/* In Module 3 Activity 2, dragging a placed token should also keep other blanks visually active. */
+#tab3Exercise.drag-from-blank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
 /* In Speaking, dragging a placed token should also keep other blanks visually active. */
 #tabSpeaking.drag-from-blank .blank{
   border-style: dashed !important;

@@ -183,3 +183,102 @@
   margin-top: 16px;
 }
 
+/* ---------- Module 3: Key Words & Listening extras ---------- */
+#tab3Keywords .questions-head{
+  color: rgba(47,79,138,.98);
+}
+
+.m3kw-section{
+  padding-top: 2px;
+}
+
+.m3kw-divider{
+  height: 1px;
+  background: rgba(138,162,216,.55);
+  margin: 16px 0;
+}
+
+.m3kw-instr-text{
+  font-weight: 400;
+}
+
+.m3kw-steps{
+  margin: 0;
+  padding-left: 18px;
+}
+
+.m3kw-steps li{
+  margin: 0;
+}
+
+#tab3Keywords .m3kw-steps li + li{
+  margin-top: 8px;
+}
+
+#tab3Keywords .m3kw-steps li::marker{
+  color: rgba(47,79,138,.98);
+  font-weight: 900;
+}
+
+.m3kw-wordcloud{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding: 10px 0 2px 0;
+}
+
+.m3kw-wordcloud img{
+  max-width: 520px;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 2px solid rgba(138,162,216,.55);
+  box-shadow: 0 10px 22px rgba(30,18,60,.10);
+}
+
+.m3kw-activity2{
+  padding-top: 8px;
+}
+
+.m3kw-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 10px;
+  margin: 10px 0 12px 0;
+}
+
+.m3kw-script{
+  border: 2px solid rgba(138,162,216,.95);
+  background: rgba(255,245,142,.35);
+  border-radius: 18px;
+  padding: 12px 14px;
+  color: #111;
+}
+
+.m3kw-script p{
+  margin: 8px 0;
+  font-weight: 400;
+}
+
+.m3kw-script strong{
+  font-weight: 900;
+}
+
+.m3kw-key{
+  padding: 0 2px;
+  border-radius: 6px;
+  box-shadow: none;
+  background: transparent;
+}
+
+.m3kw-script.is-highlight .m3kw-key{
+  background: rgba(255,255,0,.55);
+  box-shadow: 0 0 0 2px rgba(255,255,0,.22);
+}
+
+.m3kw-questions{
+  margin-top: 14px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(138,162,216,.55);
+}
+

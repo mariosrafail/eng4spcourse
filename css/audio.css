@@ -39,7 +39,8 @@
 #tabKeywords,
 #tab1Keywords,
 #tabHour2Keywords,
-#tab1Hour2Keywords{
+#tab1Hour2Keywords,
+#tab3Keywords{
   --audio-accent-rgb: var(--theme-blue-rgb);
 }
 
@@ -69,7 +70,7 @@
   #tabMockListening1, #tabMockListening2, #tabMockReading,
   #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
   #tabPractice, #tab1Practice,
-  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords
+  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords, #tab3Keywords
 ) .audio-card .btn{
   border-color: rgba(var(--audio-accent-rgb), .38);
   color: rgba(var(--audio-accent-rgb), .96);
@@ -81,7 +82,7 @@
   #tabMockListening1, #tabMockListening2, #tabMockReading,
   #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
   #tabPractice, #tab1Practice,
-  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords
+  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords, #tab3Keywords
 ) .audio-card .btn.primary{
   background: linear-gradient(180deg, rgba(var(--audio-accent-rgb), .24), rgba(var(--audio-accent-rgb), .10));
   border-color: rgba(var(--audio-accent-rgb), .52);
@@ -94,7 +95,7 @@
   #tabMockListening1, #tabMockListening2, #tabMockReading,
   #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
   #tabPractice, #tab1Practice,
-  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords
+  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords, #tab3Keywords
 ) .audio-card .status{
   color: rgba(var(--audio-accent-rgb), .95);
 }
@@ -105,7 +106,7 @@
   #tabMockListening1, #tabMockListening2, #tabMockReading,
   #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
   #tabPractice, #tab1Practice,
-  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords
+  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords, #tab3Keywords
 ) .audio-card .progress{
   border-color: rgba(var(--audio-accent-rgb), .30);
   background: rgba(var(--audio-accent-rgb), .14);
@@ -117,7 +118,7 @@
   #tabMockListening1, #tabMockListening2, #tabMockReading,
   #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
   #tabPractice, #tab1Practice,
-  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords
+  #tabKeywords, #tab1Keywords, #tabHour2Keywords, #tab1Hour2Keywords, #tab3Keywords
 ) .audio-card .progress-bar{
   background: linear-gradient(90deg, rgba(var(--audio-accent-rgb), .92), rgba(var(--audio-accent-rgb), .72));
 }

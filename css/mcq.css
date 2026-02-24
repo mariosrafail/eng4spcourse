@@ -13,6 +13,11 @@
   --mcq-accent-rgb: var(--theme-listening-rgb);
 }
 
+/* Key words (Module 3): blue */
+#tab3Keywords :is(.quiz, .quiz-form, .li-quiz){
+  --mcq-accent-rgb: var(--theme-blue-rgb);
+}
+
 /* All MCQ blocks: number badges + separators follow section theme */
 :is(.quiz, .quiz-form, .li-quiz) .q-num{
   background: rgba(var(--mcq-accent-rgb), .16);

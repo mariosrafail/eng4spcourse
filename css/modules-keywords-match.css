@@ -4,18 +4,21 @@
   background: rgba(255,255,255,.86);
 }
 
-#tabHour2Keywords .h2kw-bank{
+#tabHour2Keywords .h2kw-bank,
+#tab3Hour2Keywords .h2kw-bank{
   background: rgba(47,79,138,.10);
   border-color: rgba(47,79,138,.22);
 }
 
-#tabHour2Keywords .token{
+#tabHour2Keywords .token,
+#tab3Hour2Keywords .token{
   border-color: rgba(47,79,138,.30);
   max-width: 100%;
   white-space: normal;
 }
 
-#tabHour2Keywords .blank{
+#tabHour2Keywords .blank,
+#tab3Hour2Keywords .blank{
   width: 420px;
   min-width: 420px;
   max-width: 420px;
@@ -29,37 +32,44 @@
   animation: none !important;
 }
 
-#tabHour2Keywords .blank.is-over{
+#tabHour2Keywords .blank.is-over,
+#tab3Hour2Keywords .blank.is-over{
   border-bottom-color: rgba(47,79,138,.75);
   background: rgba(47,79,138,.16);
 }
 
-#tabHour2Keywords .blank.is-correct{
+#tabHour2Keywords .blank.is-correct,
+#tab3Hour2Keywords .blank.is-correct{
   border-bottom-color: rgba(18,133,77,.82);
   background: rgba(18,133,77,.20);
 }
 
-#tabHour2Keywords .blank.is-wrong{
+#tabHour2Keywords .blank.is-wrong,
+#tab3Hour2Keywords .blank.is-wrong{
   border-bottom-color: rgba(209,42,42,.82);
   background: rgba(209,42,42,.20);
 }
 
-#tabHour2Keywords .h2kw-qs li{
+#tabHour2Keywords .h2kw-qs li,
+#tab3Hour2Keywords .h2kw-qs li{
   display: flex;
   align-items: center;
   gap: 14px;
   margin-bottom: 24px;
 }
 
-#tabHour2Keywords .h2kw-qs li:last-child{
+#tabHour2Keywords .h2kw-qs li:last-child,
+#tab3Hour2Keywords .h2kw-qs li:last-child{
   margin-bottom: 0;
 }
 
-#tabHour2Keywords .h2kw-qs br{
+#tabHour2Keywords .h2kw-qs br,
+#tab3Hour2Keywords .h2kw-qs br{
   display: none;
 }
 
-#tabHour2Keywords .blank .token{
+#tabHour2Keywords .blank .token,
+#tab3Hour2Keywords .blank .token{
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -75,19 +85,22 @@
   border-radius: 999px;
 }
 
-#tabHour2Keywords.drag-from-bank .blank{
+#tabHour2Keywords.drag-from-bank .blank,
+#tab3Hour2Keywords.drag-from-bank .blank{
   border-bottom-color: rgba(47,79,138,.72);
   box-shadow: 0 0 0 4px rgba(47,79,138,.12);
   background: rgba(47,79,138,.15);
 }
 
-#tabHour2Keywords.drag-from-blank .h2kw-bank{
+#tabHour2Keywords.drag-from-blank .h2kw-bank,
+#tab3Hour2Keywords.drag-from-blank .h2kw-bank{
   box-shadow: 0 0 0 4px rgba(47,79,138,.16), 0 12px 24px rgba(30,18,60,.12);
   border-color: rgba(47,79,138,.45);
   background: rgba(47,79,138,.18);
 }
 
-#tabHour2Keywords.drag-from-blank .blank{
+#tabHour2Keywords.drag-from-blank .blank,
+#tab3Hour2Keywords.drag-from-blank .blank{
   border-bottom-color: rgba(47,79,138,.62);
   box-shadow: 0 0 0 4px rgba(47,79,138,.10);
   background: rgba(47,79,138,.14);

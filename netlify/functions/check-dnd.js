@@ -4,9 +4,12 @@ const DND_ANSWERS = {
   module1_h2_keywords: ["F", "C", "E", "A", "D", "B"],
   module1_h2_writing_task1: ["flight", "visit", "island", "travel", "ferry"],
   module3_activity2: ["C", "F", "A", "D", "E", "B"],
+  module3_practice: ["guided", "attractions", "flying", "will drive", "wearing", "usually"],
+  module3_speaking: ["d", "f", "b", "e", "a", "c"],
   module2_practice: ["doesn't like", "she", "likes", "do", "flies"],
   module2_speaking: ["c", "d", "b", "f", "a", "e"],
   module2_h2_keywords: ["E", "C", "B", "D", "F", "A"],
+  module3_h2_keywords: ["D", "C", "E", "A", "B", "G", "F"],
   module2_h2_writing_task1: ["rates", "reservations", "beginning", "prices"],
   mini_mock_writing_1: ["manners", "warm", "respect", "team"]
 };

@@ -11,7 +11,17 @@
   color: rgba(126,78,58,.95);
 }
 
+#tab3Practice .week-chip{
+  border-color: rgba(126,78,58,.40);
+  background: rgba(126,78,58,.10);
+  color: rgba(126,78,58,.95);
+}
+
 #tabPractice .unit-title{
+  color: rgba(126,78,58,.98);
+}
+
+#tab3Practice .unit-title{
   color: rgba(126,78,58,.98);
 }
 
@@ -19,6 +29,40 @@
   background: rgba(126,78,58,.10);
   border-color: rgba(126,78,58,.28);
   color: rgba(126,78,58,.95);
+}
+
+#tab3Practice .unit-icon{
+  background: rgba(126,78,58,.10);
+  border-color: rgba(126,78,58,.28);
+  color: rgba(126,78,58,.95);
+}
+
+#tab3Practice .practice-instructions{
+  border-color: rgba(126,78,58,.42);
+  background: rgba(126,78,58,.16);
+}
+
+#tab3Practice .practice-instr-title{
+  color: rgba(126,78,58,.98);
+}
+
+#tab3Practice .practice-instr-text{
+  color: rgba(96,57,41,.98);
+}
+
+#tab3Practice .practice-actions .btn.ghost{
+  background: rgba(126,78,58,.12);
+  border-color: rgba(126,78,58,.42);
+  color: rgba(96,57,41,.98);
+}
+
+#tab3Practice .practice-actions .btn.ghost:hover{
+  background: rgba(126,78,58,.20);
+  border-color: rgba(126,78,58,.56);
+}
+
+#tab3Practice .practice-actions .btn.ghost:active{
+  background: rgba(126,78,58,.28);
 }
 
 /* Practice card in Listening-like layout */
@@ -110,6 +154,10 @@
   min-height: 70px;
 }
 
+#tab3Practice .practice-bank{
+  min-height: 70px;
+}
+
 #tabHour2Writing #h2wBank{
   min-height: 74px;
 }
@@ -123,18 +171,22 @@
 }
 
 #tabPractice .practice-card,
+#tab3Practice .practice-card,
 #tabSpeaking .practice-card,
 #tabHour2Keywords .practice-card,
 #tabHour2Writing .writing-card,
 #tabPractice .practice-bank,
+#tab3Practice .practice-bank,
 #tabSpeaking .practice-bank,
 #tabHour2Keywords .practice-bank,
 #tabHour2Writing #h2wBank,
 #tabPractice .practice-qs li,
+#tab3Practice .practice-qs li,
 #tabSpeaking .practice-qs li,
 #tabHour2Keywords .practice-qs li,
 #tabHour2Writing .writing-gap-text,
 #tabPractice .blank,
+#tab3Practice .blank,
 #tabSpeaking .blank,
 #tabHour2Keywords .blank,
 #tabHour2Writing .writing-gap-text .blank{
@@ -179,7 +231,45 @@
   animation: none !important;
 }
 
+#tab3Practice .blank{
+  width: 140px;
+  min-width: 140px;
+  max-width: 140px;
+  min-height: 42px;
+  padding: 4px 6px;
+  border-radius: 999px;
+  border-color: rgba(126,78,58,.46);
+  background: rgba(126,78,58,.16);
+  transition: none !important;
+  animation: none !important;
+}
+
+#tab3Practice.drag-from-bank .blank,
+#tab3Practice.drag-from-blank .blank{
+  border-color: rgba(126,78,58,.62);
+  box-shadow: 0 0 0 4px rgba(126,78,58,.12);
+}
+
+#tab3Practice .blank.is-over{
+  background: rgba(126,78,58,.20);
+  border-color: rgba(126,78,58,.82);
+  box-shadow: 0 0 0 5px rgba(126,78,58,.18);
+}
+
 #tabPractice .blank .token{
+  width: 100%;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 6px 8px;
+  border-radius: 999px;
+}
+
+#tab3Practice .blank .token{
   width: 100%;
   max-width: 100%;
   display: inline-flex;
@@ -198,7 +288,18 @@
   transform: none !important;
 }
 
+#tab3Practice .blank .token,
+#tab3Practice .blank .token:hover,
+#tab3Practice .blank .token:active,
+#tab3Practice .blank .token.is-dragging{
+  transform: none !important;
+}
+
 #tabPractice .blank.cap-word .token{
+  text-transform: capitalize;
+}
+
+#tab3Practice .blank.cap-word .token{
   text-transform: capitalize;
 }
 
@@ -219,28 +320,41 @@
 .blank.is-correct{border-style: solid; border-color: rgba(18,133,77,.70); background: rgba(18,133,77,.20);}
 .blank.is-wrong{border-style: solid; border-color: rgba(209,42,42,.70); background: rgba(209,42,42,.20);}
 
-/* Module 3 - Useful Language Activity 2 (purple + speaking-like layout) */
+/* Module 3 - Useful Language Activity 2 (brown + speaking-like layout) */
 #tab3Exercise .m3a2-card{
-  border-color: rgba(122,103,201,.36);
+  border-color: rgba(126,78,58,.36);
   background: rgba(255,255,255,.88);
 }
 
+#tab3Exercise .practice-card{
+  border-color: rgba(126,78,58,.36);
+}
+
+#tab3Exercise .practice-card .practice-instructions{
+  border-color: rgba(126,78,58,.34);
+  background: rgba(126,78,58,.12);
+}
+
+#tab3Exercise .practice-card .practice-instr-title{
+  color: rgba(96,57,41,.98);
+}
+
 #tab3Exercise .m3a2-card .practice-instructions{
-  border-color: rgba(122,103,201,.34);
-  background: rgba(122,103,201,.11);
+  border-color: rgba(126,78,58,.34);
+  background: rgba(126,78,58,.12);
 }
 
 #tab3Exercise .m3a2-card .practice-instr-title{
-  color: rgba(95,74,167,.98);
+  color: rgba(96,57,41,.98);
 }
 
 #tab3Exercise .m3a2-card .practice-bank{
-  background: rgba(122,103,201,.12);
-  border-color: rgba(122,103,201,.24);
+  background: rgba(126,78,58,.12);
+  border-color: rgba(126,78,58,.24);
 }
 
 #tab3Exercise .m3a2-card .token{
-  border-color: rgba(122,103,201,.34);
+  border-color: rgba(126,78,58,.34);
 }
 
 #tab3Exercise .m3a2-qs li{
@@ -256,8 +370,22 @@
   max-width: 420px;
   min-height: 52px;
   border-radius: 16px;
+  border-color: rgba(126,78,58,.45);
+  background: rgba(126,78,58,.10);
   margin-left: auto;
   padding: 4px;
+}
+
+#tab3Exercise.drag-from-bank .m3a2-qs .blank,
+#tab3Exercise.drag-from-blank .m3a2-qs .blank{
+  border-color: rgba(126,78,58,.62);
+  box-shadow: 0 0 0 4px rgba(126,78,58,.12);
+}
+
+#tab3Exercise .m3a2-qs .blank.is-over{
+  border-color: rgba(126,78,58,.82);
+  background: rgba(126,78,58,.18);
+  box-shadow: 0 0 0 5px rgba(126,78,58,.18);
 }
 
 @media (max-width: 860px){

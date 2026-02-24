@@ -15,25 +15,21 @@
     <span aria-hidden="true" class="tab-dot"></span>
     <span class="tab-label">II. Key Words</span>
   </button>
-  <button aria-controls="tab3Listening" aria-selected="false" class="tab-btn" data-tab="listening" type="button">
-    <span aria-hidden="true" class="tab-dot"></span>
-    <span class="tab-label">III. Listening</span>
-  </button>
   <button aria-controls="tab3Revision" aria-selected="false" class="tab-btn" data-tab="revision" type="button">
     <span aria-hidden="true" class="tab-dot"></span>
-    <span class="tab-label">IV. Language Revision</span>
+    <span class="tab-label">III. Language Revision</span>
   </button>
   <button aria-controls="tab3Practice" aria-selected="false" class="tab-btn" data-tab="practice" type="button">
     <span aria-hidden="true" class="tab-dot"></span>
-    <span class="tab-label">V. Language Practice</span>
+    <span class="tab-label">IV. Language Practice</span>
   </button>
   <button aria-controls="tab3Reading" aria-selected="false" class="tab-btn" data-tab="reading" type="button">
     <span aria-hidden="true" class="tab-dot"></span>
-    <span class="tab-label">VI. Reading</span>
+    <span class="tab-label">V. Reading</span>
   </button>
   <button aria-controls="tab3Speaking" aria-selected="false" class="tab-btn" data-tab="speaking" type="button">
     <span aria-hidden="true" class="tab-dot"></span>
-    <span class="tab-label">VII. Speaking</span>
+    <span class="tab-label">VI. Speaking</span>
   </button>
   <div aria-label="Second hour" class="tab-divider" role="separator">
     <span class="tab-divider-text">Second Hour</span>
@@ -100,23 +96,244 @@
 
 <!-- TAB 2: I. Useful Language -->
 <section class="tab-panel" data-panel="exercise" hidden="" id="tab3Exercise">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <img alt="" src="img/robot.png" style="width:72px;height:auto;display:block;margin:0 auto 12px auto;">
-      <div class="module-focus-title">I. Useful Language</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon">
+        <img alt="" src="img/bubbles.png">
+      </div>
+      <h1 class="unit-title">I. Useful Language</h1>
+    </div>
+  </div>
+
+  <div class="exercise-shell">
+    <div aria-label="Module 3 useful language activities" class="exercise-left" role="region">
+      <div class="questions-head">ACTIVITY 1</div>
+      <div aria-label="Useful language activity 1" class="practice-card" role="region">
+        <div class="practice-instructions">
+          <div class="practice-instr-title">INSTRUCTIONS:</div>
+          <div class="practice-instr-text">Listen to the robot's questions and say them aloud for practice.</div>
+        </div>
+
+        <div class="robot-card" style="margin-top: 14px;">
+          <div aria-hidden="true" class="robot-wrap">
+            <img alt="" class="robot" src="img/robot.png">
+          </div>
+          <div class="robot-text">
+            <div class="robot-name">Robot</div>
+            <div class="robot-line">
+              "Is there a taxi stand nearby?"<br>
+              "Where can I exchange currency?"<br>
+              "The National Gallery opens at 9:00AM, last entry at 5:00PM."<br>
+              "Just to confirm, you will arrive after midnight, correct?"<br>
+              "Payment has been received. Your receipt number is 8539."<br>
+              "The tour will depart from the port at 8:30AM sharp. Please arrive 10 minutes early."<br>
+              "Please provide: full name, contact, number of travelers, date/time, special requirements."
+            </div>
+          </div>
+        </div>
+
+        <div aria-label="Audio player" role="region" style="margin-top:14px;">
+          <audio id="m3a1Audio" preload="metadata">
+            <source src="sound/mod3_ul_a1.mp3" type="audio/mpeg"></source>
+          </audio>
+          <div class="audio-controls">
+            <button class="btn primary" id="m3a1PlayBtn" type="button">Play</button>
+            <button class="btn" id="m3a1PauseBtn" type="button">Pause</button>
+            <button class="btn" id="m3a1RestartBtn" type="button">Restart</button>
+            <div aria-live="polite" class="audio-status" id="m3a1AudioStatus">Ready</div>
+          </div>
+          <div class="progress">
+            <div class="progress-bar" id="m3a1ProgressBar" style="width:0%"></div>
+          </div>
+          <div class="note">
+            Tip: you can replay the audio anytime before submitting.
+          </div>
+        </div>
+      </div>
+
+      <div class="questions-head" style="margin-top: 18px;">ACTIVITY 2</div>
+      <div aria-label="Useful language activity 2 matching" class="practice-card m3a2-card" data-exercise-id="module3_activity2" role="region">
+        <div class="practice-instructions">
+          <div class="practice-instr-title">INSTRUCTIONS:</div>
+          <div class="practice-instr-text">
+            Read the robot's questions and match the correct half to complete the sentence appropriately.
+            <div class="instr-example" style="margin-top:10px;">
+              <span class="instr-example-label"><strong>EXAMPLE:</strong></span><br>
+              </div>
+              <strong>Robot:</strong> <em>Is there...</em><br>
+              <strong>You:</strong> <em>a taxi stand nearby?</em>
+            
+          </div>
+        </div>
+
+        <div aria-label="Answer bank" class="practice-bank" id="m3a2Bank">
+          <div class="token" data-word="A" draggable="true" tabindex="0">the opening hours for museums?</div>
+          <div class="token" data-word="B" draggable="true" tabindex="0">email or SMS?</div>
+          <div class="token" data-word="C" draggable="true" tabindex="0">guided tours in Spanish?</div>
+          <div class="token" data-word="D" draggable="true" tabindex="0">an adult ticket?</div>
+          <div class="token" data-word="E" draggable="true" tabindex="0">a luggage room available?</div>
+          <div class="token" data-word="F" draggable="true" tabindex="0">you will arrive early in the morning on April 6th.</div>
+        </div>
+
+        <ol class="practice-qs m3a2-qs">
+          <li>
+            <div><strong>1.</strong> Robot: <em>Are there...</em></div>
+            <span aria-label="Blank 1" class="blank" tabindex="0"></span>
+          </li>
+          <li>
+            <div><strong>2.</strong> Robot: <em>Just to confirm, ...</em></div>
+            <span aria-label="Blank 2" class="blank" tabindex="0"></span>
+          </li>
+          <li>
+            <div><strong>3.</strong> Robot: <em>What are...</em></div>
+            <span aria-label="Blank 3" class="blank" tabindex="0"></span>
+          </li>
+          <li>
+            <div><strong>4.</strong> Robot: <em>How much is ...</em></div>
+            <span aria-label="Blank 4" class="blank" tabindex="0"></span>
+          </li>
+          <li>
+            <div><strong>5.</strong> Robot: <em>Is there...</em></div>
+            <span aria-label="Blank 5" class="blank" tabindex="0"></span>
+          </li>
+          <li>
+            <div><strong>6.</strong> Robot: <em>Do you prefer...</em></div>
+            <span aria-label="Blank 6" class="blank" tabindex="0"></span>
+          </li>
+        </ol>
+
+        <div class="practice-actions">
+          <button class="btn ghost" id="m3a2Check" type="button">Submit</button>
+          <button class="btn ghost" id="m3a2Reset" type="button">Reset</button>
+          <div aria-live="polite" class="practice-feedback" id="m3a2Feedback"></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- TAB 3: II. Key Words -->
 <section class="tab-panel" data-panel="keywords" hidden="" id="tab3Keywords">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">II. Key Words</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+  <div class="kw-wrap">
+    <div class="kw-card" data-theme="blue">
+      <div class="kw-head">
+        <div aria-hidden="true" class="kw-icon">
+          <img alt="" src="img/listening.png">
+        </div>
+        <div class="kw-title">II. Key Words &amp; Listening</div>
+      </div>
+
+      <div class="kw-body">
+        <div class="m3kw-section" aria-label="Activity 1" role="region">
+          <div class="questions-head">Activity 1</div>
+          <div aria-label="Module 3 key words activity 1 instructions" class="kw-instructions" role="region">
+            <div class="kw-instr-title">INSTRUCTIONS:</div>
+            <div class="kw-instr-text m3kw-instr-text">
+              <ol class="m3kw-steps">
+                <li>Look at the Word Cloud below, and write down in your notebook all the words you see.</li>
+                <li>Now, listen to a dialogue between a tourist and a tour agent.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div aria-label="Word cloud" class="m3kw-wordcloud" role="img">
+            <img alt="Word cloud with key words" src="img/1.png">
+          </div>
+
+          <div aria-label="Listening audio player" class="card audio-card m3kw-audio" role="region">
+            <div class="audio-wrap">
+              <div aria-hidden="true" class="audio-badge"><img alt="" src="img/listening.png" style="width:24px;height:auto;"></div>
+              <div>
+                <div class="audio-title">Listening</div>
+                <div class="btn-row">
+                  <button class="btn" id="m3KwPlayBtn" type="button">Play</button>
+                  <button class="btn" id="m3KwPauseBtn" type="button">Pause</button>
+                  <button class="btn" id="m3KwRestartBtn" type="button">Restart</button>
+                  <span aria-live="polite" class="status" id="m3KwAudioStatus" role="status">Ready</span>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar" id="m3KwProgressBar" style="width:0%"></div>
+                </div>
+                <audio id="m3KwAudio" preload="auto">
+                  <source src="sound/mod3_kw_listening.mp3" type="audio/mpeg"></source>
+                </audio>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="m3kw-divider" role="separator" aria-hidden="true"></div>
+
+        <div class="m3kw-section" aria-label="Activity 2" role="region">
+          <div class="questions-head">Activity 2</div>
+
+          <div aria-label="Module 3 key words activity 2 instructions" class="kw-instructions" role="region">
+            <div class="kw-instr-title">INSTRUCTIONS:</div>
+            <div class="kw-instr-text m3kw-instr-text">
+              <ol class="m3kw-steps">
+                <li>
+                  Click the button below to look for the key words you saw in the Word Cloud, in the audio script of the dialogue you just heard.
+                  You should understand the meaning of these words now they are used in context. If needed, please look up the meaning online.
+                </li>
+                <li>Look at Questions 1 to 3 below. Then, listen to the dialogue again and answer the Questions.</li>
+                <li>Go back to the audio script and check your answers.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="m3kw-actions">
+            <button class="btn ghost" id="m3KwHighlightBtn" type="button">Highlight key words</button>
+            <button class="btn" id="m3KwClearHighlightBtn" type="button">Clear</button>
+          </div>
+
+          <div aria-label="Audio script" class="m3kw-script" role="region">
+            <p><strong>Tourist:</strong> Hello, I'm planning a two-day stay in Crete, and I'd like to know about <span class="m3kw-key">ferry</span> options to Milos.</p>
+            <p><strong>Tour Agent:</strong> We offer a morning ferry from Heraklion to Milos with a 4-hour <span class="m3kw-key">crossing</span>. There is also an afternoon option with a longer stop in Santorini if you <span class="m3kw-key">prefer</span>.</p>
+            <p><strong>Tourist:</strong> Do you have a <span class="m3kw-key">guided</span> island tour on the first day?</p>
+            <p><strong>Tour Agent:</strong> Yes, we have a half-day Crete city and ancient site tour, starting at 09:00, <span class="m3kw-key">including</span> a <span class="m3kw-key">lunch</span> break.</p>
+            <p><strong>Tourist:</strong> Great. Please <span class="m3kw-key">reserve</span> two seats on the morning ferry and the Crete tour.</p>
+            <p><strong>Tour Agent:</strong> I've put those on <span class="m3kw-key">hold</span>. I'll confirm shortly.</p>
+          </div>
+
+          <div class="m3kw-questions" aria-label="Questions" role="region">
+            <div class="questions-head">Questions</div>
+            <form aria-label="Module 3 key words listening questions" class="quiz li-quiz" id="m3KwListeningForm">
+              <div class="q" data-q="m3kq1">
+                <div class="q-head">
+                  <div class="q-num">1</div>
+                  <div class="q-text">What is the duration of the morning ferry from Heraklion to Milos?</div>
+                </div>
+                <label class="opt"><input name="m3kq1" type="radio" value="a"> 2 hours.</label>
+                <label class="opt"><input name="m3kq1" type="radio" value="b"> 4 hours.</label>
+                <label class="opt"><input name="m3kq1" type="radio" value="c"> 6 hours.</label>
+              </div>
+              <div class="q" data-q="m3kq2">
+                <div class="q-head">
+                  <div class="q-num">2</div>
+                  <div class="q-text">Which additional option is available for the afternoon ferry?</div>
+                </div>
+                <label class="opt"><input name="m3kq2" type="radio" value="a"> A longer stop in Santorini.</label>
+                <label class="opt"><input name="m3kq2" type="radio" value="b"> A guided city tour on Crete.</label>
+                <label class="opt"><input name="m3kq2" type="radio" value="c"> An overnight stay on Milos.</label>
+              </div>
+              <div class="q" data-q="m3kq3">
+                <div class="q-head">
+                  <div class="q-num">3</div>
+                  <div class="q-text">What does the half-day Crete tour include?</div>
+                </div>
+                <label class="opt"><input name="m3kq3" type="radio" value="a"> Beach tour of Crete, no lunch break.</label>
+                <label class="opt"><input name="m3kq3" type="radio" value="b"> Santorini island hopping with coffee break.</label>
+                <label class="opt"><input name="m3kq3" type="radio" value="c"> Crete city and ancient site tour, including a lunch break.</label>
+              </div>
+              <div class="quiz-actions">
+                <button class="btn ghost" type="submit">Submit</button>
+                <button class="btn" id="m3KwResetBtn" type="button">Reset</button>
+                <span aria-live="polite" class="status" id="m3KwFeedback" role="status"></span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -135,67 +352,386 @@
 
 <!-- TAB 5: IV. Language Revision -->
 <section class="tab-panel" data-panel="revision" hidden="" id="tab3Revision">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">IV. Language Revision</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+  <div class="kw-wrap">
+    <div class="kw-card" data-theme="green">
+      <div class="kw-head">
+        <div aria-hidden="true" class="kw-icon">
+          <img alt="" src="img/arrows.png">
+        </div>
+        <div class="kw-title">III. Language Revision</div>
+      </div>
+      <div class="kw-body">
+        <div aria-label="Language revision" class="rev-box" role="region">
+          <div class="rev-text">
+            <div class="rev-subtitle"><strong>Present Simple Expanded</strong></div>
+            <div class="rev-block">
+              <div class="rev-line">Regular and some irregular verbs in third person singular.</div>
+              <div class="rev-line">Adverbs of frequency: always, usually, often, sometimes, never</div>
+            </div>
+
+            <div class="rev-subtitle"><strong>Present Continuous</strong></div>
+            <div class="rev-block">
+              <div class="rev-line"><strong>Form:</strong> am/are/is + verb-ing</div>
+              <div class="rev-line"><strong>Use:</strong> actions happening now, temporary actions, future arrangements: <em>"I am meeting him tomorrow."</em></div>
+            </div>
+
+            <div class="rev-subtitle"><strong>Future Forms (basic introductions)</strong></div>
+            <div class="rev-block">
+              <div class="rev-line"><strong>Be going to:</strong> intention, <em>"I am going to study abroad."</em></div>
+              <div class="rev-line"><strong>Present Continuous for future arrangements:</strong> <em>"I am meeting him tomorrow."</em></div>
+              <div class="rev-line"><strong>Simple future with will/shall (very basic):</strong> <em>"OK. I will help you."</em></div>
+              <div class="rev-line">(Not planned)</div>
+            </div>
+
+            <div class="rev-subtitle"><strong>LANGUAGE FUNCTIONS</strong></div>
+            <div class="rev-block">
+              <div class="rev-line"><strong>Seeking information:</strong> <em>"Do you have a map of the area?"</em></div>
+              <div class="rev-line"><strong>Providing information:</strong> <em>"Ferry tickets are 8,00 euros."</em></div>
+              <div class="rev-line"><strong>Clarifying:</strong> <em>"This is the front desk. You have asked for a taxi tomorrow at 7:00AM. Correct?"</em></div>
+              <div class="rev-line"><strong>Confirming:</strong> <em>"We have received your e-mail, and we confirm your reservation."</em></div>
+              <div class="rev-line"><strong>Documenting:</strong> <em>"I will email or text you a summary of these details."</em></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- TAB 6: V. Language Practice -->
 <section class="tab-panel" data-panel="practice" hidden="" id="tab3Practice">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">V. Language Practice</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon">
+        <img alt="" src="img/target.png">
+      </div>
+      <h1 class="unit-title">V. Language Practice</h1>
+    </div>
+  </div>
+  <div class="exercise-shell">
+    <div aria-label="Language practice" class="practice-card" role="region">
+      <div class="practice-instructions">
+        <div class="practice-instr-title">INSTRUCTIONS:</div>
+        <div class="practice-instr-text">Choose the correct word to fill the gaps in the sentences below.</div>
+      </div>
+      <div aria-label="Word bank" class="practice-bank">
+        <div class="token" data-word="flying" draggable="true" tabindex="0">flying</div>
+        <div class="token" data-word="attractions" draggable="true" tabindex="0">attractions</div>
+        <div class="token" data-word="wearing" draggable="true" tabindex="0">wearing</div>
+        <div class="token" data-word="guided" draggable="true" tabindex="0">guided</div>
+        <div class="token" data-word="usually" draggable="true" tabindex="0">usually</div>
+        <div class="token" data-word="will drive" draggable="true" tabindex="0">will drive</div>
+      </div>
+      <ol class="practice-qs">
+        <li>Are there <span aria-label="Blank 1" class="blank" tabindex="0"></span> tours in Spanish?</li>
+        <br>
+        <br>
+        <li>What are the must-see <span aria-label="Blank 2" class="blank" tabindex="0"></span> in Crete?</li>
+        <br>
+        <br>
+        <li>They are <span aria-label="Blank 3" class="blank" tabindex="0"></span> to Kefalonia tomorrow.</li>
+        <br>
+        <br>
+        <li>You missed the bus? OK, I <span aria-label="Blank 4" class="blank" tabindex="0"></span> you home.</li>
+        <br>
+        <br>
+        <li>Is she <span aria-label="Blank 5" class="blank" tabindex="0"></span> her national dress?</li>
+        <br>
+        <br>
+        <li>She loves Crete. She <span aria-label="Blank 6" class="blank" tabindex="0"></span> spends summer holidays in Rethymno.</li>
+      </ol>
+      <div class="practice-actions">
+        <button class="btn ghost" id="practiceCheck" type="button">Submit</button>
+        <button class="btn ghost" id="practiceReset" type="button">Reset</button>
+        <div aria-live="polite" class="practice-feedback" id="practiceFeedback"></div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- TAB 7: VI. Reading -->
 <section class="tab-panel" data-panel="reading" hidden="" id="tab3Reading">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">VI. Reading</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon unit-icon--burgundy">
+        <img alt="" src="img/reading.png">
+      </div>
+      <h1 class="unit-title">V. Reading</h1>
+    </div>
+  </div>
+  <div class="exercise-shell">
+    <div class="exercise-left">
+      <div aria-label="Reading keywords" class="reading-keywords" role="region">
+        <div class="reading-kw-head reading-task-head">KEY WORDS</div>
+        <div class="reading-instr-inline">
+          <strong>INSTRUCTIONS:</strong> Search online for each one of the key words to find their meaning. Click the speaker icon to confirm its pronunciation.
+        </div>
+        <div class="reading-kw-list">
+          <button aria-label="Hear pronunciation: guesthouse" class="speak-btn" data-word="guesthouse" type="button">
+            <span class="kw-word">guesthouse</span>
+            <img alt="" aria-hidden="true" class="speak-ico" src="img/speaker.png">
+          </button>
+          <button aria-label="Hear pronunciation: sightseeing" class="speak-btn" data-word="sightseeing" type="button">
+            <span class="kw-word">sightseeing</span>
+            <img alt="" aria-hidden="true" class="speak-ico" src="img/speaker.png">
+          </button>
+          <button aria-label="Hear pronunciation: local" class="speak-btn" data-word="local" type="button">
+            <span class="kw-word">local</span>
+            <img alt="" aria-hidden="true" class="speak-ico" src="img/speaker.png">
+          </button>
+          <button aria-label="Hear pronunciation: snack" class="speak-btn" data-word="snack" type="button">
+            <span class="kw-word">snack</span>
+            <img alt="" aria-hidden="true" class="speak-ico" src="img/speaker.png">
+          </button>
+          <button aria-label="Hear pronunciation: break" class="speak-btn" data-word="break" type="button">
+            <span class="kw-word">break</span>
+            <img alt="" aria-hidden="true" class="speak-ico" src="img/speaker.png">
+          </button>
+        </div>
+      </div>
+
+      <div aria-label="Reading activity" class="reading-card" role="region">
+        <div class="reading-section-title reading-task-head">READING TEXT</div>
+        <div class="reading-instr-inline">
+          <strong>INSTRUCTIONS:</strong> Read the text below and answer the questions.
+        </div>
+        <div class="reading-text">
+          <div class="reading-text-title">Cretan Welcome and Cretan Dining</div>
+          <div class="reading-text-body">
+            Welcome to our family guesthouse near the old town of Chania. How can I help you plan your Crete visit today? We can make your day in Crete feel special. If you are hungry after sightseeing, we have a simple food idea: dakos. Dakos is a local snack with bread, tomatoes, feta, and olive oil. You can have it with water or a local juice. Enjoy a short vacation break before going back to work.
+          </div>
+        </div>
+      </div>
+
+      <div class="questions-head">QUESTIONS:</div>
+      <form aria-label="Reading questions" class="quiz-form" data-server-quiz-id="module3_reading" id="readingForm">
+        <div class="q" data-q="r1">
+          <div class="q-head">
+            <div class="q-num">1</div>
+            <div class="q-text">Where is the guesthouse located?</div>
+          </div>
+          <div aria-label="Question 1 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="r1" type="radio" value="a"> Near the town of Heraklion.</label>
+            <label class="opt"><input name="r1" type="radio" value="b"> Near the old town of Chania.</label>
+            <label class="opt"><input name="r1" type="radio" value="c"> Near the town of Ierapetra.</label>
+          </div>
+        </div>
+
+        <div class="q" data-q="r2">
+          <div class="q-head">
+            <div class="q-num">2</div>
+            <div class="q-text">What is a local snack in Crete?</div>
+          </div>
+          <div aria-label="Question 2 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="r2" type="radio" value="a"> Potatoes and greens.</label>
+            <label class="opt"><input name="r2" type="radio" value="b"> Rice and mushrooms.</label>
+            <label class="opt"><input name="r2" type="radio" value="c"> Dakos with tomatoes and feta.</label>
+          </div>
+        </div>
+
+        <div class="q" data-q="r3">
+          <div class="q-head">
+            <div class="q-num">3</div>
+            <div class="q-text">Who is speaking in the text/passage?</div>
+          </div>
+          <div aria-label="Question 3 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="r3" type="radio" value="a"> A local man.</label>
+            <label class="opt"><input name="r3" type="radio" value="b"> A guesthouse staff member.</label>
+            <label class="opt"><input name="r3" type="radio" value="c"> A tourist from France.</label>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn ghost" type="submit">Submit</button>
+          <button class="btn" id="readingReset" type="button">Reset</button>
+        </div>
+        <div aria-live="polite" class="feedback" id="readingFeedback"></div>
+      </form>
     </div>
   </div>
 </section>
 
 <!-- TAB 8: VII. Speaking -->
 <section class="tab-panel" data-panel="speaking" hidden="" id="tab3Speaking">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">VII. Speaking</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+  <div class="kw-wrap">
+    <div class="page-title">
+      <div class="unit-head">
+        <div aria-hidden="true" class="unit-icon unit-icon--burgundy">
+          <img alt="" src="img/speaking.png">
+        </div>
+        <h1 class="unit-title">VI. Speaking - Basic Tourism Phrases</h1>
+      </div>
+    </div>
+    <div class="kw-card speaking-card" data-theme="green">
+      <div class="kw-body">
+        <div aria-label="Sample phrases" class="speaking-phrases">
+          <div class="speaking-phrase">"Where can I exchange currency?"</div>
+          <div class="speaking-phrase">"May I inquire about...?"</div>
+          <div class="speaking-phrase">"Could you clarify...?"</div>
+          <div class="speaking-phrase">"Is there something else I can do for you?"</div>
+        </div>
+        <div aria-label="Speaking instructions" class="kw-instructions" role="region">
+          <div class="kw-instr-title">INSTRUCTIONS:</div>
+          <div class="kw-instr-text">
+            Create short A-B dialogues. Match the sentences from column A to the sentences from column B.
+            <br><br>
+            <strong class="instr-example-label">EXAMPLE:</strong><br>
+            A: Where can I exchange currency? (1)<br>
+            B: At the front desk. (d)<br>
+            <em>The correct answer is: 1 d</em>
+          </div>
+        </div>
+        <div class="speaking-match">
+          <div aria-label="Speaking matching" class="practice-card practice-card--green" data-exercise-id="module3_speaking" role="region">
+            <div aria-label="Column B (drag these sentences)" class="practice-bank speaking-bank">
+              <div class="token" data-word="a" draggable="true" tabindex="0">Certainly. Was I speaking too fast?</div>
+              <div class="token" data-word="b" draggable="true" tabindex="0">OK. Let me repeat.</div>
+              <div class="token" data-word="c" draggable="true" tabindex="0">Will you pay with cash or card?</div>
+              <div class="token" data-word="d" draggable="true" tabindex="0">At the front desk. (Ex.)</div>
+              <div class="token" data-word="e" draggable="true" tabindex="0">Yes, please. Can I have a glass of wine?</div>
+              <div class="token" data-word="f" draggable="true" tabindex="0">I'm fine, thank you.</div>
+            </div>
+            <ol aria-label="Column A (drop in the gaps)" class="practice-qs speaking-qs">
+              <li>Where can I exchange currency? <strong>(Ex.)</strong> <span aria-label="Blank 1" class="blank" tabindex="0"></span>
+              </li>
+              <li>May I inquire about your health? <span aria-label="Blank 2" class="blank" tabindex="0"></span>
+              </li>
+              <li>Could you clarify your statement? <span aria-label="Blank 3" class="blank" tabindex="0"></span>
+              </li>
+              <li>Is there something else I can do for you? <span aria-label="Blank 4" class="blank" tabindex="0"></span>
+              </li>
+              <li>Could you speak more slowly, please? <span aria-label="Blank 5" class="blank" tabindex="0"></span>
+              </li>
+              <li>Could we have the bill, please? <span aria-label="Blank 6" class="blank" tabindex="0"></span>
+              </li>
+            </ol>
+          </div>
+          <div class="practice-actions">
+            <button class="btn ghost" id="speakingCheck" type="button">Submit</button>
+            <button class="btn btn-ghost" id="speakingReset" type="button">Reset</button>
+            <div aria-live="polite" class="practice-feedback" id="speakingFeedback" role="status"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- TAB 9: I. Useful Language -->
 <section class="tab-panel" data-panel="h2_exercise" hidden="" id="tab3Hour2Exercise">
-  <div class="module-card">
-    <div class="module-top">
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon">
+        <img alt="" src="img/bubbles.png">
+      </div>
+      <h1 class="unit-title">I. Useful Language</h1>
+    </div>
+  </div>
+  <div class="exercise-shell">
+    <div class="exercise-left">
+      <aside aria-label="Instructions" class="exercise-right">
+        <div class="sticky-card">
+          <div class="card-title">INSTRUCTIONS:</div>
+          <p class="card-p">Look up online any Useful Language expressions you are not familiar with. Take notes. Please, use your notebook.</p>
+        </div>
+      </aside>
       <br>
-      <img alt="" src="img/robot.png" style="width:72px;height:auto;display:block;margin:0 auto 12px auto;">
-      <div class="module-focus-title">I. Useful Language</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+      <div class="robot-card">
+        <div aria-hidden="true" class="robot-wrap">
+          <img alt="" class="robot" src="img/robot.png">
+        </div>
+        <div class="robot-text">
+          <div class="robot-name">Robot</div>
+          <div class="robot-line">
+            "I would appreciate if you could..."<br>
+            "Please let us know if you need assistance."<br>
+            "It's better to..."<br>
+            "Are there discounts for students/seniors?"<br>
+            "It's about 5km from..."
+          </div>
+        </div>
+      </div>
+      <div aria-label="Audio player" role="region">
+        <audio id="m3h2UlAudio" preload="metadata">
+          <source src="sound/mod3_ul_2nd.mp3" type="audio/mpeg"></source>
+        </audio>
+        <div class="audio-controls">
+          <button class="btn primary" id="m3h2UlPlayBtn" type="button">Play</button>
+          <button class="btn" id="m3h2UlPauseBtn" type="button">Pause</button>
+          <button class="btn" id="m3h2UlRestartBtn" type="button">Restart</button>
+          <div aria-live="polite" class="audio-status" id="m3h2UlAudioStatus">Ready</div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" id="m3h2UlProgressBar" style="width:0%"></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- TAB 10: II. Key Words -->
 <section class="tab-panel" data-panel="h2_keywords" hidden="" id="tab3Hour2Keywords">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">II. Key Words</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+  <div class="kw-wrap">
+    <div class="page-title">
+      <div class="unit-head">
+        <div aria-hidden="true" class="unit-icon unit-icon--burgundy">
+          <img alt="" src="img/icon-key.png">
+        </div>
+        <h1 class="unit-title">II. Key Words</h1>
+      </div>
+    </div>
+    <div class="kw-card" data-theme="blue">
+      <div class="kw-body">
+        <div aria-label="Key words instructions" class="kw-instructions" role="region">
+          <div class="kw-instr-title">INSTRUCTIONS:</div>
+          <div class="kw-instr-text h2kw-instr-text instr-example">
+            Look at the key words and jumbled definitions below, then guess or indicate which one is correct. Match the numbers and letters. Keep notes in your notebook.
+            <br><br>
+            <span class="h2kw-instr-label">EXAMPLE:</span><br>
+            <em>1. D (Narrow valley between mountains)</em>
+          </div>
+        </div>
+        <div class="speaking-match">
+          <div aria-label="Key words matching" class="practice-card practice-card--blue" data-exercise-id="module3_h2_keywords" role="region">
+            <div aria-label="Definitions (drag these)" class="practice-bank h2kw-bank">
+              <div class="token" data-word="A" draggable="true" tabindex="0">Path</div>
+              <div class="token" data-word="B" draggable="true" tabindex="0">Sharp climb</div>
+              <div class="token" data-word="C" draggable="true" tabindex="0">Well made</div>
+              <div class="token" data-word="D" draggable="true" tabindex="0">Narrow valley between mountains (Ex.)</div>
+              <div class="token" data-word="E" draggable="true" tabindex="0">Long outdoor walk</div>
+              <div class="token" data-word="F" draggable="true" tabindex="0">Ahead of time</div>
+              <div class="token" data-word="G" draggable="true" tabindex="0">Comfortable, cozy</div>
+            </div>
+            <ol aria-label="Key words (drop in the gaps)" class="practice-qs h2kw-qs">
+              <li>Gorge <strong>(Ex.)</strong> <span aria-label="Blank 1" class="blank" tabindex="0"></span>
+              </li>
+              <br>
+              <li>Sturdy <span aria-label="Blank 2" class="blank" tabindex="0"></span>
+              </li>
+              <br>
+              <li>Hike <span aria-label="Blank 3" class="blank" tabindex="0"></span>
+              </li>
+              <br>
+              <li>Trail <span aria-label="Blank 4" class="blank" tabindex="0"></span>
+              </li>
+              <br>
+              <li>Steep <span aria-label="Blank 5" class="blank" tabindex="0"></span>
+              </li>
+              <br>
+              <li>Comfy <span aria-label="Blank 6" class="blank" tabindex="0"></span>
+              </li>
+              <br>
+              <li>In advance <span aria-label="Blank 7" class="blank" tabindex="0"></span>
+              </li>
+            </ol>
+          </div>
+          <div class="practice-actions">
+            <button class="btn ghost" id="h2kwCheck" type="button">Submit</button>
+            <button class="btn btn-ghost" id="h2kwReset" type="button">Reset</button>
+            <div aria-live="polite" class="practice-feedback" id="h2kwFeedback" role="status"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
