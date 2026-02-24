@@ -18,6 +18,16 @@
   status = 200
 
 [[redirects]]
+  from = "/api/auth/register-verify"
+  to = "/.netlify/functions/auth-register-verify"
+  status = 200
+
+[[redirects]]
+  from = "/api/auth/captcha-challenge"
+  to = "/.netlify/functions/auth-captcha-challenge"
+  status = 200
+
+[[redirects]]
   from = "/api/auth/login"
   to = "/.netlify/functions/auth-login"
   status = 200

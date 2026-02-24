@@ -3,7 +3,7 @@ import { ensureSchema, getPool } from "./db.js";
 
 const SESSION_DAYS = 30;
 
-function normalizeEmail(email) {
+export function normalizeEmail(email) {
   return String(email || "").trim().toLowerCase();
 }
 
