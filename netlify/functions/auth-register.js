@@ -1,7 +1,6 @@
 import { ensureSchema, getPool } from "./_lib/db.js";
 import { badRequest, json } from "./_lib/http.js";
 import { findUserByEmail, makePasswordPair, normalizeEmail } from "./_lib/auth.js";
-import { verifyCaptchaChallenge } from "./_lib/captcha.js";
 import { sendVerificationEmail } from "./_lib/mail.js";
 import {
   REGISTER_CODE_MINUTES,
@@ -18,14 +17,9 @@ export default async (req) => {
     const body = await req.json();
     const email = normalizeEmail(body?.email);
     const password = String(body?.password || "");
-    const captchaId = body?.captchaId;
-    const captchaAnswer = body?.captchaAnswer;
 
     if (!email || !email.includes("@")) return badRequest("Invalid email.");
     if (!password || password.length < 8) return badRequest("Password must be at least 8 characters.");
-
-    const captchaCheck = verifyCaptchaChallenge(captchaId, captchaAnswer);
-    if (!captchaCheck.ok) return badRequest(captchaCheck.error);
 
     await ensureSchema();
     const existing = await findUserByEmail(email);

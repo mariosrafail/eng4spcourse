@@ -5,10 +5,6 @@
   const registerForm = document.getElementById("registerForm");
   const registerConfirmWrap = document.getElementById("registerConfirmWrap");
   const registerConfirmPasswordInput = document.getElementById("registerConfirmPassword");
-  const registerCaptchaWrap = document.getElementById("registerCaptchaWrap");
-  const registerCaptchaPrompt = document.getElementById("registerCaptchaPrompt");
-  const registerCaptchaAnswerInput = document.getElementById("registerCaptchaAnswer");
-  const registerCaptchaRefreshBtn = document.getElementById("registerCaptchaRefreshBtn");
   const registerVerifyWrap = document.getElementById("registerVerifyWrap");
   const registerSubmitBtn = document.getElementById("registerSubmitBtn");
   const registerCodeInput = document.getElementById("registerCode");
@@ -22,17 +18,11 @@
   const changeProgressBtn = document.getElementById("changeProgressBtn");
   const logoutBtn = document.getElementById("logoutBtn");
   let registerStage = "request";
-  let registerCaptchaId = "";
-
   if (
     !loginForm ||
     !registerForm ||
     !registerConfirmWrap ||
     !registerConfirmPasswordInput ||
-    !registerCaptchaWrap ||
-    !registerCaptchaPrompt ||
-    !registerCaptchaAnswerInput ||
-    !registerCaptchaRefreshBtn ||
     !registerVerifyWrap ||
     !registerSubmitBtn ||
     !registerCodeInput ||
@@ -110,20 +100,6 @@
     return payload;
   }
 
-  async function loadCaptchaChallenge() {
-    try {
-      const data = await api("/api/auth/captcha-challenge", { method: "GET" });
-      registerCaptchaId = String(data?.challengeId || "");
-      registerCaptchaPrompt.textContent = String(data?.prompt || "Solve the captcha.");
-      registerCaptchaAnswerInput.value = "";
-      return !!registerCaptchaId;
-    } catch (_error) {
-      registerCaptchaId = "";
-      registerCaptchaPrompt.textContent = "Captcha unavailable. Press Refresh.";
-      return false;
-    }
-  }
-
   function showMode(mode) {
     const loginMode = mode === "login";
     loginForm.hidden = !loginMode;
@@ -142,16 +118,13 @@
     registerVerifyWrap.hidden = !verify;
     registerCodeInput.required = verify;
     registerConfirmWrap.hidden = verify;
-    registerCaptchaWrap.hidden = verify;
     registerConfirmPasswordInput.required = !verify;
-    registerCaptchaAnswerInput.required = !verify;
     registerSubmitBtn.textContent = verify ? "Verify And Create Account" : "Send Verification Code (Check Spam)";
     if (verify) {
       registerCodeInput.value = "";
       return;
     }
     registerCodeInput.value = "";
-    void loadCaptchaChallenge();
   }
 
   function showUser(user) {
@@ -201,7 +174,6 @@
     const email = String(registerForm.email.value || "").trim();
     const password = String(registerForm.password.value || "");
     const confirmPassword = String(registerConfirmPasswordInput.value || "");
-    const captchaAnswer = String(registerCaptchaAnswerInput.value || "").trim();
     const code = String(registerCodeInput.value || "").trim();
 
     setFeedback("");
@@ -211,16 +183,9 @@
           setFeedback("Password and confirm password must match.", "is-error");
           return;
         }
-        if (!registerCaptchaId) {
-          const ready = await loadCaptchaChallenge();
-          if (!ready) {
-            setFeedback("Captcha is unavailable. Press Refresh and try again.", "is-error");
-            return;
-          }
-        }
         const data = await api("/api/auth/register", {
           method: "POST",
-          body: JSON.stringify({ email, password, captchaId: registerCaptchaId, captchaAnswer })
+          body: JSON.stringify({ email, password })
         });
         setRegisterStage("verify");
         setFeedback(`Verification code sent to ${data.email}. Check spam.`, "is-ok");
@@ -237,20 +202,8 @@
       registerForm.reset();
       setRegisterStage("request");
     } catch (error) {
-      if (registerStage === "request") {
-        await loadCaptchaChallenge();
-      }
       setFeedback(error.message, "is-error");
     }
-  });
-
-  registerCaptchaRefreshBtn.addEventListener("click", async () => {
-    const ready = await loadCaptchaChallenge();
-    if (!ready) {
-      setFeedback("Captcha is unavailable right now. Try again.", "is-error");
-      return;
-    }
-    setFeedback("Captcha refreshed.", "is-ok");
   });
 
   loginForm.addEventListener("submit", async (event) => {

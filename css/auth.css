@@ -90,40 +90,6 @@ body.assets-loading .layout {
   max-width: 420px;
 }
 
-.auth-captcha {
-  display: grid;
-  gap: 8px;
-}
-
-.auth-captcha-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.auth-captcha-prompt {
-  flex: 1 1 220px;
-  min-width: 0;
-  font-weight: 700;
-  color: #5f4aa7;
-  background: rgba(122, 103, 201, 0.1);
-  border: 1px solid rgba(122, 103, 201, 0.22);
-  border-radius: 10px;
-  padding: 8px 10px;
-}
-
-.auth-captcha-refresh {
-  border: 1px solid rgba(122, 103, 201, 0.4);
-  background: #fff;
-  color: #5f4aa7;
-  border-radius: 10px;
-  padding: 8px 10px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
 .auth-label {
   font-size: 0.9rem;
   opacity: 0.92;

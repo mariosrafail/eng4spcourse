@@ -97,14 +97,6 @@
                 <label class="auth-label" for="registerConfirmPassword">Confirm Password</label>
                 <input class="auth-input" id="registerConfirmPassword" name="confirmPassword" type="password" required minlength="8">
               </div>
-              <div class="auth-captcha" id="registerCaptchaWrap">
-                <label class="auth-label" for="registerCaptchaAnswer">Captcha</label>
-                <div class="auth-captcha-row">
-                  <span class="auth-captcha-prompt" id="registerCaptchaPrompt">Loading captcha...</span>
-                  <button class="auth-captcha-refresh" id="registerCaptchaRefreshBtn" type="button">Refresh</button>
-                </div>
-                <input class="auth-input" id="registerCaptchaAnswer" name="captchaAnswer" type="text" required autocomplete="off">
-              </div>
               <div class="auth-verify" id="registerVerifyWrap" hidden>
                 <label class="auth-label" for="registerCode">Verification Code</label>
                 <input class="auth-input" id="registerCode" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6">
