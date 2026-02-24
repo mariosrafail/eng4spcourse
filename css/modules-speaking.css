@@ -5,6 +5,35 @@
   gap: 14px;
 }
 
+.speaking-prompts{
+  background: rgba(47,107,87,.14);
+  border: 2px solid rgba(47,107,87,.28);
+  border-radius: 18px;
+  padding: 14px 14px;
+  color: rgba(18,72,58,.95);
+  box-shadow: 0 10px 24px rgba(30,18,60,.08);
+}
+
+.speaking-prompt{
+  font-weight: 700;
+  font-style: italic;
+  margin: 6px 0;
+}
+
+.speaking-photo{
+  border: 2px solid rgba(47,107,87,.35);
+  border-radius: 18px;
+  background: rgba(255,255,255,.86);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.speaking-photo img{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* Make Speaking exercise match the Practice (V) layout but with green accents */
 #tabSpeaking .practice-card--green,
 #tab3Speaking .practice-card--green{
@@ -127,7 +156,8 @@
   }
 
   #tabHour2Keywords .h2kw-qs li,
-  #tab3Hour2Keywords .h2kw-qs li{
+  #tab3Hour2Keywords .h2kw-qs li,
+  #tab4Hour2Keywords .h2kw-qs li{
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
@@ -135,7 +165,8 @@
   }
 
   #tabHour2Keywords .blank,
-  #tab3Hour2Keywords .blank{
+  #tab3Hour2Keywords .blank,
+  #tab4Hour2Keywords .blank{
     width: 100%;
     min-width: 100%;
     max-width: 100%;

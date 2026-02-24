@@ -264,6 +264,24 @@ window.initializeApp = function initializeApp() {
     progressId: 'm3h2UlProgressBar'
   });
 
+  const m4h2UlPlayer = bindAudioPlayer({
+    audioId: 'm4h2UlAudio',
+    playId: 'm4h2UlPlayBtn',
+    pauseId: 'm4h2UlPauseBtn',
+    restartId: 'm4h2UlRestartBtn',
+    statusId: 'm4h2UlAudioStatus',
+    progressId: 'm4h2UlProgressBar'
+  });
+
+  const m4UlPlayer = bindAudioPlayer({
+    audioId: 'm4ulAudio',
+    playId: 'm4ulPlayBtn',
+    pauseId: 'm4ulPauseBtn',
+    restartId: 'm4ulRestartBtn',
+    statusId: 'm4ulAudioStatus',
+    progressId: 'm4ulProgressBar'
+  });
+
   const liPlayer = bindAudioPlayer({
     audioId: 'listeningAudio',
     playId: 'liPlayBtn',
@@ -271,6 +289,42 @@ window.initializeApp = function initializeApp() {
     restartId: 'liRestartBtn',
     statusId: 'liAudioStatus',
     progressId: 'liProgressBar'
+  });
+
+  const m4liPlayer = bindAudioPlayer({
+    audioId: 'm4ListeningAudio',
+    playId: 'm4liPlayBtn',
+    pauseId: 'm4liPauseBtn',
+    restartId: 'm4liRestartBtn',
+    statusId: 'm4liAudioStatus',
+    progressId: 'm4liProgressBar'
+  });
+
+  const m5liPlayer = bindAudioPlayer({
+    audioId: 'm5ListeningAudio',
+    playId: 'm5liPlayBtn',
+    pauseId: 'm5liPauseBtn',
+    restartId: 'm5liRestartBtn',
+    statusId: 'm5liAudioStatus',
+    progressId: 'm5liProgressBar'
+  });
+
+  const m5h2liPlayer = bindAudioPlayer({
+    audioId: 'm5h2ListeningAudio',
+    playId: 'm5h2liPlayBtn',
+    pauseId: 'm5h2liPauseBtn',
+    restartId: 'm5h2liRestartBtn',
+    statusId: 'm5h2liAudioStatus',
+    progressId: 'm5h2liProgressBar'
+  });
+
+  const m4h2liPlayer = bindAudioPlayer({
+    audioId: 'm4h2ListeningAudio',
+    playId: 'm4h2liPlayBtn',
+    pauseId: 'm4h2liPauseBtn',
+    restartId: 'm4h2liRestartBtn',
+    statusId: 'm4h2liAudioStatus',
+    progressId: 'm4h2liProgressBar'
   });
 
   const mockPlayer = bindAudioPlayer({
@@ -523,6 +577,37 @@ window.initializeApp = function initializeApp() {
     }
   });
 
+  // Module 4 - I. Useful Language
+  bindQuiz({
+    formId: 'm4UlForm',
+    feedbackId: 'm4UlFeedback',
+    resetId: 'm4UlResetBtn',
+    serverQuizId: 'module4_useful_language',
+    questionIds: ['m4ul1', 'm4ul2', 'm4ul3', 'm4ul4', 'm4ul5'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Some answers are incorrect. Try again.',
+    onReset: () => {
+      const a = m4UlPlayer?.audio;
+      if (a){
+        a.pause();
+        a.currentTime = 0;
+        m4UlPlayer.setStatus('Ready');
+        m4UlPlayer.updateProgress();
+      }
+    }
+  });
+
+  // Module 5 - V. Speaking (MCQ)
+  bindQuiz({
+    formId: 'm5SpeakingForm',
+    feedbackId: 'm5spFeedback',
+    resetId: 'm5spResetBtn',
+    serverQuizId: document.getElementById('m5SpeakingForm')?.dataset?.serverQuizId || 'module5_speaking',
+    questionIds: ['m5sp1', 'm5sp2'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Some answers are incorrect. Try again.'
+  });
+
   // III. Listening
   const listeningQuizId =
     document.getElementById('listeningForm')?.dataset?.serverQuizId ||
@@ -569,11 +654,91 @@ window.initializeApp = function initializeApp() {
     }
   });
 
-	bindQuiz({
-	  formId: 'h2ListeningForm',
-	  feedbackId: 'h2liFeedback',
-	  resetId: 'h2liResetBtn',
-	  serverQuizId: h2ListeningQuizId,
+  // Module 4 - III. Listening
+  bindQuiz({
+    formId: 'm4ListeningForm',
+    feedbackId: 'm4liFeedback',
+    resetId: 'm4liResetBtn',
+    serverQuizId: document.getElementById('m4ListeningForm')?.dataset?.serverQuizId || 'module4_listening',
+    questionIds: ['m4lq1', 'm4lq2', 'm4lq3'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Incorrect. Listen again and try again.',
+    onReset: () => {
+      const a = m4liPlayer?.audio;
+      if (a){
+        a.pause();
+        a.currentTime = 0;
+        m4liPlayer.setStatus('Ready');
+        m4liPlayer.updateProgress();
+      }
+    }
+  });
+
+  // Module 4 - Second Hour - III. Listening
+  bindQuiz({
+    formId: 'm4h2ListeningForm',
+    feedbackId: 'm4h2liFeedback',
+    resetId: 'm4h2liResetBtn',
+    serverQuizId: document.getElementById('m4h2ListeningForm')?.dataset?.serverQuizId || 'module4_h2_listening',
+    questionIds: ['m4h2lq1', 'm4h2lq2', 'm4h2lq3'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Incorrect. Listen again and try again.',
+    onReset: () => {
+      const a = m4h2liPlayer?.audio;
+      if (a){
+        a.pause();
+        a.currentTime = 0;
+        m4h2liPlayer.setStatus('Ready');
+        m4h2liPlayer.updateProgress();
+      }
+    }
+  });
+
+  // Module 5 - III. Listening
+  bindQuiz({
+    formId: 'm5ListeningForm',
+    feedbackId: 'm5liFeedback',
+    resetId: 'm5liResetBtn',
+    serverQuizId: document.getElementById('m5ListeningForm')?.dataset?.serverQuizId || 'module5_listening',
+    questionIds: ['m5lq1', 'm5lq2', 'm5lq3', 'm5lq4'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Incorrect. Listen again and try again.',
+    onReset: () => {
+      const a = m5liPlayer?.audio;
+      if (a){
+        a.pause();
+        a.currentTime = 0;
+        m5liPlayer.setStatus('Ready');
+        m5liPlayer.updateProgress();
+      }
+    }
+  });
+
+  // Module 5 - Second Hour - I. Listening
+  bindQuiz({
+    formId: 'm5h2ListeningForm',
+    feedbackId: 'm5h2liFeedback',
+    resetId: 'm5h2liResetBtn',
+    serverQuizId: document.getElementById('m5h2ListeningForm')?.dataset?.serverQuizId || 'module5_h2_listening',
+    questionIds: ['m5h2lq1', 'm5h2lq2', 'm5h2lq3', 'm5h2lq4'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Incorrect. Listen again and try again.',
+    onReset: () => {
+      const a = m5h2liPlayer?.audio;
+      if (a){
+        a.pause();
+        a.currentTime = 0;
+        m5h2liPlayer.setStatus('Ready');
+        m5h2liPlayer.updateProgress();
+      }
+    }
+  });
+
+  bindQuiz({
+    formId: 'h2ListeningForm',
+    feedbackId: 'h2liFeedback',
+    resetId: 'h2liResetBtn',
+    serverQuizId: h2ListeningQuizId,
 	  questionIds: ['h2lq1', 'h2lq2', 'h2lq3'],
 	  goodText: 'All answers are correct. Well done.',
 	  badText: 'Incorrect. Listen again and try again.',
@@ -651,20 +816,50 @@ window.initializeApp = function initializeApp() {
     badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
   });
 
-// Second Hour: IV. Reading
-const h2ReadingQuizId =
-  document.getElementById('h2ReadingForm')?.dataset?.serverQuizId ||
-  'module2_h2_reading';
+  // Module 4 - VI. Reading
+  const m4ReadingQuizId =
+    document.getElementById('m4ReadingForm')?.dataset?.serverQuizId ||
+    'module4_reading';
 
-bindQuiz({
-  formId: 'h2ReadingForm',
-  feedbackId: 'h2ReadingFeedback',
-  resetId: 'h2ReadingReset',
-  serverQuizId: h2ReadingQuizId,
-  questionIds: ['h2r1', 'h2r2', 'h2r3'],
-  goodText: 'All answers are correct. Well done.',
-  badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
-});
+  bindQuiz({
+    formId: 'm4ReadingForm',
+    feedbackId: 'm4ReadingFeedback',
+    resetId: 'm4ReadingReset',
+    serverQuizId: m4ReadingQuizId,
+    questionIds: ['m4r1', 'm4r2', 'm4r3'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
+  });
+
+// Second Hour: IV. Reading
+ const h2ReadingQuizId =
+   document.getElementById('h2ReadingForm')?.dataset?.serverQuizId ||
+   'module2_h2_reading';
+
+ bindQuiz({
+   formId: 'h2ReadingForm',
+   feedbackId: 'h2ReadingFeedback',
+   resetId: 'h2ReadingReset',
+   serverQuizId: h2ReadingQuizId,
+   questionIds: ['h2r1', 'h2r2', 'h2r3'],
+   goodText: 'All answers are correct. Well done.',
+   badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
+ });
+
+  // Module 4 - Second Hour: IV. Reading
+  const m4h2ReadingQuizId =
+    document.getElementById('m4h2ReadingForm')?.dataset?.serverQuizId ||
+    'module4_h2_reading';
+
+  bindQuiz({
+    formId: 'm4h2ReadingForm',
+    feedbackId: 'm4h2ReadingFeedback',
+    resetId: 'm4h2ReadingReset',
+    serverQuizId: m4h2ReadingQuizId,
+    questionIds: ['m4h2r1', 'm4h2r2', 'm4h2r3', 'm4h2r4'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
+  });
 
   liShowAnswersBtn?.addEventListener('click', () => {
     if (liShowAnswersBtn.hasAttribute('disabled')) return;
@@ -738,190 +933,194 @@ bindQuiz({
 
 // Practice (Tab V) drag and drop
   function setupPracticeDnD(){
-    const root = document.querySelector('#tabPractice, #tab3Practice');
-    if(!root) return;
+    const roots = Array.from(document.querySelectorAll('#tabPractice, #tab3Practice, #tab4Practice, #tab5Keywords'));
+    if(!roots.length) return;
 
-    const bank = root.querySelector('.practice-bank');
-    const tokens = Array.from(root.querySelectorAll('.token'));
-    const blanks = Array.from(root.querySelectorAll('.blank'));
-    const checkBtn = root.querySelector('#practiceCheck');
-    const resetBtn = root.querySelector('#practiceReset');
-    const feedback = root.querySelector('#practiceFeedback');
-    const dndExerciseId = root.querySelector('.practice-card')?.dataset?.exerciseId
-      || (root.id === 'tab3Practice' ? 'module3_practice' : 'module2_practice');
+    roots.forEach((root) => {
+      const bank = root.querySelector('.practice-bank');
+      const tokens = Array.from(root.querySelectorAll('.token'));
+      const blanks = Array.from(root.querySelectorAll('.blank'));
+      const checkBtn = root.querySelector('#practiceCheck');
+      const resetBtn = root.querySelector('#practiceReset');
+      const feedback = root.querySelector('#practiceFeedback');
+      const dndExerciseId = root.querySelector('.practice-card')?.dataset?.exerciseId
+        || (root.id === 'tab3Practice' ? 'module3_practice' : (root.id === 'tab4Practice' ? 'module4_practice' : 'module2_practice'));
 
-    let selectedToken = null;
+      if(!bank || !tokens.length || !blanks.length) return;
 
-    function clearMarks(){
-      blanks.forEach(b => {
-        b.classList.remove('is-correct','is-wrong','is-over');
-      });
-      tokens.forEach(t => t.classList.remove('is-correct','is-wrong'));
-    }
+      let selectedToken = null;
 
-    function setFeedback(msg){
-      if(feedback) feedback.textContent = msg || '';
-    }
-
-    function moveTokenToBank(token){
-      if(!token) return;
-      token.classList.remove('is-selected');
-      bank.appendChild(token);
-    }
-
-    function clearDragHints(){
-      root.classList.remove('drag-from-bank', 'drag-from-blank');
-    }
-
-    function getTokenInBlank(blank){
-      return blank.querySelector('.token');
-    }
-
-    function placeToken(blank, token){
-      if(!blank || !token) return;
-      const existing = getTokenInBlank(blank);
-      if(existing && existing !== token){
-        moveTokenToBank(existing);
+      function clearMarks(){
+        blanks.forEach(b => {
+          b.classList.remove('is-correct','is-wrong','is-over');
+        });
+        tokens.forEach(t => t.classList.remove('is-correct','is-wrong'));
       }
-      blank.appendChild(token);
-      token.classList.remove('is-selected');
-      selectedToken = null;
-      clearMarks();
-      setFeedback('');
-    }
 
-    function onTokenClick(token){
-      if(selectedToken === token){
+      function setFeedback(msg){
+        if(feedback) feedback.textContent = msg || '';
+      }
+
+      function moveTokenToBank(token){
+        if(!token) return;
+        token.classList.remove('is-selected');
+        bank.appendChild(token);
+      }
+
+      function clearDragHints(){
+        root.classList.remove('drag-from-bank', 'drag-from-blank');
+      }
+
+      function getTokenInBlank(blank){
+        return blank.querySelector('.token');
+      }
+
+      function placeToken(blank, token){
+        if(!blank || !token) return;
+        const existing = getTokenInBlank(blank);
+        if(existing && existing !== token){
+          moveTokenToBank(existing);
+        }
+        blank.appendChild(token);
         token.classList.remove('is-selected');
         selectedToken = null;
-        return;
+        clearMarks();
+        setFeedback('');
       }
-      tokens.forEach(t => t.classList.remove('is-selected'));
-      token.classList.add('is-selected');
-      selectedToken = token;
-    }
 
-    tokens.forEach((t, idx) => {
-      if(!t.id) t.id = `tok_${idx}_${Math.random().toString(16).slice(2)}`;
+      function onTokenClick(token){
+        if(selectedToken === token){
+          token.classList.remove('is-selected');
+          selectedToken = null;
+          return;
+        }
+        tokens.forEach(t => t.classList.remove('is-selected'));
+        token.classList.add('is-selected');
+        selectedToken = token;
+      }
 
-      t.addEventListener('click', () => onTokenClick(t));
+      tokens.forEach((t, idx) => {
+        if(!t.id) t.id = `tok_${idx}_${Math.random().toString(16).slice(2)}`;
 
-      t.addEventListener('dblclick', () => {
-        if (t.parentElement?.classList?.contains('blank')){
-          moveTokenToBank(t);
-          clearMarks();
-          setFeedback('');
+        t.addEventListener('click', () => onTokenClick(t));
+
+        t.addEventListener('dblclick', () => {
+          if (t.parentElement?.classList?.contains('blank')){
+            moveTokenToBank(t);
+            clearMarks();
+            setFeedback('');
+            clearDragHints();
+          }
+        });
+
+        t.addEventListener('keydown', (e) => {
+          if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            onTokenClick(t);
+          }
+        });
+
+        t.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', t.id);
+          e.dataTransfer.effectAllowed = 'move';
+          const fromBank = t.parentElement === bank;
+          root.classList.toggle('drag-from-bank', !!fromBank);
+          root.classList.toggle('drag-from-blank', !fromBank);
+          window.requestAnimationFrame(() => t.classList.add('is-dragging'));
+        });
+
+        t.addEventListener('dragend', () => {
+          t.classList.remove('is-dragging');
+          blanks.forEach(b => b.classList.remove('is-over'));
           clearDragHints();
-        }
+        });
       });
 
-      t.addEventListener('keydown', (e) => {
-        if(e.key === 'Enter' || e.key === ' '){
+      blanks.forEach((b) => {
+        b.addEventListener('click', () => {
+          if(selectedToken) placeToken(b, selectedToken);
+        });
+
+        b.addEventListener('keydown', (e) => {
+          if((e.key === 'Enter' || e.key === ' ') && selectedToken){
+            e.preventDefault();
+            placeToken(b, selectedToken);
+          }
+        });
+
+        b.addEventListener('dragover', (e) => {
           e.preventDefault();
-          onTokenClick(t);
-        }
-      });
+          b.classList.add('is-over');
+          e.dataTransfer.dropEffect = 'move';
+        });
 
-      t.addEventListener('dragstart', (e) => {
-        e.dataTransfer.setData('text/plain', t.id);
-        e.dataTransfer.effectAllowed = 'move';
-        const fromBank = t.parentElement === bank;
-        root.classList.toggle('drag-from-bank', !!fromBank);
-        root.classList.toggle('drag-from-blank', !fromBank);
-        window.requestAnimationFrame(() => t.classList.add('is-dragging'));
-      });
+        b.addEventListener('dragleave', () => b.classList.remove('is-over'));
 
-      t.addEventListener('dragend', () => {
-        t.classList.remove('is-dragging');
-        blanks.forEach(b => b.classList.remove('is-over'));
-        clearDragHints();
-      });
-    });
-
-    blanks.forEach((b) => {
-      b.addEventListener('click', () => {
-        if(selectedToken) placeToken(b, selectedToken);
-      });
-
-      b.addEventListener('keydown', (e) => {
-        if((e.key === 'Enter' || e.key === ' ') && selectedToken){
+        b.addEventListener('drop', (e) => {
           e.preventDefault();
-          placeToken(b, selectedToken);
-        }
+          b.classList.remove('is-over');
+          const id = e.dataTransfer.getData('text/plain');
+          const token = root.querySelector(`#${CSS.escape(id)}`);
+          if(token) placeToken(b, token);
+        });
       });
 
-      b.addEventListener('dragover', (e) => {
+      bank.addEventListener('dragover', (e) => {
         e.preventDefault();
-        b.classList.add('is-over');
         e.dataTransfer.dropEffect = 'move';
       });
 
-      b.addEventListener('dragleave', () => b.classList.remove('is-over'));
-
-      b.addEventListener('drop', (e) => {
+      bank.addEventListener('drop', (e) => {
         e.preventDefault();
-        b.classList.remove('is-over');
         const id = e.dataTransfer.getData('text/plain');
         const token = root.querySelector(`#${CSS.escape(id)}`);
-        if(token) placeToken(b, token);
-      });
-    });
-
-    bank.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-    });
-
-    bank.addEventListener('drop', (e) => {
-      e.preventDefault();
-      const id = e.dataTransfer.getData('text/plain');
-      const token = root.querySelector(`#${CSS.escape(id)}`);
-      if(token) moveTokenToBank(token);
-      clearMarks();
-      setFeedback('');
-      clearDragHints();
-    });
-
-    checkBtn?.addEventListener('click', async () => {
-      clearMarks();
-      const answers = [];
-
-      blanks.forEach((b) => {
-        const t = getTokenInBlank(b);
-        const got = t ? (t.dataset.word || t.textContent || '').trim() : '';
-        answers.push(got);
+        if(token) moveTokenToBank(token);
+        clearMarks();
+        setFeedback('');
+        clearDragHints();
       });
 
-      try{
-        const result = await checkDndOnServer(dndExerciseId, answers);
-        let correct = 0;
-        blanks.forEach((b, i) => {
+      checkBtn?.addEventListener('click', async () => {
+        clearMarks();
+        const answers = [];
+
+        blanks.forEach((b) => {
           const t = getTokenInBlank(b);
-          const isCorrect = !!result?.correctByIndex?.[i];
-          b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
-          if(t) t.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
-          if(isCorrect) correct += 1;
+          const got = t ? (t.dataset.word || t.textContent || '').trim() : '';
+          answers.push(got);
         });
-        if(correct === blanks.length){
-          setFeedback('Correct. Well done.');
-        }else{
-          setFeedback('Some answers are incorrect. Try again.');
-        }
-      }catch(_e){
-        setFeedback('Cannot validate answers now. Try again in a moment.');
-      }
-    });
 
-    resetBtn?.addEventListener('click', () => {
-      blanks.forEach((b) => {
-        const t = getTokenInBlank(b);
-        if(t) moveTokenToBank(t);
+        try{
+          const result = await checkDndOnServer(dndExerciseId, answers);
+          let correct = 0;
+          blanks.forEach((b, i) => {
+            const t = getTokenInBlank(b);
+            const isCorrect = !!result?.correctByIndex?.[i];
+            b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+            if(t) t.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+            if(isCorrect) correct += 1;
+          });
+          if(correct === blanks.length){
+            setFeedback('Correct. Well done.');
+          }else{
+            setFeedback('Some answers are incorrect. Try again.');
+          }
+        }catch(_e){
+          setFeedback('Cannot validate answers now. Try again in a moment.');
+        }
       });
-      tokens.forEach(t => t.classList.remove('is-selected'));
-      selectedToken = null;
-      clearMarks();
-      setFeedback('');
-      clearDragHints();
+
+      resetBtn?.addEventListener('click', () => {
+        blanks.forEach((b) => {
+          const t = getTokenInBlank(b);
+          if(t) moveTokenToBank(t);
+        });
+        tokens.forEach(t => t.classList.remove('is-selected'));
+        selectedToken = null;
+        clearMarks();
+        setFeedback('');
+        clearDragHints();
+      });
     });
   }
 
@@ -1106,6 +1305,381 @@ bindQuiz({
         if(t) moveTokenToBank(t);
       });
       tokens.forEach((t) => t.classList.remove('is-selected'));
+      selectedToken = null;
+      clearMarks();
+      setFeedback('');
+      clearDragHints();
+    });
+  }
+
+  // Module 3 - Second Hour - VI. Learning Recall & Feedback (drag and drop)
+  function setupModule3Hour2RecallDnD(){
+    const root = document.querySelector('#tab3Hour2Recall');
+    if(!root) return;
+
+    const card = root.querySelector('.practice-card');
+    if(!card) return;
+
+    const bank = card.querySelector('.practice-bank');
+    const tokens = Array.from(card.querySelectorAll('.token'));
+    const blanks = Array.from(card.querySelectorAll('.blank'));
+    const checkBtn = card.querySelector('#m3h2RecallCheck');
+    const resetBtn = card.querySelector('#m3h2RecallReset');
+    const feedback = card.querySelector('#m3h2RecallFeedback');
+    const dndExerciseId = card.dataset.exerciseId || 'module3_h2_recall';
+
+    let selectedToken = null;
+
+    function clearMarks(){
+      blanks.forEach(b => b.classList.remove('is-correct','is-wrong','is-over'));
+      tokens.forEach(t => t.classList.remove('is-correct','is-wrong'));
+    }
+
+    function setFeedback(msg){
+      if(feedback) feedback.textContent = msg || '';
+    }
+
+    function moveTokenToBank(token){
+      if(!token || !bank) return;
+      token.classList.remove('is-selected');
+      bank.appendChild(token);
+    }
+
+    function clearDragHints(){
+      root.classList.remove('drag-from-bank', 'drag-from-blank');
+    }
+
+    function getTokenInBlank(blank){
+      return blank.querySelector('.token');
+    }
+
+    function placeToken(blank, token){
+      if(!blank || !token) return;
+      const existing = getTokenInBlank(blank);
+      if(existing && existing !== token) moveTokenToBank(existing);
+      blank.appendChild(token);
+      token.classList.remove('is-selected');
+      selectedToken = null;
+      clearMarks();
+      setFeedback('');
+    }
+
+    function onTokenClick(token){
+      if(selectedToken === token){
+        token.classList.remove('is-selected');
+        selectedToken = null;
+        return;
+      }
+      tokens.forEach(t => t.classList.remove('is-selected'));
+      token.classList.add('is-selected');
+      selectedToken = token;
+    }
+
+    tokens.forEach((t, idx) => {
+      if(!t.id) t.id = `m3h2rec_tok_${idx}_${Math.random().toString(16).slice(2)}`;
+
+      t.addEventListener('click', () => onTokenClick(t));
+
+      t.addEventListener('dblclick', () => {
+        if(t.parentElement?.classList?.contains('blank')){
+          moveTokenToBank(t);
+          clearMarks();
+          setFeedback('');
+          clearDragHints();
+        }
+      });
+
+      t.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          onTokenClick(t);
+        }
+      });
+
+      t.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', t.id);
+        e.dataTransfer.effectAllowed = 'move';
+        const fromBank = t.parentElement === bank;
+        root.classList.toggle('drag-from-bank', !!fromBank);
+        root.classList.toggle('drag-from-blank', !fromBank);
+        window.requestAnimationFrame(() => t.classList.add('is-dragging'));
+      });
+
+      t.addEventListener('dragend', () => {
+        t.classList.remove('is-dragging');
+        blanks.forEach(b => b.classList.remove('is-over'));
+        clearDragHints();
+      });
+    });
+
+    blanks.forEach((b) => {
+      b.addEventListener('click', () => {
+        if(selectedToken) placeToken(b, selectedToken);
+      });
+
+      b.addEventListener('keydown', (e) => {
+        if((e.key === 'Enter' || e.key === ' ') && selectedToken){
+          e.preventDefault();
+          placeToken(b, selectedToken);
+        }
+      });
+
+      b.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        b.classList.add('is-over');
+        e.dataTransfer.dropEffect = 'move';
+      });
+
+      b.addEventListener('dragleave', () => b.classList.remove('is-over'));
+
+      b.addEventListener('drop', (e) => {
+        e.preventDefault();
+        b.classList.remove('is-over');
+        const id = e.dataTransfer.getData('text/plain');
+        const token = card.querySelector(`#${CSS.escape(id)}`);
+        if(token) placeToken(b, token);
+      });
+    });
+
+    bank?.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    });
+
+    bank?.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const id = e.dataTransfer.getData('text/plain');
+      const token = card.querySelector(`#${CSS.escape(id)}`);
+      if(token) moveTokenToBank(token);
+      clearMarks();
+      setFeedback('');
+      clearDragHints();
+    });
+
+    checkBtn?.addEventListener('click', async () => {
+      clearMarks();
+      const answers = [];
+
+      blanks.forEach((b) => {
+        const t = getTokenInBlank(b);
+        const got = t ? (t.dataset.word || t.textContent || '').trim() : '';
+        answers.push(got);
+      });
+
+      try{
+        const result = await checkDndOnServer(dndExerciseId, answers);
+        let correct = 0;
+        blanks.forEach((b, i) => {
+          const t = getTokenInBlank(b);
+          const isCorrect = !!result?.correctByIndex?.[i];
+          b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+          if(t) t.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+          if(isCorrect) correct += 1;
+        });
+        if(correct === blanks.length){
+          setFeedback('Correct. Well done.');
+        }else{
+          setFeedback('Some answers are incorrect. Try again.');
+        }
+      }catch(_e){
+        setFeedback('Cannot validate answers now. Try again in a moment.');
+      }
+    });
+
+    resetBtn?.addEventListener('click', () => {
+      blanks.forEach((b) => {
+        const t = getTokenInBlank(b);
+        if(t) moveTokenToBank(t);
+      });
+      tokens.forEach(t => t.classList.remove('is-selected'));
+      selectedToken = null;
+      clearMarks();
+      setFeedback('');
+      clearDragHints();
+    });
+  }
+
+  function setupModule4Activity2DnD(){
+    const root = document.querySelector('#tab4Exercise');
+    if(!root) return;
+
+    const card = root.querySelector('.m4ul-a2-card');
+    if(!card) return;
+
+    const bank = card.querySelector('#m4a2Bank');
+    const tokens = Array.from(card.querySelectorAll('.token'));
+    const blanks = Array.from(card.querySelectorAll('.blank'));
+    const checkBtn = card.querySelector('#m4a2Check');
+    const resetBtn = card.querySelector('#m4a2Reset');
+    const feedback = card.querySelector('#m4a2Feedback');
+    const dndExerciseId = card.dataset.exerciseId || 'module4_activity2';
+
+    let selectedToken = null;
+
+    function clearMarks(){
+      blanks.forEach((b) => b.classList.remove('is-correct','is-wrong','is-over'));
+      tokens.forEach((t) => t.classList.remove('is-correct','is-wrong'));
+    }
+
+    function setFeedback(msg){
+      if(feedback) feedback.textContent = msg || '';
+    }
+
+    function moveTokenToBank(token){
+      if(!token) return;
+      token.classList.remove('is-selected');
+      bank.appendChild(token);
+    }
+
+    function clearDragHints(){
+      root.classList.remove('drag-from-bank', 'drag-from-blank');
+    }
+
+    function getTokenInBlank(blank){
+      return blank.querySelector('.token');
+    }
+
+    function placeToken(blank, token){
+      if(!blank || !token) return;
+      const existing = getTokenInBlank(blank);
+      if(existing && existing !== token){
+        moveTokenToBank(existing);
+      }
+      blank.appendChild(token);
+      token.classList.remove('is-selected');
+      selectedToken = null;
+      clearMarks();
+      setFeedback('');
+    }
+
+    function onTokenClick(token){
+      if(selectedToken === token){
+        token.classList.remove('is-selected');
+        selectedToken = null;
+        return;
+      }
+      tokens.forEach((t) => t.classList.remove('is-selected'));
+      token.classList.add('is-selected');
+      selectedToken = token;
+    }
+
+    tokens.forEach((t, idx) => {
+      if(!t.id) t.id = `m4a2tok_${idx}_${Math.random().toString(16).slice(2)}`;
+
+      t.addEventListener('click', () => onTokenClick(t));
+
+      t.addEventListener('dblclick', () => {
+        if (t.parentElement?.classList?.contains('blank')){
+          moveTokenToBank(t);
+          clearMarks();
+          setFeedback('');
+          clearDragHints();
+        }
+      });
+
+      t.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          onTokenClick(t);
+        }
+      });
+
+      t.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', t.id);
+        e.dataTransfer.effectAllowed = 'move';
+        const fromBank = t.parentElement === bank;
+        root.classList.toggle('drag-from-bank', !!fromBank);
+        root.classList.toggle('drag-from-blank', !fromBank);
+        window.requestAnimationFrame(() => t.classList.add('is-dragging'));
+      });
+
+      t.addEventListener('dragend', () => {
+        t.classList.remove('is-dragging');
+        blanks.forEach(b => b.classList.remove('is-over'));
+        clearDragHints();
+      });
+    });
+
+    blanks.forEach((b) => {
+      b.addEventListener('click', () => {
+        if(selectedToken) placeToken(b, selectedToken);
+      });
+
+      b.addEventListener('keydown', (e) => {
+        if((e.key === 'Enter' || e.key === ' ') && selectedToken){
+          e.preventDefault();
+          placeToken(b, selectedToken);
+        }
+      });
+
+      b.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        b.classList.add('is-over');
+        e.dataTransfer.dropEffect = 'move';
+      });
+
+      b.addEventListener('dragleave', () => b.classList.remove('is-over'));
+
+      b.addEventListener('drop', (e) => {
+        e.preventDefault();
+        b.classList.remove('is-over');
+        const id = e.dataTransfer.getData('text/plain');
+        const token = root.querySelector(`#${CSS.escape(id)}`);
+        if(token) placeToken(b, token);
+      });
+    });
+
+    bank.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    });
+
+    bank.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const id = e.dataTransfer.getData('text/plain');
+      const token = root.querySelector(`#${CSS.escape(id)}`);
+      if(token) moveTokenToBank(token);
+      clearMarks();
+      setFeedback('');
+      clearDragHints();
+    });
+
+    checkBtn?.addEventListener('click', async () => {
+      clearMarks();
+      const answers = [];
+
+      blanks.forEach((b) => {
+        const t = getTokenInBlank(b);
+        const got = t ? (t.dataset.word || t.textContent || '').trim() : '';
+        answers.push(got);
+      });
+
+      try{
+        const result = await checkDndOnServer(dndExerciseId, answers);
+        let correct = 0;
+        blanks.forEach((b, i) => {
+          const t = getTokenInBlank(b);
+          const isCorrect = !!result?.correctByIndex?.[i];
+          b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+          if(t) t.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+          if(isCorrect) correct += 1;
+        });
+        if(correct === blanks.length){
+          setFeedback('Correct. Well done.');
+        }else{
+          setFeedback('Some answers are incorrect. Try again.');
+        }
+      }catch(_e){
+        setFeedback('Cannot validate answers now. Try again in a moment.');
+      }
+    });
+
+    resetBtn?.addEventListener('click', () => {
+      blanks.forEach((b) => {
+        const t = getTokenInBlank(b);
+        if(t) moveTokenToBank(t);
+      });
+      tokens.forEach(t => t.classList.remove('is-selected'));
       selectedToken = null;
       clearMarks();
       setFeedback('');
@@ -1581,30 +2155,237 @@ bindQuiz({
 
   // Hour 2 (Tab II) Key Words matching drag and drop
   function setupHour2KeywordsMatchDnD(){
-    const root = document.querySelector('#tabHour2Keywords, #tab3Hour2Keywords');
+    const roots = Array.from(document.querySelectorAll('#tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords'));
+    if(!roots.length) return;
+
+    roots.forEach((root) => {
+      const bank = root.querySelector('.practice-bank');
+      const tokens = Array.from(root.querySelectorAll('.token'));
+      const blanks = Array.from(root.querySelectorAll('.blank'));
+      const checkBtn = root.querySelector('#h2kwCheck');
+      const resetBtn = root.querySelector('#h2kwReset');
+      const feedback = root.querySelector('#h2kwFeedback');
+      const h2kwExerciseId =
+        root.querySelector('.practice-card')?.dataset?.exerciseId
+        || (
+          root.id === 'tab4Hour2Keywords'
+            ? 'module4_h2_keywords'
+            : (root.id === 'tab3Hour2Keywords' ? 'module3_h2_keywords' : 'module2_h2_keywords')
+        );
+
+      if(!bank || !blanks.length || !tokens.length) return;
+
+      let selectedToken = null;
+
+      function clearMarks(){
+        blanks.forEach(b => {
+          b.classList.remove('is-correct','is-wrong','is-over');
+        });
+        tokens.forEach(t => t.classList.remove('is-correct','is-wrong'));
+      }
+
+      function setFeedback(msg){
+        if(!feedback) return;
+        feedback.textContent = msg;
+      }
+
+      function clearDragHints(){
+        root.classList.remove('drag-from-bank', 'drag-from-blank');
+      }
+
+      function getTokenInBlank(blank){
+        return blank.querySelector('.token');
+      }
+
+      function returnTokenToBank(token){
+        if(!token || !bank) return;
+        token.classList.remove('is-placed');
+        bank.appendChild(token);
+      }
+
+      function placeToken(blank, token){
+        if(!blank || !token) return;
+
+        // If blank already has a token, return it to bank
+        const existing = getTokenInBlank(blank);
+        if(existing && existing !== token){
+          returnTokenToBank(existing);
+        }
+
+        token.classList.add('is-placed');
+        blank.textContent = '';
+        blank.appendChild(token);
+        selectedToken = null;
+
+        tokens.forEach(t => t.classList.remove('is-selected'));
+        clearMarks();
+        setFeedback('');
+      }
+
+      function onTokenClick(token){
+        tokens.forEach(t => t.classList.remove('is-selected'));
+        token.classList.add('is-selected');
+        selectedToken = token;
+      }
+
+      tokens.forEach((t, idx) => {
+        if(!t.id) t.id = `sptok_${idx}_${Math.random().toString(16).slice(2)}`;
+
+        t.addEventListener('click', () => onTokenClick(t));
+
+        t.addEventListener('dblclick', () => {
+          if (t.parentElement?.classList?.contains('blank')){
+            returnTokenToBank(t);
+            clearMarks();
+            setFeedback('');
+            clearDragHints();
+          }
+        });
+
+        t.addEventListener('keydown', (e) => {
+          if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            onTokenClick(t);
+          }
+        });
+
+        t.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', t.id);
+          e.dataTransfer.effectAllowed = 'move';
+          const fromBank = t.parentElement === bank;
+          root.classList.toggle('drag-from-bank', !!fromBank);
+          root.classList.toggle('drag-from-blank', !fromBank);
+          window.requestAnimationFrame(() => t.classList.add('is-dragging'));
+        });
+
+        t.addEventListener('dragend', () => {
+          t.classList.remove('is-dragging');
+          blanks.forEach(b => b.classList.remove('is-over'));
+          clearDragHints();
+        });
+      });
+
+      blanks.forEach((b) => {
+        b.addEventListener('click', () => {
+          if(selectedToken) placeToken(b, selectedToken);
+        });
+
+        b.addEventListener('keydown', (e) => {
+          if((e.key === 'Enter' || e.key === ' ') && selectedToken){
+            e.preventDefault();
+            placeToken(b, selectedToken);
+          }
+        });
+
+        b.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          b.classList.add('is-over');
+        });
+
+        b.addEventListener('dragleave', () => {
+          b.classList.remove('is-over');
+        });
+
+        b.addEventListener('drop', (e) => {
+          e.preventDefault();
+          b.classList.remove('is-over');
+          const id = e.dataTransfer.getData('text/plain');
+          const token = root.querySelector('#' + CSS.escape(id));
+          if(token) placeToken(b, token);
+        });
+      });
+
+      bank.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+      });
+
+      bank.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const id = e.dataTransfer.getData('text/plain');
+        const token = root.querySelector('#' + CSS.escape(id));
+        if(token) returnTokenToBank(token);
+        clearMarks();
+        setFeedback('');
+      });
+
+      function reset(){
+        clearMarks();
+        setFeedback('');
+        clearDragHints();
+        blanks.forEach((b) => {
+          const t = getTokenInBlank(b);
+          if(t) returnTokenToBank(t);
+          b.textContent = '';
+        });
+        tokens.forEach(t => t.classList.remove('is-selected'));
+        selectedToken = null;
+      }
+
+      async function check(){
+        clearMarks();
+        const answers = [];
+
+        blanks.forEach((b) => {
+          const t = getTokenInBlank(b);
+          const got = t ? (t.dataset.word || t.textContent || '').trim() : '';
+          answers.push(got);
+        });
+
+        try{
+          const result = await checkDndOnServer(h2kwExerciseId, answers);
+          let correct = 0;
+          blanks.forEach((b, i) => {
+            const t = getTokenInBlank(b);
+            const isCorrect = !!result?.correctByIndex?.[i];
+            b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+            if(t) t.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+            if(isCorrect) correct += 1;
+          });
+          if(correct === blanks.length){
+            setFeedback('All correct. Well done.');
+          }else{
+            setFeedback('Some answers are wrong. Try again.');
+          }
+        }catch(_e){
+          setFeedback('Cannot validate answers now. Try again in a moment.');
+        }
+      }
+
+      checkBtn?.addEventListener('click', check);
+      resetBtn?.addEventListener('click', reset);
+
+      reset();
+    });
+  }
+
+  // Module 5 - IV. Language Revision matching drag and drop (letters A-D)
+  function setupModule5RevisionDnD(){
+    const root = document.querySelector('#tab5Revision');
     if(!root) return;
 
-    const bank = root.querySelector('.practice-bank');
-    const tokens = Array.from(root.querySelectorAll('.token'));
-    const blanks = Array.from(root.querySelectorAll('.blank'));
-    const checkBtn = root.querySelector('#h2kwCheck');
-    const resetBtn = root.querySelector('#h2kwReset');
-    const feedback = root.querySelector('#h2kwFeedback');
-    const h2kwExerciseId = root.querySelector('.practice-card')?.dataset?.exerciseId
-      || (root.id === 'tab3Hour2Keywords' ? 'module3_h2_keywords' : 'module2_h2_keywords');
+    const card = root.querySelector('.m5rev-match');
+    if(!card) return;
+
+    const bank = card.querySelector('.practice-bank');
+    const tokens = Array.from(card.querySelectorAll('.token'));
+    const blanks = Array.from(card.querySelectorAll('.blank'));
+    const checkBtn = card.querySelector('#m5revCheck');
+    const resetBtn = card.querySelector('#m5revReset');
+    const feedback = card.querySelector('#m5revFeedback');
+    const exerciseId = card.dataset.exerciseId || 'module5_h1_revision';
+
+    if(!bank || !tokens.length || !blanks.length) return;
 
     let selectedToken = null;
 
     function clearMarks(){
-      blanks.forEach(b => {
-        b.classList.remove('is-correct','is-wrong','is-over');
-      });
-      tokens.forEach(t => t.classList.remove('is-correct','is-wrong'));
+      blanks.forEach(b => b.classList.remove('is-correct','is-wrong','is-over'));
+      tokens.forEach(t => t.classList.remove('is-correct','is-wrong','is-selected'));
     }
 
     function setFeedback(msg){
-      if(!feedback) return;
-      feedback.textContent = msg;
+      if(feedback) feedback.textContent = msg || '';
     }
 
     function clearDragHints(){
@@ -1616,38 +2397,38 @@ bindQuiz({
     }
 
     function returnTokenToBank(token){
-      if(!token || !bank) return;
-      token.classList.remove('is-placed');
+      if(!token) return;
+      token.classList.remove('is-selected');
       bank.appendChild(token);
     }
 
     function placeToken(blank, token){
       if(!blank || !token) return;
-
-      // If blank already has a token, return it to bank
       const existing = getTokenInBlank(blank);
       if(existing && existing !== token){
         returnTokenToBank(existing);
       }
-
-      token.classList.add('is-placed');
       blank.textContent = '';
       blank.appendChild(token);
+      token.classList.remove('is-selected');
       selectedToken = null;
-
-      tokens.forEach(t => t.classList.remove('is-selected'));
       clearMarks();
       setFeedback('');
     }
 
     function onTokenClick(token){
+      if(selectedToken === token){
+        token.classList.remove('is-selected');
+        selectedToken = null;
+        return;
+      }
       tokens.forEach(t => t.classList.remove('is-selected'));
       token.classList.add('is-selected');
       selectedToken = token;
     }
 
     tokens.forEach((t, idx) => {
-      if(!t.id) t.id = `sptok_${idx}_${Math.random().toString(16).slice(2)}`;
+      if(!t.id) t.id = `m5revtok_${idx}_${Math.random().toString(16).slice(2)}`;
 
       t.addEventListener('click', () => onTokenClick(t));
 
@@ -1657,14 +2438,6 @@ bindQuiz({
           clearMarks();
           setFeedback('');
           clearDragHints();
-        }
-      });
-
-      t.addEventListener('dblclick', () => {
-        if (t.parentElement?.classList?.contains('blank')){
-          returnTokenToBank(t);
-          clearMarks();
-          setFeedback('');
         }
       });
 
@@ -1708,15 +2481,13 @@ bindQuiz({
         b.classList.add('is-over');
       });
 
-      b.addEventListener('dragleave', () => {
-        b.classList.remove('is-over');
-      });
+      b.addEventListener('dragleave', () => b.classList.remove('is-over'));
 
       b.addEventListener('drop', (e) => {
         e.preventDefault();
         b.classList.remove('is-over');
         const id = e.dataTransfer.getData('text/plain');
-        const token = root.querySelector('#' + CSS.escape(id));
+        const token = card.querySelector('#' + CSS.escape(id));
         if(token) placeToken(b, token);
       });
     });
@@ -1729,10 +2500,11 @@ bindQuiz({
     bank.addEventListener('drop', (e) => {
       e.preventDefault();
       const id = e.dataTransfer.getData('text/plain');
-      const token = root.querySelector('#' + CSS.escape(id));
+      const token = card.querySelector('#' + CSS.escape(id));
       if(token) returnTokenToBank(token);
       clearMarks();
       setFeedback('');
+      clearDragHints();
     });
 
     function reset(){
@@ -1744,22 +2516,18 @@ bindQuiz({
         if(t) returnTokenToBank(t);
         b.textContent = '';
       });
-      tokens.forEach(t => t.classList.remove('is-selected'));
       selectedToken = null;
     }
 
     async function check(){
       clearMarks();
-      const answers = [];
-
-      blanks.forEach((b) => {
+      const answers = blanks.map((b) => {
         const t = getTokenInBlank(b);
-        const got = t ? (t.dataset.word || t.textContent || '').trim() : '';
-        answers.push(got);
+        return t ? (t.dataset.word || t.textContent || '').trim() : '';
       });
 
       try{
-        const result = await checkDndOnServer(h2kwExerciseId, answers);
+        const result = await checkDndOnServer(exerciseId, answers);
         let correct = 0;
         blanks.forEach((b, i) => {
           const t = getTokenInBlank(b);
@@ -1790,6 +2558,8 @@ bindQuiz({
   // Enable Practice interactions
   setupPracticeDnD();
   setupModule3Activity2DnD();
+  setupModule4Activity2DnD();
+  setupModule3Hour2RecallDnD();
 
   // Enable Mini Mock writing interactions
   setupMockWritingDnD();
@@ -1800,6 +2570,9 @@ bindQuiz({
 
   // Enable Hour 2, II. Key Words matching
   setupHour2KeywordsMatchDnD();
+
+  // Enable Module 5 - IV. Language Revision matching
+  setupModule5RevisionDnD();
 };
 
 // Call on page load

@@ -142,7 +142,10 @@
 /* Reading layout: match TASK-style headings for KEY WORDS / READING TEXT */
 #tabReading .reading-keywords,
 #tab3Reading .reading-keywords,
-#tabHour2Reading .reading-keywords{
+#tab4Reading .reading-keywords,
+#tabHour2Reading .reading-keywords,
+#tab3Hour2Reading .reading-keywords,
+#tab4Hour2Reading .reading-keywords{
   background: #fff;
 }
 
@@ -150,8 +153,14 @@
 #tabReading .reading-section-title.reading-task-head,
 #tab3Reading .reading-kw-head.reading-task-head,
 #tab3Reading .reading-section-title.reading-task-head,
+#tab4Reading .reading-kw-head.reading-task-head,
+#tab4Reading .reading-section-title.reading-task-head,
 #tabHour2Reading .reading-kw-head.reading-task-head,
-#tabHour2Reading .reading-section-title.reading-task-head{
+#tabHour2Reading .reading-section-title.reading-task-head,
+#tab3Hour2Reading .reading-kw-head.reading-task-head,
+#tab3Hour2Reading .reading-section-title.reading-task-head,
+#tab4Hour2Reading .reading-kw-head.reading-task-head,
+#tab4Hour2Reading .reading-section-title.reading-task-head{
   font-weight: 900;
   letter-spacing: .4px;
   font-size: 18px;
@@ -162,16 +171,39 @@
 
 #tabReading .speak-btn,
 #tab3Reading .speak-btn,
-#tabHour2Reading .speak-btn{
+#tab4Reading .speak-btn,
+#tabHour2Reading .speak-btn,
+#tab3Hour2Reading .speak-btn,
+#tab4Hour2Reading .speak-btn{
   padding: 8px 14px;
   font-size: 17px;
 }
 
 #tabReading .speak-ico,
 #tab3Reading .speak-ico,
-#tabHour2Reading .speak-ico{
+#tab4Reading .speak-ico,
+#tabHour2Reading .speak-ico,
+#tab3Hour2Reading .speak-ico,
+#tab4Hour2Reading .speak-ico{
   width: 18px;
   height: 18px;
+}
+
+.reading-wordcloud{
+  border: 2px dashed rgba(123,59,82,.25);
+  background: rgba(255,255,255,.70);
+  border-radius: 18px;
+  padding: 12px;
+  display:flex;
+  justify-content:center;
+}
+
+.reading-wordcloud img{
+  width: min(560px, 100%);
+  height: auto;
+  display:block;
+  border-radius: 14px;
+  border: 2px solid rgba(123,59,82,.22);
 }
 
 

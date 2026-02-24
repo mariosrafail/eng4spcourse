@@ -128,7 +128,12 @@
 
 #tabListening .unit-title,
 #tab1Listening .unit-title,
-#tabHour2Listening .unit-title{
+#tabHour2Listening .unit-title,
+#tab3Hour2Listening .unit-title,
+#tab4Hour2Listening .unit-title{
+  color: rgba(95,55,106,.98);
+}
+#tab4Listening .unit-title{
   color: rgba(95,55,106,.98);
 }
 #tabMockListening1 .unit-title,
@@ -146,7 +151,14 @@
 }
 #tabListening .unit-icon,
 #tab1Listening .unit-icon,
-#tabHour2Listening .unit-icon{
+#tabHour2Listening .unit-icon,
+#tab3Hour2Listening .unit-icon,
+#tab4Hour2Listening .unit-icon{
+  background: rgba(140,91,150,.10);
+  border-color: rgba(140,91,150,.35);
+  color: rgba(95,55,106,.95);
+}
+#tab4Listening .unit-icon{
   background: rgba(140,91,150,.10);
   border-color: rgba(140,91,150,.35);
   color: rgba(95,55,106,.95);
@@ -183,11 +195,19 @@
 }
 
 #tabReading .unit-title,
-#tabHour2Reading .unit-title{
+#tab3Reading .unit-title,
+#tab4Reading .unit-title,
+#tabHour2Reading .unit-title,
+#tab3Hour2Reading .unit-title,
+#tab4Hour2Reading .unit-title{
   color: rgba(123,59,82,.98);
 }
 #tabReading .unit-icon,
-#tabHour2Reading .unit-icon{
+#tab3Reading .unit-icon,
+#tab4Reading .unit-icon,
+#tabHour2Reading .unit-icon,
+#tab3Hour2Reading .unit-icon,
+#tab4Hour2Reading .unit-icon{
   background: rgba(123,59,82,.10);
   border-color: rgba(123,59,82,.30);
   color: rgba(123,59,82,.95);
@@ -196,16 +216,36 @@
 #tabSpeaking .unit-title{
   color: rgba(47,107,87,.98);
 }
+#tab3Speaking .unit-title{
+  color: rgba(47,107,87,.98);
+}
+#tab4Speaking .unit-title{
+  color: rgba(47,107,87,.98);
+}
 #tabSpeaking .unit-icon{
   background: rgba(47,107,87,.10);
   border-color: rgba(47,107,87,.30);
   color: rgba(47,107,87,.95);
 }
+#tab3Speaking .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.30);
+  color: rgba(47,107,87,.95);
+}
+#tab4Speaking .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.30);
+  color: rgba(47,107,87,.95);
+}
 
-#tabHour2Keywords .unit-title{
+#tabHour2Keywords .unit-title,
+#tab3Hour2Keywords .unit-title,
+#tab4Hour2Keywords .unit-title{
   color: rgba(47,79,138,.98);
 }
-#tabHour2Keywords .unit-icon{
+#tabHour2Keywords .unit-icon,
+#tab3Hour2Keywords .unit-icon,
+#tab4Hour2Keywords .unit-icon{
   background: rgba(47,79,138,.10);
   border-color: rgba(47,79,138,.30);
   color: rgba(47,79,138,.95);
@@ -214,9 +254,35 @@
 #tabHour2Writing .unit-title{
   color: rgba(18,72,58,.98);
 }
+#tab3Hour2Writing .unit-title{
+  color: rgba(18,72,58,.98);
+}
+#tab4Hour2Writing .unit-title{
+  color: rgba(18,72,58,.98);
+}
 #tabHour2Writing .unit-icon{
   background: rgba(47,107,87,.10);
   border-color: rgba(47,107,87,.35);
   color: rgba(18,72,58,.95);
+}
+#tab3Hour2Writing .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.35);
+  color: rgba(18,72,58,.95);
+}
+#tab4Hour2Writing .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.35);
+  color: rgba(18,72,58,.95);
+}
+
+#tab3Hour2Recall .unit-title{
+  color: rgba(183,52,73,.98);
+}
+
+#tab3Hour2Recall .unit-icon{
+  background: rgba(183,52,73,.10);
+  border-color: rgba(183,52,73,.30);
+  color: rgba(183,52,73,.95);
 }
 

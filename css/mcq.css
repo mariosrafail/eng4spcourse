@@ -9,13 +9,23 @@
 #tabListening :is(.quiz, .quiz-form, .li-quiz),
 #tab1Listening :is(.quiz, .quiz-form, .li-quiz),
 #tabHour2Listening :is(.quiz, .quiz-form, .li-quiz),
-#tab1Hour2Listening :is(.quiz, .quiz-form, .li-quiz){
+#tab3Hour2Listening :is(.quiz, .quiz-form, .li-quiz),
+#tab5Listening :is(.quiz, .quiz-form, .li-quiz),
+#tab4Listening :is(.quiz, .quiz-form, .li-quiz),
+#tab4Hour2Listening :is(.quiz, .quiz-form, .li-quiz),
+#tab1Hour2Listening :is(.quiz, .quiz-form, .li-quiz),
+#tab5Hour2Exercise :is(.quiz, .quiz-form, .li-quiz){
   --mcq-accent-rgb: var(--theme-listening-rgb);
 }
 
 /* Key words (Module 3): blue */
 #tab3Keywords :is(.quiz, .quiz-form, .li-quiz){
   --mcq-accent-rgb: var(--theme-blue-rgb);
+}
+
+/* Speaking (Module 5, Hour 1 - V) */
+#tab5Practice :is(.quiz, .quiz-form, .li-quiz){
+  --mcq-accent-rgb: var(--theme-green-rgb);
 }
 
 /* All MCQ blocks: number badges + separators follow section theme */
@@ -31,8 +41,12 @@
 
 /* Reading family: soft red/burgundy */
 #tabReading :is(.quiz, .quiz-form, .li-quiz),
+#tab3Reading :is(.quiz, .quiz-form, .li-quiz),
+#tab4Reading :is(.quiz, .quiz-form, .li-quiz),
 #tab1Reading :is(.quiz, .quiz-form, .li-quiz),
-#tabHour2Reading :is(.quiz, .quiz-form, .li-quiz){
+#tabHour2Reading :is(.quiz, .quiz-form, .li-quiz),
+#tab3Hour2Reading :is(.quiz, .quiz-form, .li-quiz),
+#tab4Hour2Reading :is(.quiz, .quiz-form, .li-quiz){
   --mcq-accent-rgb: var(--theme-red-rgb);
 }
 

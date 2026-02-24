@@ -5,6 +5,11 @@
   padding: 6px 10px 18px 10px;
 }
 
+.unit-icon--blue{
+  background: rgba(47,79,138,.10);
+  border-color: rgba(47,79,138,.35);
+}
+
 .kw-card{
   background: rgba(255,255,255,.76);
   border: 2px solid rgba(138,162,216,.75);
@@ -189,7 +194,12 @@
 }
 
 .m3kw-section{
-  padding-top: 2px;
+  border: 2px solid rgba(47,79,138,.22);
+  background: rgba(255,255,255,.86);
+  border-radius: 22px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+  margin: 0 0 18px 0;
 }
 
 .m3kw-divider{

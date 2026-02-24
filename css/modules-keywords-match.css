@@ -5,20 +5,23 @@
 }
 
 #tabHour2Keywords .h2kw-bank,
-#tab3Hour2Keywords .h2kw-bank{
+#tab3Hour2Keywords .h2kw-bank,
+#tab4Hour2Keywords .h2kw-bank{
   background: rgba(47,79,138,.10);
   border-color: rgba(47,79,138,.22);
 }
 
 #tabHour2Keywords .token,
-#tab3Hour2Keywords .token{
+#tab3Hour2Keywords .token,
+#tab4Hour2Keywords .token{
   border-color: rgba(47,79,138,.30);
   max-width: 100%;
   white-space: normal;
 }
 
 #tabHour2Keywords .blank,
-#tab3Hour2Keywords .blank{
+#tab3Hour2Keywords .blank,
+#tab4Hour2Keywords .blank{
   width: 420px;
   min-width: 420px;
   max-width: 420px;
@@ -33,25 +36,29 @@
 }
 
 #tabHour2Keywords .blank.is-over,
-#tab3Hour2Keywords .blank.is-over{
+#tab3Hour2Keywords .blank.is-over,
+#tab4Hour2Keywords .blank.is-over{
   border-bottom-color: rgba(47,79,138,.75);
   background: rgba(47,79,138,.16);
 }
 
 #tabHour2Keywords .blank.is-correct,
-#tab3Hour2Keywords .blank.is-correct{
+#tab3Hour2Keywords .blank.is-correct,
+#tab4Hour2Keywords .blank.is-correct{
   border-bottom-color: rgba(18,133,77,.82);
   background: rgba(18,133,77,.20);
 }
 
 #tabHour2Keywords .blank.is-wrong,
-#tab3Hour2Keywords .blank.is-wrong{
+#tab3Hour2Keywords .blank.is-wrong,
+#tab4Hour2Keywords .blank.is-wrong{
   border-bottom-color: rgba(209,42,42,.82);
   background: rgba(209,42,42,.20);
 }
 
 #tabHour2Keywords .h2kw-qs li,
-#tab3Hour2Keywords .h2kw-qs li{
+#tab3Hour2Keywords .h2kw-qs li,
+#tab4Hour2Keywords .h2kw-qs li{
   display: flex;
   align-items: center;
   gap: 14px;
@@ -59,17 +66,20 @@
 }
 
 #tabHour2Keywords .h2kw-qs li:last-child,
-#tab3Hour2Keywords .h2kw-qs li:last-child{
+#tab3Hour2Keywords .h2kw-qs li:last-child,
+#tab4Hour2Keywords .h2kw-qs li:last-child{
   margin-bottom: 0;
 }
 
 #tabHour2Keywords .h2kw-qs br,
-#tab3Hour2Keywords .h2kw-qs br{
+#tab3Hour2Keywords .h2kw-qs br,
+#tab4Hour2Keywords .h2kw-qs br{
   display: none;
 }
 
 #tabHour2Keywords .blank .token,
-#tab3Hour2Keywords .blank .token{
+#tab3Hour2Keywords .blank .token,
+#tab4Hour2Keywords .blank .token{
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -86,21 +96,24 @@
 }
 
 #tabHour2Keywords.drag-from-bank .blank,
-#tab3Hour2Keywords.drag-from-bank .blank{
+#tab3Hour2Keywords.drag-from-bank .blank,
+#tab4Hour2Keywords.drag-from-bank .blank{
   border-bottom-color: rgba(47,79,138,.72);
   box-shadow: 0 0 0 4px rgba(47,79,138,.12);
   background: rgba(47,79,138,.15);
 }
 
 #tabHour2Keywords.drag-from-blank .h2kw-bank,
-#tab3Hour2Keywords.drag-from-blank .h2kw-bank{
+#tab3Hour2Keywords.drag-from-blank .h2kw-bank,
+#tab4Hour2Keywords.drag-from-blank .h2kw-bank{
   box-shadow: 0 0 0 4px rgba(47,79,138,.16), 0 12px 24px rgba(30,18,60,.12);
   border-color: rgba(47,79,138,.45);
   background: rgba(47,79,138,.18);
 }
 
 #tabHour2Keywords.drag-from-blank .blank,
-#tab3Hour2Keywords.drag-from-blank .blank{
+#tab3Hour2Keywords.drag-from-blank .blank,
+#tab4Hour2Keywords.drag-from-blank .blank{
   border-bottom-color: rgba(47,79,138,.62);
   box-shadow: 0 0 0 4px rgba(47,79,138,.10);
   background: rgba(47,79,138,.14);
@@ -116,4 +129,26 @@
   color: #fff;
 }
 .kw-card[data-theme="blue"] .kw-title{color:#fff;}
+
+/* Module 5, Hour 1 - II. Key Words (Reading-like layout, blue theme) */
+#tab5Keywords .reading-keywords{
+  border-color: rgba(47,79,138,.30);
+  background: rgba(255,255,255,.92);
+}
+
+#tab5Keywords .reading-kw-head.reading-task-head{
+  color: rgba(47,79,138,.98);
+}
+
+#tab5Keywords .speak-btn{
+  border-color: rgba(47,79,138,.25);
+}
+#tab5Keywords .speak-btn:focus-visible{
+  outline-color: rgba(47,79,138,.22);
+}
+
+#tab5Keywords .reading-instr-inline{
+  border-color: rgba(47,79,138,.25);
+  background: rgba(47,79,138,.08);
+}
 

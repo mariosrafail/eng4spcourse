@@ -97,16 +97,22 @@
 .wf-bad{padding: 10px 12px; border-radius: 14px; border: 2px solid rgba(175,74,74,.35); background: rgba(255,240,240,.78); font-weight: 900; color: rgba(130,35,35,.95);}
 
 /* Second Hour - V. Writing: keep all inner DnD visuals in green theme */
-#tabHour2Writing .writing-bank{
+#tabHour2Writing .writing-bank,
+#tab3Hour2Writing .writing-bank,
+#tab4Hour2Writing .writing-bank{
   background: rgba(47,107,87,.12);
   border-color: rgba(47,107,87,.28) !important;
 }
-#tabHour2Writing .writing-bank .token{
+#tabHour2Writing .writing-bank .token,
+#tab3Hour2Writing .writing-bank .token,
+#tab4Hour2Writing .writing-bank .token{
   border-color: rgba(47,107,87,.30);
   background: rgba(255,255,255,.92);
   color: rgba(18,72,58,.95);
 }
-#tabHour2Writing .writing-gap-text .blank{
+#tabHour2Writing .writing-gap-text .blank,
+#tab3Hour2Writing .writing-gap-text .blank,
+#tab4Hour2Writing .writing-gap-text .blank{
   width: 140px;
   min-width: 140px;
   max-width: 140px;
@@ -116,7 +122,9 @@
   border-color: rgba(47,107,87,.42);
   background: rgba(47,107,87,.10);
 }
-#tabHour2Writing .writing-gap-text .blank .token{
+#tabHour2Writing .writing-gap-text .blank .token,
+#tab3Hour2Writing .writing-gap-text .blank .token,
+#tab4Hour2Writing .writing-gap-text .blank .token{
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -137,14 +145,26 @@
 #tabHour2Writing .writing-gap-text .blank .token,
 #tabHour2Writing .writing-gap-text .blank .token:hover,
 #tabHour2Writing .writing-gap-text .blank .token:active,
-#tabHour2Writing .writing-gap-text .blank .token.is-dragging{
+#tabHour2Writing .writing-gap-text .blank .token.is-dragging,
+#tab3Hour2Writing .writing-gap-text .blank .token,
+#tab3Hour2Writing .writing-gap-text .blank .token:hover,
+#tab3Hour2Writing .writing-gap-text .blank .token:active,
+#tab3Hour2Writing .writing-gap-text .blank .token.is-dragging,
+#tab4Hour2Writing .writing-gap-text .blank .token,
+#tab4Hour2Writing .writing-gap-text .blank .token:hover,
+#tab4Hour2Writing .writing-gap-text .blank .token:active,
+#tab4Hour2Writing .writing-gap-text .blank .token.is-dragging{
   transform: none !important;
 }
-#tabHour2Writing .writing-gap-text .blank.is-correct{
+#tabHour2Writing .writing-gap-text .blank.is-correct,
+#tab3Hour2Writing .writing-gap-text .blank.is-correct,
+#tab4Hour2Writing .writing-gap-text .blank.is-correct{
   border-color: rgba(18,133,77,.70);
   background: rgba(18,133,77,.20);
 }
-#tabHour2Writing .writing-gap-text .blank.is-wrong{
+#tabHour2Writing .writing-gap-text .blank.is-wrong,
+#tab3Hour2Writing .writing-gap-text .blank.is-wrong,
+#tab4Hour2Writing .writing-gap-text .blank.is-wrong{
   border-color: rgba(209,42,42,.70);
   background: rgba(209,42,42,.20);
 }
@@ -155,6 +175,8 @@
   background: rgba(255,255,255,.88);
 }
 #tabHour2Writing .writing-card + .writing-card,
+#tab3Hour2Writing .writing-card + .writing-card,
+#tab4Hour2Writing .writing-card + .writing-card,
 #tabMockWriting .writing-card + .writing-card{
   margin-top: 14px;
 }
@@ -202,11 +224,13 @@
 }
 
 /* Second Hour - VI. Learning Recall: keep inner card in brown theme */
-#tabHour2Recall .rev-box{
+#tabHour2Recall .rev-box,
+#tab4Hour2Recall .rev-box{
   border-color: rgba(183,52,73,.52);
   background: rgba(255,245,248,.84);
 }
-#tabHour2Recall .rev-text{
+#tabHour2Recall .rev-text,
+#tab4Hour2Recall .rev-text{
   color: rgba(74,33,45,.94);
 }
 

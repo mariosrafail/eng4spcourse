@@ -2,7 +2,7 @@
   // Second Hour - V. Writing
   // Task 1: drag & drop gap fill
   function setupWritingTaskOne(){
-    const root = document.getElementById('tabHour2Writing');
+    const root = document.querySelector('#tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing');
     if(!root) return;
 
     const bank = root.querySelector('#h2wBank');
@@ -11,7 +11,13 @@
     const checkBtn = root.querySelector('#h2wCheck');
     const resetBtn = root.querySelector('#h2wReset');
     const feedback = root.querySelector('#h2wFeedback');
-    const writingExerciseId = root.dataset.writingExerciseId || 'module2_h2_writing_task1';
+    const writingExerciseId =
+      root.dataset.writingExerciseId ||
+      (
+        root.id === 'tab4Hour2Writing'
+          ? 'module4_h2_writing_task1'
+          : (root.id === 'tab3Hour2Writing' ? 'module3_h2_writing_task1' : 'module2_h2_writing_task1')
+      );
 
     let selectedToken = null;
 
@@ -200,7 +206,7 @@
 
   // Task 2: writing checker (offline heuristic)
   function setupWritingTaskTwo(){
-    const root = document.getElementById('tabHour2Writing');
+    const root = document.querySelector('#tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing');
     if(!root) return;
 
     const writingTaskTwoType = root.dataset.writingTaskTwoType || 'hotel_request';
@@ -313,6 +319,46 @@
         if(req.action){ score += 1; } else { notes.push('Use a clear action phrase (e.g., please prepare/include).'); }
 
         issues = basicGrammarFlags(text, { requireGreeting: false, requireThanks: false, requireClosing: false });
+      }else if(writingTaskTwoType === 'incident_notice'){
+        const req = {
+          room312: hasAny(text, ['room 312','312']),
+          wetFloor: hasAny(text, ['wet floor','wet','slippery']),
+          apology: hasAny(text, ['apolog','sorry']),
+          handled: hasAny(text, ['taken care','cleaned','mopped','dried','handled','fixed']),
+          safety: hasAny(text, ['safe','caution','careful','warning','sign'])
+        };
+
+        minGoodWords = 20;
+        firstStepMsg = 'Write your note first.';
+
+        if(req.room312){ score += 1; } else { notes.push('Mention: Room 312.'); }
+        if(req.wetFloor){ score += 1; } else { notes.push('Mention: wet floor.'); }
+        if(req.apology){ score += 1; } else { notes.push('Include an apology (e.g., We apologise for...).'); }
+        if(req.handled){ score += 1; } else { notes.push('Say: it has been taken care of / cleaned.'); }
+        if(req.safety){ score += 1; } else { notes.push('Add a safety line (e.g., Please be careful).'); }
+        if(hasAny(text, ['please','we have','we will','we are','our team'])){ score += 1; } else { notes.push('Use a polite, professional tone (e.g., Please...).'); }
+
+        issues = basicGrammarFlags(text, { requireGreeting: true, requireThanks: false, requireClosing: true });
+      }else if(writingTaskTwoType === 'itinerary_confirmation'){
+        const req = {
+          crete: hasAny(text, ['crete']),
+          itinerary: hasAny(text, ['itinerary']),
+          threeDay: hasAny(text, ['3-day','3 day','three-day','three day']),
+          days: hasAny(text, ['day 1','day1','day 2','day2','day 3','day3']),
+          confirm: hasAny(text, ['confirm','confirmation','please confirm','final confirmation'])
+        };
+
+        minGoodWords = 30;
+        firstStepMsg = 'Write your email first.';
+
+        if(req.crete){ score += 1; } else { notes.push('Mention: Crete.'); }
+        if(req.itinerary){ score += 1; } else { notes.push('Mention: itinerary.'); }
+        if(req.threeDay){ score += 1; } else { notes.push('Mention: 3-day.'); }
+        if(req.days){ score += 1; } else { notes.push('Include: Day 1 / Day 2 / Day 3.'); }
+        if(req.confirm){ score += 1; } else { notes.push('Ask for: final confirmation.'); }
+        if(hasAny(text, ['would like','could you','please','i would like'])){ score += 1; } else { notes.push('Use a polite request phrase (e.g., "Could you please confirm...").'); }
+
+        issues = basicGrammarFlags(text, { requireGreeting: true, requireThanks: true, requireClosing: true });
       }else{
         const req = {
           rethymno: hasAny(text, ['rethymno']),
@@ -388,7 +434,7 @@
     });
   }
   function init(){
-    const root = document.getElementById('tabHour2Writing');
+    const root = document.querySelector('#tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing');
     if(!root) return;
     if(root.dataset.h2wInitialized === '1') return;
     root.dataset.h2wInitialized = '1';

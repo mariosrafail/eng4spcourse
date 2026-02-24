@@ -25,6 +25,10 @@
   color: rgba(126,78,58,.98);
 }
 
+#tab4Practice .unit-title{
+  color: rgba(126,78,58,.98);
+}
+
 #tabPractice .unit-icon{
   background: rgba(126,78,58,.10);
   border-color: rgba(126,78,58,.28);
@@ -37,7 +41,18 @@
   color: rgba(126,78,58,.95);
 }
 
+#tab4Practice .unit-icon{
+  background: rgba(126,78,58,.10);
+  border-color: rgba(126,78,58,.28);
+  color: rgba(126,78,58,.95);
+}
+
 #tab3Practice .practice-instructions{
+  border-color: rgba(126,78,58,.42);
+  background: rgba(126,78,58,.16);
+}
+
+#tab4Practice .practice-instructions{
   border-color: rgba(126,78,58,.42);
   background: rgba(126,78,58,.16);
 }
@@ -46,11 +61,25 @@
   color: rgba(126,78,58,.98);
 }
 
+#tab4Practice .practice-instr-title{
+  color: rgba(126,78,58,.98);
+}
+
 #tab3Practice .practice-instr-text{
   color: rgba(96,57,41,.98);
 }
 
+#tab4Practice .practice-instr-text{
+  color: rgba(96,57,41,.98);
+}
+
 #tab3Practice .practice-actions .btn.ghost{
+  background: rgba(126,78,58,.12);
+  border-color: rgba(126,78,58,.42);
+  color: rgba(96,57,41,.98);
+}
+
+#tab4Practice .practice-actions .btn.ghost{
   background: rgba(126,78,58,.12);
   border-color: rgba(126,78,58,.42);
   color: rgba(96,57,41,.98);
@@ -61,8 +90,69 @@
   border-color: rgba(126,78,58,.56);
 }
 
+#tab4Practice .practice-actions .btn.ghost:hover{
+  background: rgba(126,78,58,.20);
+  border-color: rgba(126,78,58,.56);
+}
+
 #tab3Practice .practice-actions .btn.ghost:active{
   background: rgba(126,78,58,.28);
+}
+
+#tab4Practice .practice-actions .btn.ghost:active{
+  background: rgba(126,78,58,.28);
+}
+
+/* Module 3 - Second Hour - VI. Learning Recall (red + practice-like layout) */
+#tab3Hour2Recall .practice-card{
+  border-color: rgba(var(--theme-red-rgb), .36);
+  background: rgba(255,255,255,.88);
+}
+
+#tab3Hour2Recall .practice-instructions{
+  border-color: rgba(var(--theme-red-rgb), .34);
+  background: rgba(var(--theme-red-rgb), .10);
+}
+
+#tab3Hour2Recall .practice-bank{
+  background: rgba(var(--theme-red-rgb), .10);
+  border-color: rgba(var(--theme-red-rgb), .22);
+}
+
+#tab3Hour2Recall .token{
+  border-color: rgba(var(--theme-red-rgb), .30);
+}
+
+#tab3Hour2Recall .practice-qs li{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+#tab3Hour2Recall .blank{
+  width: 420px;
+  min-width: 420px;
+  max-width: 420px;
+  min-height: 52px;
+  border-radius: 16px;
+  margin-left: auto;
+  padding: 4px;
+}
+
+@media (max-width: 860px){
+  #tab3Hour2Recall .practice-qs li{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  #tab3Hour2Recall .blank{
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+  }
 }
 
 /* Practice card in Listening-like layout */
@@ -162,6 +252,10 @@
   min-height: 74px;
 }
 
+#tab4Hour2Writing #h2wBank{
+  min-height: 74px;
+}
+
 #tabSpeaking .speaking-bank{
   min-height: 120px;
 }
@@ -170,26 +264,42 @@
   min-height: 120px;
 }
 
+#tab4Hour2Keywords .h2kw-bank{
+  min-height: 120px;
+}
+
 #tabPractice .practice-card,
 #tab3Practice .practice-card,
 #tabSpeaking .practice-card,
 #tabHour2Keywords .practice-card,
+#tab4Hour2Keywords .practice-card,
 #tabHour2Writing .writing-card,
+#tab4Hour2Writing .writing-card,
 #tabPractice .practice-bank,
 #tab3Practice .practice-bank,
 #tabSpeaking .practice-bank,
 #tabHour2Keywords .practice-bank,
+#tab4Hour2Keywords .practice-bank,
 #tabHour2Writing #h2wBank,
+#tab4Hour2Writing #h2wBank,
 #tabPractice .practice-qs li,
 #tab3Practice .practice-qs li,
 #tabSpeaking .practice-qs li,
 #tabHour2Keywords .practice-qs li,
+#tab4Hour2Keywords .practice-qs li,
 #tabHour2Writing .writing-gap-text,
+#tab4Hour2Writing .writing-gap-text,
 #tabPractice .blank,
 #tab3Practice .blank,
 #tabSpeaking .blank,
 #tabHour2Keywords .blank,
+#tab4Hour2Keywords .blank,
 #tabHour2Writing .writing-gap-text .blank{
+  transition: none !important;
+  animation: none !important;
+}
+
+#tab4Hour2Writing .writing-gap-text .blank{
   transition: none !important;
   animation: none !important;
 }
@@ -320,44 +430,118 @@
 .blank.is-correct{border-style: solid; border-color: rgba(18,133,77,.70); background: rgba(18,133,77,.20);}
 .blank.is-wrong{border-style: solid; border-color: rgba(209,42,42,.70); background: rgba(209,42,42,.20);}
 
-/* Module 3 - Useful Language Activity 2 (brown + speaking-like layout) */
+/* Module 3 - Useful Language Activity 2 (purple + speaking-like layout) */
 #tab3Exercise .m3a2-card{
-  border-color: rgba(126,78,58,.36);
+  border-color: rgba(var(--theme-purple-rgb), .36);
+  background: rgba(255,255,255,.88);
+}
+
+#tab4Exercise .m4ul-a2-card{
+  border-color: rgba(var(--theme-purple-rgb), .36);
   background: rgba(255,255,255,.88);
 }
 
 #tab3Exercise .practice-card{
-  border-color: rgba(126,78,58,.36);
+  border-color: rgba(var(--theme-purple-rgb), .36);
+}
+
+#tab4Exercise .practice-card{
+  border-color: rgba(var(--theme-purple-rgb), .36);
+}
+
+#tab5Exercise .practice-card{
+  border-color: rgba(var(--theme-purple-rgb), .36);
+}
+
+#tab5Keywords .practice-card{
+  border-color: rgba(var(--theme-blue-rgb), .36);
+}
+
+#tab5Keywords .practice-instructions{
+  border-color: rgba(var(--theme-blue-rgb), .30);
+  background: rgba(var(--theme-blue-rgb), .10);
+}
+
+#tab5Keywords .practice-instr-title{
+  color: rgba(47,79,138,.95);
+}
+
+#tab5Keywords .practice-bank{
+  background: rgba(var(--theme-blue-rgb), .12);
+  border-color: rgba(var(--theme-blue-rgb), .18);
 }
 
 #tab3Exercise .practice-card .practice-instructions{
-  border-color: rgba(126,78,58,.34);
-  background: rgba(126,78,58,.12);
+  border-color: rgba(var(--theme-purple-rgb), .34);
+  background: rgba(var(--theme-purple-rgb), .12);
+}
+
+#tab4Exercise .practice-card .practice-instructions{
+  border-color: rgba(var(--theme-purple-rgb), .34);
+  background: rgba(var(--theme-purple-rgb), .12);
+}
+
+#tab5Exercise .practice-card .practice-instructions{
+  border-color: rgba(var(--theme-purple-rgb), .34);
+  background: rgba(var(--theme-purple-rgb), .12);
 }
 
 #tab3Exercise .practice-card .practice-instr-title{
-  color: rgba(96,57,41,.98);
+  color: rgba(95,74,167,.98);
+}
+
+#tab4Exercise .practice-card .practice-instr-title{
+  color: rgba(95,74,167,.98);
+}
+
+#tab5Exercise .practice-card .practice-instr-title{
+  color: rgba(95,74,167,.98);
 }
 
 #tab3Exercise .m3a2-card .practice-instructions{
-  border-color: rgba(126,78,58,.34);
-  background: rgba(126,78,58,.12);
+  border-color: rgba(var(--theme-purple-rgb), .34);
+  background: rgba(var(--theme-purple-rgb), .12);
+}
+
+#tab4Exercise .m4ul-a2-card .practice-instructions{
+  border-color: rgba(var(--theme-purple-rgb), .34);
+  background: rgba(var(--theme-purple-rgb), .12);
 }
 
 #tab3Exercise .m3a2-card .practice-instr-title{
-  color: rgba(96,57,41,.98);
+  color: rgba(95,74,167,.98);
+}
+
+#tab4Exercise .m4ul-a2-card .practice-instr-title{
+  color: rgba(95,74,167,.98);
 }
 
 #tab3Exercise .m3a2-card .practice-bank{
-  background: rgba(126,78,58,.12);
-  border-color: rgba(126,78,58,.24);
+  background: rgba(var(--theme-purple-rgb), .12);
+  border-color: rgba(var(--theme-purple-rgb), .24);
+}
+
+#tab4Exercise .m4ul-a2-card .practice-bank{
+  background: rgba(var(--theme-purple-rgb), .12);
+  border-color: rgba(var(--theme-purple-rgb), .24);
 }
 
 #tab3Exercise .m3a2-card .token{
-  border-color: rgba(126,78,58,.34);
+  border-color: rgba(var(--theme-purple-rgb), .34);
+}
+
+#tab4Exercise .m4ul-a2-card .token{
+  border-color: rgba(var(--theme-purple-rgb), .34);
 }
 
 #tab3Exercise .m3a2-qs li{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+#tab4Exercise .m4ul-a2-qs li{
   display: flex;
   align-items: center;
   gap: 14px;
@@ -370,22 +554,46 @@
   max-width: 420px;
   min-height: 52px;
   border-radius: 16px;
-  border-color: rgba(126,78,58,.45);
-  background: rgba(126,78,58,.10);
+  border-color: rgba(var(--theme-purple-rgb), .45);
+  background: rgba(var(--theme-purple-rgb), .10);
+  margin-left: auto;
+  padding: 4px;
+}
+
+#tab4Exercise .m4ul-a2-qs .blank{
+  width: 420px;
+  min-width: 420px;
+  max-width: 420px;
+  min-height: 52px;
+  border-radius: 16px;
+  border-color: rgba(var(--theme-purple-rgb), .45);
+  background: rgba(var(--theme-purple-rgb), .10);
   margin-left: auto;
   padding: 4px;
 }
 
 #tab3Exercise.drag-from-bank .m3a2-qs .blank,
 #tab3Exercise.drag-from-blank .m3a2-qs .blank{
-  border-color: rgba(126,78,58,.62);
-  box-shadow: 0 0 0 4px rgba(126,78,58,.12);
+  border-color: rgba(var(--theme-purple-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--theme-purple-rgb), .12);
+}
+
+#tab4Exercise.drag-from-bank .m4ul-a2-qs .blank,
+#tab4Exercise.drag-from-blank .m4ul-a2-qs .blank{
+  border-color: rgba(var(--theme-purple-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--theme-purple-rgb), .12);
 }
 
 #tab3Exercise .m3a2-qs .blank.is-over{
-  border-color: rgba(126,78,58,.82);
-  background: rgba(126,78,58,.18);
-  box-shadow: 0 0 0 5px rgba(126,78,58,.18);
+  border-color: rgba(var(--theme-purple-rgb), .82);
+  background: rgba(var(--theme-purple-rgb), .18);
+  box-shadow: 0 0 0 5px rgba(var(--theme-purple-rgb), .18);
+}
+
+#tab4Exercise .m4ul-a2-qs .blank.is-over{
+  border-color: rgba(var(--theme-purple-rgb), .82);
+  background: rgba(var(--theme-purple-rgb), .18);
+  box-shadow: 0 0 0 5px rgba(var(--theme-purple-rgb), .18);
 }
 
 @media (max-width: 860px){
@@ -395,7 +603,20 @@
     gap: 10px;
   }
 
+  #tab4Exercise .m4ul-a2-qs li{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
   #tab3Exercise .m3a2-qs .blank{
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  #tab4Exercise .m4ul-a2-qs .blank{
     width: 100%;
     min-width: 100%;
     max-width: 100%;
