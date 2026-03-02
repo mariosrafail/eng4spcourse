@@ -28,17 +28,21 @@
   const PARTS_PER_MODULE = Object.freeze({
     '1': 13,
     '2': 13,
-    '3': 13,
+    '3': 12,
     '4': 13,
-    '5': 13,
+    '5': 10,
     '6': 13,
     '7': 13,
-    '8': 13,
+    '8': 6,
     '9': 5
   });
   const TOTAL_PARTS = MODULE_SEQUENCE.reduce((sum, id) => sum + (PARTS_PER_MODULE[id] || 0), 0);
-  const PART_PERCENT = 100 / TOTAL_PARTS;
   const TOKEN_KEY = 'e4sp_auth_token';
+  const FINAL_APPENDIX_MODULE_ID = '10';
+  const PROGRESS_BY_PART = Array.from({ length: TOTAL_PARTS + 1 }, (_v, parts) => {
+    if(parts >= TOTAL_PARTS) return 100;
+    return Math.round((parts * 100) / TOTAL_PARTS);
+  });
   const MODULE_START_UNITS = (() => {
     const out = {};
     let cursor = 0;
@@ -62,16 +66,27 @@
     return fromButton || `Module ${id}`;
   }
 
-  function clampProgress(value){
+  function normalizeProgress(value){
     const numeric = Number(value);
     if(!Number.isFinite(numeric)) return 0;
-    return Math.max(0, Math.min(100, numeric));
+    return Math.max(0, Math.min(100, Math.round(numeric)));
   }
 
   function getCompletedParts(progress = currentProgress){
-    const clamped = clampProgress(progress);
-    if(clamped >= 100) return TOTAL_PARTS;
-    return Math.max(0, Math.min(TOTAL_PARTS, Math.round(clamped / PART_PERCENT)));
+    const normalized = normalizeProgress(progress);
+    if(normalized >= 100) return TOTAL_PARTS;
+
+    let low = 0;
+    let high = TOTAL_PARTS;
+    while(low < high){
+      const mid = Math.floor((low + high + 1) / 2);
+      if(PROGRESS_BY_PART[mid] <= normalized){
+        low = mid;
+      }else{
+        high = mid - 1;
+      }
+    }
+    return low;
   }
 
   function getModuleStartUnit(moduleId){
@@ -82,48 +97,65 @@
     return PARTS_PER_MODULE[String(moduleId)] ?? 0;
   }
 
+  function getModuleUnlockUnit(moduleId){
+    const id = String(moduleId);
+    if(id === FINAL_APPENDIX_MODULE_ID) return TOTAL_PARTS;
+
+    const moduleStart = getModuleStartUnit(id);
+    if(id === '9'){
+      return moduleStart + 1;
+    }
+    return moduleStart;
+  }
+
+  function getTabUnlockUnit(moduleId, tabIndex){
+    const id = String(moduleId);
+    if(id === FINAL_APPENDIX_MODULE_ID) return TOTAL_PARTS;
+
+    const partCount = getModulePartCount(id);
+    const moduleStart = getModuleStartUnit(id);
+    if(partCount <= 0) return moduleStart;
+
+    if(id === '9'){
+      return moduleStart + Math.min(tabIndex + 1, partCount);
+    }
+
+    if(tabIndex === 0) return moduleStart;
+    return moduleStart + Math.min(tabIndex, partCount);
+  }
+
   function getProgressForUnit(unitIndex){
     const safeUnit = Math.max(0, Math.min(TOTAL_PARTS, unitIndex));
-    return (safeUnit / TOTAL_PARTS) * 100;
+    return PROGRESS_BY_PART[safeUnit];
   }
 
   function syncProgressState(nextProgress){
-    currentProgress = clampProgress(nextProgress);
+    currentProgress = normalizeProgress(nextProgress);
     currentCompletedParts = getCompletedParts(currentProgress);
   }
 
   function isModuleUnlockedByProgress(moduleId, progress){
-    const requiredUnit = getModuleStartUnit(moduleId);
+    const requiredUnit = getModuleUnlockUnit(moduleId);
     return getCompletedParts(progress) >= requiredUnit;
   }
 
   function isTabUnlockedByProgress(moduleId, tabIndex, progress){
     const id = String(moduleId);
-    const partCount = getModulePartCount(id);
-    if(partCount <= 0) return true;
     const completedParts = getCompletedParts(progress);
-    const moduleStart = getModuleStartUnit(id);
-    if(tabIndex === 0){
-      return completedParts >= moduleStart;
-    }
-    const requiredUnit = moduleStart + Math.min(tabIndex, partCount);
+    const requiredUnit = getTabUnlockUnit(id, tabIndex);
     return completedParts >= requiredUnit;
   }
 
   function applyChapterLocks(moduleId, tabButtons){
     const id = String(moduleId);
-    const partCount = getModulePartCount(id);
-    const moduleStart = getModuleStartUnit(id);
     tabButtons.forEach((btn, index) => {
       const unlocked = isTabUnlockedByProgress(id, index, currentProgress);
       btn.disabled = !unlocked;
       btn.classList.toggle('is-locked', !unlocked);
       btn.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
       if(!unlocked){
-        const requiredUnit = index === 0
-          ? moduleStart
-          : moduleStart + Math.min(index, partCount);
-        btn.title = `Locked until ${Math.ceil(getProgressForUnit(requiredUnit))}%`;
+        const requiredUnit = getTabUnlockUnit(id, index);
+        btn.title = `Locked until ${getProgressForUnit(requiredUnit)}%`;
       }else{
         btn.removeAttribute('title');
       }
@@ -196,7 +228,7 @@
       const result = await setProgressOnServer(targetProgress);
       syncProgressState(result?.progress ?? targetProgress);
 
-      const safeProgress = Math.max(0, Math.min(100, Number(Number(currentProgress).toFixed(4))));
+      const safeProgress = normalizeProgress(currentProgress);
       document.dispatchEvent(new CustomEvent('progress:updated', { detail: { progress: safeProgress } }));
       document.dispatchEvent(new CustomEvent('auth:statechange', { detail: { authenticated: true, progress: safeProgress } }));
     }catch(_e){
@@ -528,8 +560,8 @@
       btn.classList.toggle('is-locked', !unlocked);
       btn.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
       if(!unlocked){
-        const requiredUnit = getModuleStartUnit(id);
-        btn.title = `Locked until ${Math.ceil(getProgressForUnit(requiredUnit))}%`;
+        const requiredUnit = getModuleUnlockUnit(id);
+        btn.title = `Locked until ${getProgressForUnit(requiredUnit)}%`;
       }else{
         btn.removeAttribute('title');
       }
@@ -622,7 +654,7 @@
 
 
   const moduleFromQuery = Number(new URLSearchParams(window.location.search).get('module'));
-  if(isAuthenticated() && Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 9){
+  if(isAuthenticated() && Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 10){
     setActive(moduleFromQuery);
   }
 
@@ -641,7 +673,7 @@
       return;
     }
 
-    if(Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 9){
+    if(Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 10){
       setActive(moduleFromQuery);
     }
   });
