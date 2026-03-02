@@ -10,7 +10,14 @@
 #tab3Hour2Listening,
 #tab4Listening,
 #tab4Hour2Listening,
-#tab1Hour2Listening{
+#tab1Hour2Listening,
+#tab5Listening,
+#tab5Hour2Exercise,
+#tab6Listening,
+#tab6Hour2Listening,
+#tab7Listening,
+#tab7Hour2Listening,
+#tab8Hour2Listening{
   --audio-accent-rgb: var(--theme-listening-rgb);
 }
 
@@ -18,7 +25,12 @@
 #tab1Reading,
 #tabHour2Reading,
 #tab3Hour2Reading,
-#tab1Hour2Reading{
+#tab1Hour2Reading,
+#tab5Hour2Reading,
+#tab6Reading,
+#tab6Hour2Reading2,
+#tab7Reading,
+#tab7Hour2Reading{
   --audio-accent-rgb: var(--theme-red-rgb);
 }
 
@@ -44,7 +56,8 @@
 #tab1Keywords,
 #tabHour2Keywords,
 #tab1Hour2Keywords,
-#tab3Keywords{
+#tab3Keywords,
+#tab6Hour2Reading{
   --audio-accent-rgb: var(--theme-blue-rgb);
 }
 
@@ -70,8 +83,10 @@
 /* Themed controls inside audio boxes */
 :is(
   #tabListening, #tab1Listening, #tabHour2Listening, #tab1Hour2Listening,
-  #tab4Hour2Listening,
-  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading,
+  #tab3Hour2Listening, #tab4Listening, #tab4Hour2Listening,
+  #tab5Listening, #tab5Hour2Exercise, #tab6Listening,
+  #tab6Hour2Listening, #tab7Hour2Listening, #tab8Hour2Listening,
+  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading, #tab5Listening, #tab5Hour2Exercise,
   #tabMockListening1, #tabMockListening2, #tabMockReading,
   #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
   #tabPractice, #tab1Practice,
@@ -83,8 +98,10 @@
 
 :is(
   #tabListening, #tab1Listening, #tabHour2Listening, #tab1Hour2Listening,
-  #tab4Hour2Listening,
-  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading,
+  #tab3Hour2Listening, #tab4Listening, #tab4Hour2Listening,
+  #tab5Listening, #tab5Hour2Exercise, #tab6Listening,
+  #tab6Hour2Listening, #tab7Hour2Listening, #tab8Hour2Listening,
+  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading, #tab5Listening, #tab5Hour2Exercise,
   #tabMockListening1, #tabMockListening2, #tabMockReading,
   #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
   #tabPractice, #tab1Practice,
@@ -97,8 +114,10 @@
 
 :is(
   #tabListening, #tab1Listening, #tabHour2Listening, #tab1Hour2Listening,
-  #tab4Hour2Listening,
-  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading,
+  #tab3Hour2Listening, #tab4Listening, #tab4Hour2Listening,
+  #tab5Listening, #tab5Hour2Exercise, #tab6Listening,
+  #tab6Hour2Listening, #tab7Hour2Listening, #tab8Hour2Listening,
+  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading, #tab5Listening, #tab5Hour2Exercise,
   #tabMockListening1, #tabMockListening2, #tabMockReading,
   #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
   #tabPractice, #tab1Practice,
@@ -109,8 +128,10 @@
 
 :is(
   #tabListening, #tab1Listening, #tabHour2Listening, #tab1Hour2Listening,
-  #tab4Hour2Listening,
-  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading,
+  #tab3Hour2Listening, #tab4Listening, #tab4Hour2Listening,
+  #tab5Listening, #tab5Hour2Exercise, #tab6Listening,
+  #tab6Hour2Listening, #tab7Hour2Listening, #tab8Hour2Listening,
+  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading, #tab5Listening, #tab5Hour2Exercise,
   #tabMockListening1, #tabMockListening2, #tabMockReading,
   #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
   #tabPractice, #tab1Practice,
@@ -122,8 +143,10 @@
 
 :is(
   #tabListening, #tab1Listening, #tabHour2Listening, #tab1Hour2Listening,
-  #tab4Hour2Listening,
-  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading,
+  #tab3Hour2Listening, #tab4Listening, #tab4Hour2Listening,
+  #tab5Listening, #tab5Hour2Exercise, #tab6Listening,
+  #tab6Hour2Listening, #tab7Hour2Listening, #tab8Hour2Listening,
+  #tabReading, #tab1Reading, #tabHour2Reading, #tab1Hour2Reading, #tab5Listening, #tab5Hour2Exercise,
   #tabMockListening1, #tabMockListening2, #tabMockReading,
   #tabSpeaking, #tab1Speaking, #tabHour2Writing, #tab1Hour2Writing,
   #tabPractice, #tab1Practice,

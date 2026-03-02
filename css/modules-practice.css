@@ -4,8 +4,54 @@
 .tab-btn[data-tab="practice"].is-active,
 .tab-btn[data-tab="m1_practice"].is-active{box-shadow: 0 0 0 2px rgba(126,78,58,.35) inset;}
 
+/* Module 5 - V. Speaking (uses the Practice tab) should be green, not brown */
+nav[aria-label="Module 5 Tabs"] .tab-btn[data-tab="practice"]{
+  background: rgba(47,107,87,.10);
+}
+nav[aria-label="Module 5 Tabs"] .tab-btn[data-tab="practice"]:hover{
+  background: rgba(47,107,87,.14);
+}
+nav[aria-label="Module 5 Tabs"] .tab-btn[data-tab="practice"].is-active{
+  background: linear-gradient(180deg, rgba(47,107,87,.22), rgba(47,107,87,.10));
+  border-color: rgba(47,107,87,.45);
+  box-shadow: 0 0 0 2px rgba(47,107,87,.35) inset;
+}
+nav[aria-label="Module 5 Tabs"] .tab-btn[data-tab="practice"] .tab-dot{
+  background: var(--green-700);
+  box-shadow: 0 0 0 4px rgba(47,107,87,.12);
+}
+
+/* Same override, but pinned directly to the Module 5 Speaking tab button */
+nav[aria-label="Module 5 Tabs"] .tab-btn[aria-controls="tab5Practice"]{
+  background: rgba(47,107,87,.10);
+}
+nav[aria-label="Module 5 Tabs"] .tab-btn[aria-controls="tab5Practice"]:hover{
+  background: rgba(47,107,87,.14);
+}
+nav[aria-label="Module 5 Tabs"] .tab-btn[aria-controls="tab5Practice"].is-active{
+  background: linear-gradient(180deg, rgba(47,107,87,.22), rgba(47,107,87,.10));
+  border-color: rgba(47,107,87,.45);
+  box-shadow: 0 0 0 2px rgba(47,107,87,.35) inset;
+}
+nav[aria-label="Module 5 Tabs"] .tab-btn[aria-controls="tab5Practice"] .tab-dot{
+  background: var(--green-700);
+  box-shadow: 0 0 0 4px rgba(47,107,87,.12);
+}
+
 /* Tab V header accents */
 #tabPractice .week-chip{
+  border-color: rgba(126,78,58,.40);
+  background: rgba(126,78,58,.10);
+  color: rgba(126,78,58,.95);
+}
+
+#tab6Practice .week-chip{
+  border-color: rgba(126,78,58,.40);
+  background: rgba(126,78,58,.10);
+  color: rgba(126,78,58,.95);
+}
+
+#tab7Practice .week-chip{
   border-color: rgba(126,78,58,.40);
   background: rgba(126,78,58,.10);
   color: rgba(126,78,58,.95);
@@ -18,6 +64,14 @@
 }
 
 #tabPractice .unit-title{
+  color: rgba(126,78,58,.98);
+}
+
+#tab6Practice .unit-title{
+  color: rgba(126,78,58,.98);
+}
+
+#tab7Practice .unit-title{
   color: rgba(126,78,58,.98);
 }
 
@@ -35,6 +89,18 @@
   color: rgba(126,78,58,.95);
 }
 
+#tab6Practice .unit-icon{
+  background: rgba(126,78,58,.10);
+  border-color: rgba(126,78,58,.28);
+  color: rgba(126,78,58,.95);
+}
+
+#tab7Practice .unit-icon{
+  background: rgba(126,78,58,.10);
+  border-color: rgba(126,78,58,.28);
+  color: rgba(126,78,58,.95);
+}
+
 #tab3Practice .unit-icon{
   background: rgba(126,78,58,.10);
   border-color: rgba(126,78,58,.28);
@@ -47,6 +113,16 @@
   color: rgba(126,78,58,.95);
 }
 
+#tab5Practice .unit-title{
+  color: rgba(26,90,72,.98);
+}
+
+#tab5Practice .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.28);
+  color: rgba(26,90,72,.95);
+}
+
 #tab3Practice .practice-instructions{
   border-color: rgba(126,78,58,.42);
   background: rgba(126,78,58,.16);
@@ -57,12 +133,39 @@
   background: rgba(126,78,58,.16);
 }
 
+#tab6Practice .practice-instructions{
+  border-color: rgba(126,78,58,.42);
+  background: rgba(126,78,58,.16);
+}
+
+#tab7Practice .practice-instructions{
+  border-color: rgba(126,78,58,.42);
+  background: rgba(126,78,58,.16);
+}
+
+#tab5Practice .practice-instructions{
+  border-color: rgba(47,107,87,.45);
+  background: rgba(230,244,238,.88);
+}
+
 #tab3Practice .practice-instr-title{
   color: rgba(126,78,58,.98);
 }
 
 #tab4Practice .practice-instr-title{
   color: rgba(126,78,58,.98);
+}
+
+#tab6Practice .practice-instr-title{
+  color: rgba(126,78,58,.98);
+}
+
+#tab7Practice .practice-instr-title{
+  color: rgba(126,78,58,.98);
+}
+
+#tab5Practice .practice-instr-title{
+  color: rgba(26,90,72,.98);
 }
 
 #tab3Practice .practice-instr-text{
@@ -73,6 +176,18 @@
   color: rgba(96,57,41,.98);
 }
 
+#tab6Practice .practice-instr-text{
+  color: rgba(96,57,41,.98);
+}
+
+#tab7Practice .practice-instr-text{
+  color: rgba(96,57,41,.98);
+}
+
+#tab5Practice .practice-instr-text{
+  color: rgba(18,72,58,.95);
+}
+
 #tab3Practice .practice-actions .btn.ghost{
   background: rgba(126,78,58,.12);
   border-color: rgba(126,78,58,.42);
@@ -80,6 +195,18 @@
 }
 
 #tab4Practice .practice-actions .btn.ghost{
+  background: rgba(126,78,58,.12);
+  border-color: rgba(126,78,58,.42);
+  color: rgba(96,57,41,.98);
+}
+
+#tab6Practice .practice-actions .btn.ghost{
+  background: rgba(126,78,58,.12);
+  border-color: rgba(126,78,58,.42);
+  color: rgba(96,57,41,.98);
+}
+
+#tab7Practice .practice-actions .btn.ghost{
   background: rgba(126,78,58,.12);
   border-color: rgba(126,78,58,.42);
   color: rgba(96,57,41,.98);
@@ -95,11 +222,29 @@
   border-color: rgba(126,78,58,.56);
 }
 
+#tab6Practice .practice-actions .btn.ghost:hover{
+  background: rgba(126,78,58,.20);
+  border-color: rgba(126,78,58,.56);
+}
+
+#tab7Practice .practice-actions .btn.ghost:hover{
+  background: rgba(126,78,58,.20);
+  border-color: rgba(126,78,58,.56);
+}
+
 #tab3Practice .practice-actions .btn.ghost:active{
   background: rgba(126,78,58,.28);
 }
 
 #tab4Practice .practice-actions .btn.ghost:active{
+  background: rgba(126,78,58,.28);
+}
+
+#tab6Practice .practice-actions .btn.ghost:active{
+  background: rgba(126,78,58,.28);
+}
+
+#tab7Practice .practice-actions .btn.ghost:active{
   background: rgba(126,78,58,.28);
 }
 
@@ -265,6 +410,10 @@
 }
 
 #tab4Hour2Keywords .h2kw-bank{
+  min-height: 120px;
+}
+
+#tab6Hour2Reading .h2kw-bank{
   min-height: 120px;
 }
 
@@ -469,6 +618,50 @@
 #tab5Keywords .practice-bank{
   background: rgba(var(--theme-blue-rgb), .12);
   border-color: rgba(var(--theme-blue-rgb), .18);
+}
+
+#tab7Keywords .practice-card{
+  border-color: rgba(var(--theme-blue-rgb), .36);
+}
+
+#tab7Keywords .practice-bank{
+  background: rgba(var(--theme-blue-rgb), .12);
+  border-color: rgba(var(--theme-blue-rgb), .18);
+}
+
+#tab8Exercise .practice-card{
+  border-color: rgba(var(--theme-green-rgb), .36);
+}
+
+#tab8Exercise .practice-instructions{
+  border-color: rgba(var(--theme-green-rgb), .34);
+  background: rgba(var(--theme-green-rgb), .12);
+}
+
+#tab8Exercise .practice-bank{
+  background: rgba(var(--theme-green-rgb), .12);
+  border-color: rgba(var(--theme-green-rgb), .24);
+}
+
+#tab8Exercise .token{
+  border-color: rgba(var(--theme-green-rgb), .34);
+}
+
+#tab8Keywords .practice-card{
+  border-color: rgba(var(--theme-green-rgb), .36);
+}
+
+#tab8Keywords .practice-card--blue{
+  border-color: rgba(var(--theme-green-rgb), .36);
+}
+
+#tab8Keywords .practice-bank{
+  background: rgba(var(--theme-green-rgb), .12);
+  border-color: rgba(var(--theme-green-rgb), .24);
+}
+
+#tab8Keywords .token{
+  border-color: rgba(var(--theme-green-rgb), .34);
 }
 
 #tab3Exercise .practice-card .practice-instructions{

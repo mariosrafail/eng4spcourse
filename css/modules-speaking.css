@@ -28,6 +28,12 @@
   overflow: hidden;
 }
 
+.speaking-photo--m8{
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
 .speaking-photo img{
   width: 100%;
   height: auto;
@@ -36,19 +42,27 @@
 
 /* Make Speaking exercise match the Practice (V) layout but with green accents */
 #tabSpeaking .practice-card--green,
-#tab3Speaking .practice-card--green{
+#tab3Speaking .practice-card--green,
+#tab7Speaking .practice-card--green{
   border-color: rgba(47,107,87,.35);
   background: rgba(255,255,255,.86);
 }
 
+#tab5Practice .practice-card--green{
+  border-color: rgba(47,107,87,.35);
+  background: rgba(239,250,246,.78);
+}
+
 #tabSpeaking .speaking-bank,
-#tab3Speaking .speaking-bank{
+#tab3Speaking .speaking-bank,
+#tab7Speaking .speaking-bank{
   background: rgba(47,107,87,.10);
   border-color: rgba(47,107,87,.22);
 }
 
 #tabSpeaking .token,
-#tab3Speaking .token{
+#tab3Speaking .token,
+#tab7Speaking .token{
   border-color: rgba(47,107,87,.30);
   max-width: 100%;
   white-space: normal;
@@ -56,7 +70,8 @@
 
 
 #tabSpeaking .blank,
-#tab3Speaking .blank{
+#tab3Speaking .blank,
+#tab7Speaking .blank{
   width: 420px;
   min-width: 420px;
   max-width: 420px;
@@ -71,7 +86,8 @@
 }
 
 #tabSpeaking .blank.is-over,
-#tab3Speaking .blank.is-over{
+#tab3Speaking .blank.is-over,
+#tab7Speaking .blank.is-over{
   border-color: rgba(47,107,87,.75);
   background: rgba(47,107,87,.16);
   box-shadow: 0 0 0 4px rgba(47,107,87,.14);
@@ -109,7 +125,8 @@
 }
 
 #tabSpeaking .speaking-qs li,
-#tab3Speaking .speaking-qs li{
+#tab3Speaking .speaking-qs li,
+#tab7Speaking .speaking-qs li{
   display: flex;
   align-items: center;
   gap: 14px;
@@ -117,7 +134,8 @@
 }
 
 #tabSpeaking .blank .token,
-#tab3Speaking .blank .token{
+#tab3Speaking .blank .token,
+#tab7Speaking .blank .token{
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -140,7 +158,8 @@
   }
 
   #tabSpeaking .speaking-qs li,
-  #tab3Speaking .speaking-qs li{
+  #tab3Speaking .speaking-qs li,
+  #tab7Speaking .speaking-qs li{
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
@@ -148,7 +167,8 @@
   }
 
   #tabSpeaking .blank,
-  #tab3Speaking .blank{
+  #tab3Speaking .blank,
+  #tab7Speaking .blank{
     width: 100%;
     min-width: 100%;
     max-width: 100%;
@@ -175,3 +195,180 @@
 }
 
 
+/* Module 10: Final Appendix A */
+.tabs.tabs--appendix .tab-label{
+  white-space: normal;
+  text-align: left;
+}
+
+/* Force Module 10 footer dots/line to blue across all appendix sheets */
+.tab-panel[id^="tabAppendix"] .appendix-footer-dots{
+  --appendix-accent-rgb: 14, 105, 160;
+}
+
+.tab-panel[id^="tabAppendix"] .appendix-sheet{
+  --appendix-accent-rgb: 14, 105, 160;
+  --appendix-level: #0a6ea7;
+}
+
+.appendix-wrap{
+  display: flex;
+  justify-content: center;
+  padding: 6px 0 28px 0;
+}
+
+.appendix-sheet{
+  --appendix-accent-rgb: 147, 88, 150; /* purple */
+  --appendix-title: #0a6ea7;
+  --appendix-level: #8d5b97;
+  --appendix-subhead: #0a6ea7;
+  --appendix-body: rgba(28,27,34,.92);
+
+  width: min(760px, 96%);
+  border-radius: 34px;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(146, 220, 232, 0.92), rgba(146, 220, 232, 0.70));
+  box-shadow: 0 18px 44px rgba(30,18,60,.10);
+}
+
+.appendix-sheet[data-accent="blue"]{
+  --appendix-accent-rgb: 14, 105, 160;
+}
+
+.appendix-inner{
+  background: rgba(255,255,255,.96);
+  border-radius: 26px;
+  padding: 18px 18px 20px 18px;
+}
+
+.appendix-hero{
+  padding: 8px 10px 12px 10px;
+}
+
+.appendix-hero-title{
+  text-align: center;
+  color: var(--appendix-title);
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-size: clamp(28px, 4.1vw, 44px);
+  line-height: 1.05;
+}
+
+.appendix-level-row{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 8px 0 14px 0;
+}
+
+.appendix-level{
+  color: var(--appendix-level);
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: .02em;
+}
+
+.appendix-level--long{
+  font-size: 18px;
+  max-width: 520px;
+}
+
+.appendix-level-line{
+  flex: 1 1 auto;
+  height: 0;
+  border-top: 5px solid rgba(var(--appendix-accent-rgb), .80);
+  border-radius: 999px;
+}
+
+.appendix-block + .appendix-block{
+  margin-top: 14px;
+}
+
+.appendix-subhead{
+  margin: 0 0 4px 0;
+  color: var(--appendix-subhead);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: .02em;
+}
+
+.appendix-text{
+  margin: 0;
+  color: var(--appendix-body);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.appendix-text--form{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+
+.appendix-intro{
+  margin: 0 0 14px 0;
+  color: rgba(28,27,34,.90);
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.appendix-purpose-head{
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 10px 0;
+}
+
+.appendix-purpose-num{
+  color: var(--appendix-level);
+  font-weight: 950;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.appendix-purpose-title{
+  color: var(--appendix-level);
+  font-weight: 950;
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.appendix-footer-dots{
+  position: relative;
+  height: 44px;
+  margin: 14px 2px 2px 2px;
+  border-radius: 18px;
+  overflow: visible;
+}
+
+.appendix-footer-dots::before{
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(var(--appendix-accent-rgb), .85);
+}
+
+.appendix-footer-dots::after{
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle, rgba(var(--appendix-accent-rgb), .30) 0 14px, transparent 15px) 0 50%/64px 100% repeat-x;
+}
+
+@media (max-width: 560px){
+  .appendix-sheet{ padding: 14px; }
+  .appendix-inner{ padding: 16px 14px 18px 14px; }
+  .appendix-level{ font-size: 18px; }
+  .appendix-level--long{ font-size: 16px; }
+  .appendix-level-row{ gap: 10px; }
+}

@@ -9,7 +9,22 @@ window.updateAmbientThemeForTab = function updateAmbientThemeForTab(tabKey){
 
   let rgb = '122,103,201'; // purple default
   // Order matters: specific groups first, then broad pattern groups.
-  if(key.includes('mock')){
+  if(key === 'exercise' && document.getElementById('tab8Exercise')){
+    // Module 8: Activity 1 should be green-themed.
+    rgb = '47,107,87'; // green
+  }else if(key === 'keywords' && document.getElementById('tab8Keywords')){
+    // Module 8: Activity 2 should be green-themed.
+    rgb = '47,107,87'; // green
+  }else if(key === 'h2_reading' && document.getElementById('tab6Hour2Reading')){
+    // Module 6: this tab key is used for a Key Words (blue) activity.
+    rgb = '111,143,203'; // blue
+  }else if(key === 'h2_exercise' && document.getElementById('tab5Hour2Exercise')){
+    // Module 5: Hour 2 "I. Listening" uses the h2_exercise tab key, but should be listening-colored.
+    rgb = '140,91,150'; // soft violet (listening)
+  }else if(key === 'practice' && document.getElementById('tab5Practice')){
+    // Module 5: Hour 1 "V. Speaking" uses the Practice tab key, but should be green.
+    rgb = '47,107,87'; // green
+  }else if(key.includes('mock')){
     rgb = '85,107,63'; // olive
   }else if(key === 'h2_recall' || key === 'm1_h2_recall'){
     rgb = '183,52,73'; // soft red
@@ -282,6 +297,51 @@ window.initializeApp = function initializeApp() {
     progressId: 'm4ulProgressBar'
   });
 
+  const m5UlPlayer = bindAudioPlayer({
+    audioId: 'm5ulAudio',
+    playId: 'm5ulPlayBtn',
+    pauseId: 'm5ulPauseBtn',
+    restartId: 'm5ulRestartBtn',
+    statusId: 'm5ulAudioStatus',
+    progressId: 'm5ulProgressBar'
+  });
+
+  const m6UlPlayer = bindAudioPlayer({
+    audioId: 'm6ulAudio',
+    playId: 'm6ulPlayBtn',
+    pauseId: 'm6ulPauseBtn',
+    restartId: 'm6ulRestartBtn',
+    statusId: 'm6ulAudioStatus',
+    progressId: 'm6ulProgressBar'
+  });
+
+  const m6h2UlPlayer = bindAudioPlayer({
+    audioId: 'm6h2UlAudio',
+    playId: 'm6h2UlPlayBtn',
+    pauseId: 'm6h2UlPauseBtn',
+    restartId: 'm6h2UlRestartBtn',
+    statusId: 'm6h2UlAudioStatus',
+    progressId: 'm6h2UlProgressBar'
+  });
+
+  const m7h2UlPlayer = bindAudioPlayer({
+    audioId: 'm7h2UlAudio',
+    playId: 'm7h2UlPlayBtn',
+    pauseId: 'm7h2UlPauseBtn',
+    restartId: 'm7h2UlRestartBtn',
+    statusId: 'm7h2UlAudioStatus',
+    progressId: 'm7h2UlProgressBar'
+  });
+
+  const m7UlPlayer = bindAudioPlayer({
+    audioId: 'm7ulAudio',
+    playId: 'm7ulPlayBtn',
+    pauseId: 'm7ulPauseBtn',
+    restartId: 'm7ulRestartBtn',
+    statusId: 'm7ulAudioStatus',
+    progressId: 'm7ulProgressBar'
+  });
+
   const liPlayer = bindAudioPlayer({
     audioId: 'listeningAudio',
     playId: 'liPlayBtn',
@@ -309,6 +369,24 @@ window.initializeApp = function initializeApp() {
     progressId: 'm5liProgressBar'
   });
 
+  const m6liPlayer = bindAudioPlayer({
+    audioId: 'm6ListeningAudio',
+    playId: 'm6liPlayBtn',
+    pauseId: 'm6liPauseBtn',
+    restartId: 'm6liRestartBtn',
+    statusId: 'm6liAudioStatus',
+    progressId: 'm6liProgressBar'
+  });
+
+  const m7liPlayer = bindAudioPlayer({
+    audioId: 'm7ListeningAudio',
+    playId: 'm7liPlayBtn',
+    pauseId: 'm7liPauseBtn',
+    restartId: 'm7liRestartBtn',
+    statusId: 'm7liAudioStatus',
+    progressId: 'm7liProgressBar'
+  });
+
   const m5h2liPlayer = bindAudioPlayer({
     audioId: 'm5h2ListeningAudio',
     playId: 'm5h2liPlayBtn',
@@ -316,6 +394,33 @@ window.initializeApp = function initializeApp() {
     restartId: 'm5h2liRestartBtn',
     statusId: 'm5h2liAudioStatus',
     progressId: 'm5h2liProgressBar'
+  });
+
+  const m6h2liPlayer = bindAudioPlayer({
+    audioId: 'm6h2ListeningAudio',
+    playId: 'm6h2liPlayBtn',
+    pauseId: 'm6h2liPauseBtn',
+    restartId: 'm6h2liRestartBtn',
+    statusId: 'm6h2liAudioStatus',
+    progressId: 'm6h2liProgressBar'
+  });
+
+  const m7h2liPlayer = bindAudioPlayer({
+    audioId: 'm7h2ListeningAudio',
+    playId: 'm7h2liPlayBtn',
+    pauseId: 'm7h2liPauseBtn',
+    restartId: 'm7h2liRestartBtn',
+    statusId: 'm7h2liAudioStatus',
+    progressId: 'm7h2liProgressBar'
+  });
+
+  const m8h2liPlayer = bindAudioPlayer({
+    audioId: 'm8h2ListeningAudio',
+    playId: 'm8h2liPlayBtn',
+    pauseId: 'm8h2liPauseBtn',
+    restartId: 'm8h2liRestartBtn',
+    statusId: 'm8h2liAudioStatus',
+    progressId: 'm8h2liProgressBar'
   });
 
   const m4h2liPlayer = bindAudioPlayer({
@@ -714,6 +819,26 @@ window.initializeApp = function initializeApp() {
     }
   });
 
+  // Module 6 - III. Listening
+  bindQuiz({
+    formId: 'm6ListeningForm',
+    feedbackId: 'm6liFeedback',
+    resetId: 'm6liResetBtn',
+    serverQuizId: document.getElementById('m6ListeningForm')?.dataset?.serverQuizId || 'module6_listening',
+    questionIds: ['m6lq1', 'm6lq2', 'm6lq3'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Incorrect. Listen again and try again.',
+    onReset: () => {
+      const a = m6liPlayer?.audio;
+      if (a){
+        a.pause();
+        a.currentTime = 0;
+        m6liPlayer.setStatus('Ready');
+        m6liPlayer.updateProgress();
+      }
+    }
+  });
+
   // Module 5 - Second Hour - I. Listening
   bindQuiz({
     formId: 'm5h2ListeningForm',
@@ -732,6 +857,71 @@ window.initializeApp = function initializeApp() {
         m5h2liPlayer.updateProgress();
       }
     }
+  });
+
+  // Module 6 - Second Hour - III. Listening
+  bindQuiz({
+    formId: 'm6h2ListeningForm',
+    feedbackId: 'm6h2liFeedback',
+    resetId: 'm6h2liResetBtn',
+    serverQuizId: document.getElementById('m6h2ListeningForm')?.dataset?.serverQuizId || 'module6_h2_listening',
+    questionIds: ['m6h2lq1', 'm6h2lq2', 'm6h2lq3', 'm6h2lq4'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Incorrect. Listen again and try again.',
+    onReset: () => {
+      const a = m6h2liPlayer?.audio;
+      if (a){
+        a.pause();
+        a.currentTime = 0;
+        m6h2liPlayer.setStatus('Ready');
+        m6h2liPlayer.updateProgress();
+      }
+    }
+  });
+
+  // Module 8 - Second Hour - I. Listening (Mock Test)
+  const m8h2MockListeningQuizId =
+    document.getElementById('m8h2MockListeningForm')?.dataset?.serverQuizId ||
+    'module8_h2_mock_listening';
+
+  bindQuiz({
+    formId: 'm8h2MockListeningForm',
+    feedbackId: 'm8h2liFeedback',
+    resetId: 'm8h2liResetBtn',
+    serverQuizId: m8h2MockListeningQuizId,
+    questionIds: ['m8h2lq1', 'm8h2lq2', 'm8h2lq3', 'm8h2lq4', 'm8h2lq5', 'm8h2lq6', 'm8h2lq7', 'm8h2lq8'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Incorrect. Listen again and try again.',
+    onReset: () => {
+      const a = m8h2liPlayer?.audio;
+      if (a){
+        a.pause();
+        a.currentTime = 0;
+        m8h2liPlayer.setStatus('Ready');
+        m8h2liPlayer.updateProgress();
+      }
+    }
+  });
+
+  // Module 8 - Second Hour - II. Reading (Mock Test)
+  bindQuiz({
+    formId: 'm8h2ReadingAForm',
+    feedbackId: 'm8h2ReadingAFeedback',
+    resetId: 'm8h2ReadingAReset',
+    serverQuizId: document.getElementById('m8h2ReadingAForm')?.dataset?.serverQuizId || 'module8_h2_mock_reading_a',
+    questionIds: ['m8h2ra1', 'm8h2ra2', 'm8h2ra3', 'm8h2ra4'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Some answers are incorrect. Check the highlighted statement(s) and try again.'
+  });
+
+  bindQuiz({
+    formId: 'm8h2ReadingBForm',
+    feedbackId: 'm8h2ReadingBFeedback',
+    resetId: 'm8h2ReadingBReset',
+    serverQuizId: document.getElementById('m8h2ReadingBForm')?.dataset?.serverQuizId || 'module8_h2_mock_reading_b',
+    questionIds: ['m8h2rb5', 'm8h2rb6', 'm8h2rb7', 'm8h2rb8'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
   });
 
   bindQuiz({
@@ -831,7 +1021,22 @@ window.initializeApp = function initializeApp() {
     badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
   });
 
-// Second Hour: IV. Reading
+  // Module 6 - VI. Reading
+  const m6ReadingQuizId =
+    document.getElementById('m6ReadingForm')?.dataset?.serverQuizId ||
+    'module6_reading';
+
+  bindQuiz({
+    formId: 'm6ReadingForm',
+    feedbackId: 'm6ReadingFeedback',
+    resetId: 'm6ReadingReset',
+    serverQuizId: m6ReadingQuizId,
+    questionIds: ['m6r1', 'm6r2', 'm6r3'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
+  });
+
+ // Second Hour: IV. Reading
  const h2ReadingQuizId =
    document.getElementById('h2ReadingForm')?.dataset?.serverQuizId ||
    'module2_h2_reading';
@@ -857,6 +1062,21 @@ window.initializeApp = function initializeApp() {
     resetId: 'm4h2ReadingReset',
     serverQuizId: m4h2ReadingQuizId,
     questionIds: ['m4h2r1', 'm4h2r2', 'm4h2r3', 'm4h2r4'],
+    goodText: 'All answers are correct. Well done.',
+    badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
+  });
+
+  // Module 5 - Second Hour: IV. Reading
+  const m5h2ReadingQuizId =
+    document.getElementById('m5h2ReadingForm')?.dataset?.serverQuizId ||
+    'module5_h2_reading';
+
+  bindQuiz({
+    formId: 'm5h2ReadingForm',
+    feedbackId: 'm5h2ReadingFeedback',
+    resetId: 'm5h2ReadingReset',
+    serverQuizId: m5h2ReadingQuizId,
+    questionIds: ['m5h2r1', 'm5h2r2'],
     goodText: 'All answers are correct. Well done.',
     badText: 'Some answers are incorrect. Check the highlighted question(s) and try again.'
   });
@@ -893,6 +1113,27 @@ window.initializeApp = function initializeApp() {
     btn?.addEventListener('click', () => {
       const nextState = !row.classList.contains('is-revealed');
       setKwRow(row, nextState);
+    });
+  });
+
+  function getScopedKwRows(btn){
+    const scope =
+      btn?.closest('.kw-dialogue') ||
+      btn?.closest('.kw-card') ||
+      btn?.closest('.tab-panel') ||
+      document;
+    return Array.from(scope.querySelectorAll('.kw-row'));
+  }
+
+  document.querySelectorAll('[data-kw-action="reveal-all"]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      getScopedKwRows(btn).forEach((row) => setKwRow(row, true));
+    });
+  });
+
+  document.querySelectorAll('[data-kw-action="hide-all"]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      getScopedKwRows(btn).forEach((row) => setKwRow(row, false));
     });
   });
 
@@ -933,16 +1174,16 @@ window.initializeApp = function initializeApp() {
 
 // Practice (Tab V) drag and drop
   function setupPracticeDnD(){
-    const roots = Array.from(document.querySelectorAll('#tabPractice, #tab3Practice, #tab4Practice, #tab5Keywords'));
+    const roots = Array.from(document.querySelectorAll('#tabPractice, #tab3Practice, #tab4Practice, #tab5Keywords, #tab6Practice, #tab7Exercise, #tab7Keywords, #tab7Practice, #tab7Reading, #tab8Exercise, #tab6Hour2Reading2'));
     if(!roots.length) return;
 
     roots.forEach((root) => {
       const bank = root.querySelector('.practice-bank');
       const tokens = Array.from(root.querySelectorAll('.token'));
       const blanks = Array.from(root.querySelectorAll('.blank'));
-      const checkBtn = root.querySelector('#practiceCheck');
-      const resetBtn = root.querySelector('#practiceReset');
-      const feedback = root.querySelector('#practiceFeedback');
+      const checkBtn = root.querySelector('[data-practice-check]') || root.querySelector('#practiceCheck');
+      const resetBtn = root.querySelector('[data-practice-reset]') || root.querySelector('#practiceReset');
+      const feedback = root.querySelector('[data-practice-feedback]') || root.querySelector('#practiceFeedback');
       const dndExerciseId = root.querySelector('.practice-card')?.dataset?.exerciseId
         || (root.id === 'tab3Practice' ? 'module3_practice' : (root.id === 'tab4Practice' ? 'module4_practice' : 'module2_practice'));
 
@@ -1267,6 +1508,398 @@ window.initializeApp = function initializeApp() {
       clearMarks();
       setFeedback('');
       clearDragHints();
+    });
+
+    checkBtn?.addEventListener('click', async () => {
+      clearMarks();
+      const answers = [];
+
+      blanks.forEach((b) => {
+        const t = getTokenInBlank(b);
+        const got = t ? (t.dataset.word || t.textContent || '').trim() : '';
+        answers.push(got);
+      });
+
+      try{
+        const result = await checkDndOnServer(dndExerciseId, answers);
+        let correct = 0;
+        blanks.forEach((b, i) => {
+          const t = getTokenInBlank(b);
+          const isCorrect = !!result?.correctByIndex?.[i];
+          b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+          if(t) t.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+          if(isCorrect) correct += 1;
+        });
+        if(correct === blanks.length){
+          setFeedback('All correct. Well done.');
+        }else{
+          setFeedback('Some answers are wrong. Try again.');
+        }
+      }catch(_e){
+        setFeedback('Cannot validate answers now. Try again in a moment.');
+      }
+    });
+
+    resetBtn?.addEventListener('click', () => {
+      blanks.forEach((b) => {
+        const t = getTokenInBlank(b);
+        if(t) moveTokenToBank(t);
+      });
+      tokens.forEach((t) => t.classList.remove('is-selected'));
+      selectedToken = null;
+      clearMarks();
+      setFeedback('');
+      clearDragHints();
+    });
+  }
+
+  function setupModule8Activity2PartBDnD(){
+    const root = document.querySelector('#tab8Keywords');
+    if(!root) return;
+
+    const card = root.querySelector('.m8a2b-card');
+    if(!card) return;
+
+    const bank = card.querySelector('#m8a2bBank');
+    const tokens = Array.from(card.querySelectorAll('.token'));
+    const blanks = Array.from(card.querySelectorAll('.blank'));
+    const checkBtn = card.querySelector('#m8a2bCheck');
+    const resetBtn = card.querySelector('#m8a2bReset');
+    const feedback = card.querySelector('#m8a2bFeedback');
+    const dndExerciseId = card.dataset.exerciseId || 'module8_h1_activity2_partb';
+
+    if(!bank || !tokens.length || !blanks.length) return;
+
+    let selectedToken = null;
+
+    function clearMarks(){
+      blanks.forEach((b) => b.classList.remove('is-correct','is-wrong','is-over'));
+      tokens.forEach((t) => t.classList.remove('is-correct','is-wrong'));
+    }
+
+    function setFeedback(msg){
+      if(feedback) feedback.textContent = msg || '';
+    }
+
+    function moveTokenToBank(token){
+      if(!token) return;
+      token.classList.remove('is-selected');
+      bank.appendChild(token);
+    }
+
+    function clearDragHints(){
+      root.classList.remove('drag-from-bank', 'drag-from-blank');
+    }
+
+    function getTokenInBlank(blank){
+      return blank.querySelector('.token');
+    }
+
+    function placeToken(blank, token){
+      if(!blank || !token) return;
+      const existing = getTokenInBlank(blank);
+      if(existing && existing !== token){
+        moveTokenToBank(existing);
+      }
+      blank.appendChild(token);
+      token.classList.remove('is-selected');
+      selectedToken = null;
+      clearMarks();
+      setFeedback('');
+    }
+
+    function onTokenClick(token){
+      if(selectedToken === token){
+        token.classList.remove('is-selected');
+        selectedToken = null;
+        return;
+      }
+      tokens.forEach((t) => t.classList.remove('is-selected'));
+      token.classList.add('is-selected');
+      selectedToken = token;
+    }
+
+    tokens.forEach((t, idx) => {
+      if(!t.id) t.id = `m8a2b_tok_${idx}_${Math.random().toString(16).slice(2)}`;
+
+      t.addEventListener('click', () => onTokenClick(t));
+
+      t.addEventListener('dblclick', () => {
+        if (t.parentElement?.classList?.contains('blank')){
+          moveTokenToBank(t);
+          clearMarks();
+          setFeedback('');
+          clearDragHints();
+        }
+      });
+
+      t.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          onTokenClick(t);
+        }
+      });
+
+      t.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', t.id);
+        e.dataTransfer.effectAllowed = 'move';
+        const fromBank = t.parentElement === bank;
+        root.classList.toggle('drag-from-bank', !!fromBank);
+        root.classList.toggle('drag-from-blank', !fromBank);
+        window.requestAnimationFrame(() => t.classList.add('is-dragging'));
+      });
+
+      t.addEventListener('dragend', () => {
+        t.classList.remove('is-dragging');
+        blanks.forEach((b) => b.classList.remove('is-over'));
+        clearDragHints();
+      });
+    });
+
+    blanks.forEach((b) => {
+      b.addEventListener('click', () => {
+        if(selectedToken) placeToken(b, selectedToken);
+      });
+
+      b.addEventListener('keydown', (e) => {
+        if((e.key === 'Enter' || e.key === ' ') && selectedToken){
+          e.preventDefault();
+          placeToken(b, selectedToken);
+        }
+      });
+
+      b.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        b.classList.add('is-over');
+        e.dataTransfer.dropEffect = 'move';
+      });
+
+      b.addEventListener('dragleave', () => b.classList.remove('is-over'));
+
+      b.addEventListener('drop', (e) => {
+        e.preventDefault();
+        b.classList.remove('is-over');
+        const id = e.dataTransfer.getData('text/plain');
+        const token = card.querySelector(`#${CSS.escape(id)}`);
+        if(token) placeToken(b, token);
+      });
+    });
+
+    bank.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    });
+
+    bank.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const id = e.dataTransfer.getData('text/plain');
+      const token = card.querySelector(`#${CSS.escape(id)}`);
+      if(token) moveTokenToBank(token);
+      clearMarks();
+      setFeedback('');
+      clearDragHints();
+    });
+
+    checkBtn?.addEventListener('click', async () => {
+      clearMarks();
+      const answers = [];
+
+      blanks.forEach((b) => {
+        const t = getTokenInBlank(b);
+        const got = t ? (t.dataset.word || t.textContent || '').trim() : '';
+        answers.push(got);
+      });
+
+      try{
+        const result = await checkDndOnServer(dndExerciseId, answers);
+        let correct = 0;
+        blanks.forEach((b, i) => {
+          const t = getTokenInBlank(b);
+          const isCorrect = !!result?.correctByIndex?.[i];
+          b.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+          if(t) t.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
+          if(isCorrect) correct += 1;
+        });
+        if(correct === blanks.length){
+          setFeedback('All correct. Well done.');
+        }else{
+          setFeedback('Some answers are wrong. Try again.');
+        }
+      }catch(_e){
+        setFeedback('Cannot validate answers now. Try again in a moment.');
+      }
+    });
+
+    resetBtn?.addEventListener('click', () => {
+      blanks.forEach((b) => {
+        const t = getTokenInBlank(b);
+        if(t) moveTokenToBank(t);
+      });
+      tokens.forEach((t) => t.classList.remove('is-selected'));
+      selectedToken = null;
+      clearMarks();
+      setFeedback('');
+      clearDragHints();
+    });
+  }
+
+  function setupModule8Activity2PartCDnD(){
+    const root = document.querySelector('#tab8Keywords');
+    if(!root) return;
+
+    const card = root.querySelector('.m8a2c-card');
+    if(!card) return;
+
+    const getBank = card.querySelector('#m8a2cGetBank');
+    const takeBank = card.querySelector('#m8a2cTakeBank');
+    const banks = [getBank, takeBank].filter(Boolean);
+    const tokens = Array.from(card.querySelectorAll('.token'));
+    const blanks = Array.from(card.querySelectorAll('.blank'));
+    const checkBtn = card.querySelector('#m8a2cCheck');
+    const resetBtn = card.querySelector('#m8a2cReset');
+    const feedback = card.querySelector('#m8a2cFeedback');
+    const dndExerciseId = card.dataset.exerciseId || 'module8_h1_activity2_partc';
+
+    if(banks.length < 2 || !tokens.length || !blanks.length) return;
+
+    let selectedToken = null;
+
+    function clearMarks(){
+      blanks.forEach((b) => b.classList.remove('is-correct','is-wrong','is-over'));
+      tokens.forEach((t) => t.classList.remove('is-correct','is-wrong'));
+    }
+
+    function setFeedback(msg){
+      if(feedback) feedback.textContent = msg || '';
+    }
+
+    function preferredBankForToken(token){
+      const word = String(token?.dataset?.word || '').trim().toLowerCase();
+      if(word.startsWith('take ')) return takeBank;
+      if(word.startsWith('get ')) return getBank;
+      return getBank || banks[0] || null;
+    }
+
+    function moveTokenToBank(token, targetBank){
+      if(!token) return;
+      token.classList.remove('is-selected');
+      const dest = targetBank || preferredBankForToken(token);
+      if(dest) dest.appendChild(token);
+    }
+
+    function clearDragHints(){
+      root.classList.remove('drag-from-bank', 'drag-from-blank');
+    }
+
+    function getTokenInBlank(blank){
+      return blank.querySelector('.token');
+    }
+
+    function placeToken(blank, token){
+      if(!blank || !token) return;
+      const existing = getTokenInBlank(blank);
+      if(existing && existing !== token){
+        moveTokenToBank(existing);
+      }
+      blank.appendChild(token);
+      token.classList.remove('is-selected');
+      selectedToken = null;
+      clearMarks();
+      setFeedback('');
+    }
+
+    function onTokenClick(token){
+      if(selectedToken === token){
+        token.classList.remove('is-selected');
+        selectedToken = null;
+        return;
+      }
+      tokens.forEach((t) => t.classList.remove('is-selected'));
+      token.classList.add('is-selected');
+      selectedToken = token;
+    }
+
+    tokens.forEach((t, idx) => {
+      if(!t.id) t.id = `m8a2c_tok_${idx}_${Math.random().toString(16).slice(2)}`;
+
+      t.addEventListener('click', () => onTokenClick(t));
+
+      t.addEventListener('dblclick', () => {
+        if (t.parentElement?.classList?.contains('blank')){
+          moveTokenToBank(t);
+          clearMarks();
+          setFeedback('');
+          clearDragHints();
+        }
+      });
+
+      t.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          onTokenClick(t);
+        }
+      });
+
+      t.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', t.id);
+        e.dataTransfer.effectAllowed = 'move';
+        const fromBank = banks.includes(t.parentElement);
+        root.classList.toggle('drag-from-bank', !!fromBank);
+        root.classList.toggle('drag-from-blank', !fromBank);
+        window.requestAnimationFrame(() => t.classList.add('is-dragging'));
+      });
+
+      t.addEventListener('dragend', () => {
+        t.classList.remove('is-dragging');
+        blanks.forEach((b) => b.classList.remove('is-over'));
+        clearDragHints();
+      });
+    });
+
+    blanks.forEach((b) => {
+      b.addEventListener('click', () => {
+        if(selectedToken) placeToken(b, selectedToken);
+      });
+
+      b.addEventListener('keydown', (e) => {
+        if((e.key === 'Enter' || e.key === ' ') && selectedToken){
+          e.preventDefault();
+          placeToken(b, selectedToken);
+        }
+      });
+
+      b.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        b.classList.add('is-over');
+        e.dataTransfer.dropEffect = 'move';
+      });
+
+      b.addEventListener('dragleave', () => b.classList.remove('is-over'));
+
+      b.addEventListener('drop', (e) => {
+        e.preventDefault();
+        b.classList.remove('is-over');
+        const id = e.dataTransfer.getData('text/plain');
+        const token = card.querySelector(`#${CSS.escape(id)}`);
+        if(token) placeToken(b, token);
+      });
+    });
+
+    banks.forEach((bankEl) => {
+      bankEl.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+      });
+
+      bankEl.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const id = e.dataTransfer.getData('text/plain');
+        const token = card.querySelector(`#${CSS.escape(id)}`);
+        if(token) moveTokenToBank(token, bankEl);
+        clearMarks();
+        setFeedback('');
+        clearDragHints();
+      });
     });
 
     checkBtn?.addEventListener('click', async () => {
@@ -1958,7 +2591,7 @@ window.initializeApp = function initializeApp() {
 
   // Speaking (Tab VII) matching drag and drop
   function setupSpeakingMatchDnD(){
-    const root = document.querySelector('#tabSpeaking, #tab3Speaking');
+    const root = document.querySelector('#tabSpeaking, #tab3Speaking, #tab7Speaking');
     if(!root) return;
 
     const bank = root.querySelector('.practice-bank');
@@ -1968,7 +2601,7 @@ window.initializeApp = function initializeApp() {
     const resetBtn = root.querySelector('#speakingReset');
     const feedback = root.querySelector('#speakingFeedback');
     const speakingExerciseId = root.querySelector('.practice-card')?.dataset?.exerciseId
-      || (root.id === 'tab3Speaking' ? 'module3_speaking' : 'module2_speaking');
+      || (root.id === 'tab7Speaking' ? 'module7_speaking' : (root.id === 'tab3Speaking' ? 'module3_speaking' : 'module2_speaking'));
 
     let selectedToken = null;
 
@@ -2155,7 +2788,7 @@ window.initializeApp = function initializeApp() {
 
   // Hour 2 (Tab II) Key Words matching drag and drop
   function setupHour2KeywordsMatchDnD(){
-    const roots = Array.from(document.querySelectorAll('#tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords'));
+    const roots = Array.from(document.querySelectorAll('#tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Hour2Keywords, #tab6Hour2Reading'));
     if(!roots.length) return;
 
     roots.forEach((root) => {
@@ -2170,7 +2803,11 @@ window.initializeApp = function initializeApp() {
         || (
           root.id === 'tab4Hour2Keywords'
             ? 'module4_h2_keywords'
-            : (root.id === 'tab3Hour2Keywords' ? 'module3_h2_keywords' : 'module2_h2_keywords')
+            : (
+              root.id === 'tab5Hour2Keywords'
+                ? 'module5_h2_keywords'
+                : (root.id === 'tab3Hour2Keywords' ? 'module3_h2_keywords' : 'module2_h2_keywords')
+            )
         );
 
       if(!bank || !blanks.length || !tokens.length) return;
@@ -2558,8 +3195,11 @@ window.initializeApp = function initializeApp() {
   // Enable Practice interactions
   setupPracticeDnD();
   setupModule3Activity2DnD();
+  // Module 7 Activity 2 uses the generic `setupPracticeDnD` now.
   setupModule4Activity2DnD();
   setupModule3Hour2RecallDnD();
+  setupModule8Activity2PartBDnD();
+  setupModule8Activity2PartCDnD();
 
   // Enable Mini Mock writing interactions
   setupMockWritingDnD();

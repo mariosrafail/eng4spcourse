@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.mjs",
-    "dev": "node server.mjs",
+    "dev": "node server.mjs --port 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

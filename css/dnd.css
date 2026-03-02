@@ -6,6 +6,11 @@
   --dnd-accent-ink-rgb: 88,50,34;
 }
 
+#tab6Practice{
+  --dnd-accent-rgb: var(--theme-brown-rgb);
+  --dnd-accent-ink-rgb: 88,50,34;
+}
+
 #tab3Practice{
   --dnd-accent-rgb: var(--theme-brown-rgb);
   --dnd-accent-ink-rgb: 88,50,34;
@@ -26,10 +31,39 @@
   --dnd-accent-ink-rgb: 95,74,167;
 }
 
+#tab7Exercise{
+  --dnd-accent-rgb: var(--theme-purple-rgb);
+  --dnd-accent-ink-rgb: 95,74,167;
+}
+
+#tab7Practice{
+  --dnd-accent-rgb: var(--theme-brown-rgb);
+  --dnd-accent-ink-rgb: 88,50,34;
+}
+
+#tab8Exercise{
+  --dnd-accent-rgb: var(--theme-green-rgb);
+  --dnd-accent-ink-rgb: 18,72,58;
+}
+
+#tab8Keywords{
+  --dnd-accent-rgb: var(--theme-green-rgb);
+  --dnd-accent-ink-rgb: 18,72,58;
+}
+
 #tabSpeaking,
 #tab3Speaking,
+#tab7Speaking,
 #tabHour2Writing,
-#tab4Hour2Writing{
+#tab5Hour2Writing,
+#tab4Hour2Writing,
+#tab7Hour2Writing,
+#tab8Hour2Writing{
+  --dnd-accent-rgb: var(--theme-green-rgb);
+  --dnd-accent-ink-rgb: 18,72,58;
+}
+
+#tab6Hour2Writing{
   --dnd-accent-rgb: var(--theme-green-rgb);
   --dnd-accent-ink-rgb: 18,72,58;
 }
@@ -44,9 +78,29 @@
   --dnd-accent-ink-rgb: 34,58,103;
 }
 
+#tab5Hour2Keywords{
+  --dnd-accent-rgb: var(--theme-blue-rgb);
+  --dnd-accent-ink-rgb: 34,58,103;
+}
+
 #tab5Keywords{
   --dnd-accent-rgb: var(--theme-blue-rgb);
   --dnd-accent-ink-rgb: 34,58,103;
+}
+
+#tab7Keywords{
+  --dnd-accent-rgb: var(--theme-blue-rgb);
+  --dnd-accent-ink-rgb: 34,58,103;
+}
+
+#tab7Reading{
+  --dnd-accent-rgb: 123,59,82; /* Reading (burgundy) */
+  --dnd-accent-ink-rgb: 123,59,82;
+}
+
+#tab5Revision{
+  --dnd-accent-rgb: var(--theme-green-rgb);
+  --dnd-accent-ink-rgb: 18,72,58;
 }
 
 #tab3Hour2Keywords{
@@ -59,6 +113,16 @@
   --dnd-accent-ink-rgb: 34,58,103;
 }
 
+#tab6Hour2Reading{
+  --dnd-accent-rgb: var(--theme-blue-rgb);
+  --dnd-accent-ink-rgb: 34,58,103;
+}
+
+#tab6Hour2Reading2{
+  --dnd-accent-rgb: 123,59,82; /* Reading (burgundy) */
+  --dnd-accent-ink-rgb: 123,59,82;
+}
+
 #tab3Hour2Recall{
   --dnd-accent-rgb: var(--theme-red-rgb);
   --dnd-accent-ink-rgb: 130,35,35;
@@ -69,55 +133,122 @@
   --dnd-accent-ink-rgb: 85,107,63;
 }
 
-/* Shared DnD visuals */
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .token{
+/* Module 8: Activity 1 (green) DnD visuals */
+:is(#tab8Exercise, #tab8Keywords) .token{
   border-color: rgba(var(--dnd-accent-rgb), .30);
   font-weight: 400;
 }
 
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting)
-:is(.practice-bank, .writing-bank, #h2wBank, #mockwBank) .token{
+:is(#tab8Exercise, #tab8Keywords) :is(.practice-bank, .writing-bank, #h2wBank, #mockwBank) .token{
   color: #000 !important;
 }
 
-/* Keep DnD prompt text regular (not bold). */
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tab3Hour2Recall) .practice-qs{
+:is(#tab8Exercise, #tab8Keywords) .practice-qs{
   font-weight: 400;
   color: #000 !important;
 }
 
-:is(#tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tabMockWriting) .writing-gap-text{
-  font-weight: 400;
-  color: #000 !important;
-}
-
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .token.is-selected{
+:is(#tab8Exercise, #tab8Keywords) .token.is-selected{
   outline: 3px solid rgba(var(--dnd-accent-rgb), .35);
 }
 
-/* DnD token interaction: keep only scale animation, no dark hover/drag shadow. */
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .token:hover{
+:is(#tab8Exercise, #tab8Keywords) .token:hover{
   transform: scale(1.04);
   box-shadow: none !important;
 }
 
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .token:active{
+:is(#tab8Exercise, #tab8Keywords) .token:active{
   transform: scale(.96);
   box-shadow: none !important;
 }
 
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .token.is-dragging{
+:is(#tab8Exercise, #tab8Keywords) .token.is-dragging{
   box-shadow: none !important;
 }
 
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank{
+:is(#tab8Exercise, #tab8Keywords) .blank{
   border-style: dashed !important;
   border-width: 2px !important;
   border-color: rgba(var(--dnd-accent-rgb), .45);
   background: rgba(var(--dnd-accent-rgb), .10);
 }
 
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank.is-over{
+:is(#tab8Exercise, #tab8Keywords) .blank.is-over{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .72);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .12);
+  background: rgba(var(--dnd-accent-rgb), .16);
+}
+
+:is(#tab8Exercise, #tab8Keywords).drag-from-blank .practice-bank{
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .14), 0 12px 24px rgba(30,18,60,.12);
+  border-color: rgba(var(--dnd-accent-rgb), .45) !important;
+  background: rgba(var(--dnd-accent-rgb), .18);
+}
+
+:is(#tab8Exercise, #tab8Keywords).drag-from-blank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
+:is(#tab8Exercise, #tab8Keywords).drag-from-bank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
+/* Shared DnD visuals */
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .token{
+  border-color: rgba(var(--dnd-accent-rgb), .30);
+  font-weight: 400;
+}
+
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting)
+:is(.practice-bank, .writing-bank, #h2wBank, #mockwBank) .token{
+  color: #000 !important;
+}
+
+/* Keep DnD prompt text regular (not bold). */
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab5Keywords, #tab7Keywords, #tab5Revision, #tab3Hour2Recall) .practice-qs{
+  font-weight: 400;
+  color: #000 !important;
+}
+
+:is(#tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tabMockWriting) .writing-gap-text{
+  font-weight: 400;
+  color: #000 !important;
+}
+
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .token.is-selected{
+  outline: 3px solid rgba(var(--dnd-accent-rgb), .35);
+}
+
+/* DnD token interaction: keep only scale animation, no dark hover/drag shadow. */
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .token:hover{
+  transform: scale(1.04);
+  box-shadow: none !important;
+}
+
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .token:active{
+  transform: scale(.96);
+  box-shadow: none !important;
+}
+
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab6Hour2Reading2, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .token.is-dragging{
+  box-shadow: none !important;
+}
+
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab6Hour2Reading2, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank{
+  border-style: dashed !important;
+  border-width: 2px !important;
+  border-color: rgba(var(--dnd-accent-rgb), .45);
+  background: rgba(var(--dnd-accent-rgb), .10);
+}
+
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab6Hour2Reading2, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank.is-over{
   border-style: dashed !important;
   border-color: rgba(var(--dnd-accent-rgb), .72);
   box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .12);
@@ -125,19 +256,33 @@
 }
 
 #tabPractice.drag-from-blank .practice-bank,
+#tab6Practice.drag-from-blank .practice-bank,
 #tab3Practice.drag-from-blank .practice-bank,
 #tab4Practice.drag-from-blank .practice-bank,
+#tab7Exercise.drag-from-blank .practice-bank,
+#tab7Practice.drag-from-blank .practice-bank,
+#tab7Keywords.drag-from-blank .practice-bank,
 #tab5Keywords.drag-from-blank .practice-bank,
+#tab5Revision.drag-from-blank .practice-bank,
 #tab3Exercise.drag-from-blank #m3a2Bank,
 #tab4Exercise.drag-from-blank #m4a2Bank,
 #tabSpeaking.drag-from-blank .speaking-bank,
 #tab3Speaking.drag-from-blank .speaking-bank,
+#tab7Speaking.drag-from-blank .speaking-bank,
 #tabHour2Keywords.drag-from-blank .h2kw-bank,
+#tab5Hour2Keywords.drag-from-blank .h2kw-bank,
 #tab3Hour2Keywords.drag-from-blank .h2kw-bank,
 #tab4Hour2Keywords.drag-from-blank .h2kw-bank,
+#tab6Hour2Reading.drag-from-blank .h2kw-bank,
+#tab7Reading.drag-from-blank .practice-bank,
+#tab6Hour2Reading2.drag-from-blank .practice-bank,
 #tabHour2Writing.drag-from-blank #h2wBank,
+#tab5Hour2Writing.drag-from-blank #h2wBank,
+#tab6Hour2Writing.drag-from-blank #h2wBank,
 #tab3Hour2Writing.drag-from-blank #h2wBank,
 #tab4Hour2Writing.drag-from-blank #h2wBank,
+#tab7Hour2Writing.drag-from-blank #h2wBank,
+#tab8Hour2Writing.drag-from-blank #h2wBank,
 #tab3Hour2Recall.drag-from-blank .practice-bank,
 #tabMockWriting.drag-from-blank #mockwBank{
   box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .14), 0 12px 24px rgba(30,18,60,.12);
@@ -145,8 +290,60 @@
   background: rgba(var(--dnd-accent-rgb), .18);
 }
 
+/* Module 6 - Hour 2 - Reading2: glow bank also when dragging from the bank, keep its base background */
+#tab6Hour2Reading2.drag-from-bank .practice-bank,
+#tab6Hour2Reading2.drag-from-blank .practice-bank{
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .14), 0 12px 24px rgba(30,18,60,.12);
+  border-color: rgba(var(--dnd-accent-rgb), .45) !important;
+  background: rgba(242,219,227,.45);
+}
+
+/* Hour 2 Writing: also glow the bank when dragging from the bank */
+#tabHour2Writing.drag-from-bank #h2wBank,
+#tab5Hour2Writing.drag-from-bank #h2wBank,
+#tab6Hour2Writing.drag-from-bank #h2wBank,
+#tab3Hour2Writing.drag-from-bank #h2wBank,
+#tab4Hour2Writing.drag-from-bank #h2wBank,
+#tab7Hour2Writing.drag-from-bank #h2wBank,
+#tab8Hour2Writing.drag-from-bank #h2wBank,
+#tabMockWriting.drag-from-bank #mockwBank{
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .14), 0 12px 24px rgba(30,18,60,.12);
+  border-color: rgba(var(--dnd-accent-rgb), .45) !important;
+  background: rgba(var(--dnd-accent-rgb), .18);
+}
+
+/* Module 6 - Hour 2 - Reading2: keep blanks active when dragging */
+#tab6Hour2Reading2.drag-from-blank .blank,
+#tab6Hour2Reading2.drag-from-bank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
 /* In Practice, dragging a placed token should also keep other blanks visually active. */
 #tabPractice.drag-from-blank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
+#tab6Practice.drag-from-blank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
+#tab7Exercise.drag-from-blank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
+#tab7Practice.drag-from-blank .blank{
   border-style: dashed !important;
   border-color: rgba(var(--dnd-accent-rgb), .62);
   box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
@@ -168,6 +365,27 @@
 }
 
 #tab5Keywords.drag-from-blank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
+#tab7Keywords.drag-from-blank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
+#tab7Reading.drag-from-blank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
+#tab5Revision.drag-from-blank .blank{
   border-style: dashed !important;
   border-color: rgba(var(--dnd-accent-rgb), .62);
   box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
@@ -197,20 +415,55 @@
   background: rgba(var(--dnd-accent-rgb), .14);
 }
 
+#tab7Speaking.drag-from-blank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
+/* Hour 2 Writing: dragging a placed token should keep other blanks active too */
+#tabHour2Writing.drag-from-blank .blank,
+#tab5Hour2Writing.drag-from-blank .blank,
+#tab6Hour2Writing.drag-from-blank .blank,
+#tab3Hour2Writing.drag-from-blank .blank,
+#tab4Hour2Writing.drag-from-blank .blank,
+#tab7Hour2Writing.drag-from-blank .blank,
+#tab8Hour2Writing.drag-from-blank .blank,
+#tabMockWriting.drag-from-blank .blank{
+  border-style: dashed !important;
+  border-color: rgba(var(--dnd-accent-rgb), .62);
+  box-shadow: 0 0 0 4px rgba(var(--dnd-accent-rgb), .10);
+  background: rgba(var(--dnd-accent-rgb), .14);
+}
+
 #tabPractice.drag-from-bank .blank,
+#tab6Practice.drag-from-bank .blank,
 #tab3Practice.drag-from-bank .blank,
 #tab4Practice.drag-from-bank .blank,
+#tab7Exercise.drag-from-bank .blank,
+#tab7Practice.drag-from-bank .blank,
 #tab5Keywords.drag-from-bank .blank,
+#tab7Keywords.drag-from-bank .blank,
+#tab5Revision.drag-from-bank .blank,
 #tab3Exercise.drag-from-bank .blank,
 #tab4Exercise.drag-from-bank .blank,
 #tabSpeaking.drag-from-bank .blank,
 #tab3Speaking.drag-from-bank .blank,
+#tab7Speaking.drag-from-bank .blank,
 #tabHour2Keywords.drag-from-bank .blank,
+#tab5Hour2Keywords.drag-from-bank .blank,
 #tab3Hour2Keywords.drag-from-bank .blank,
 #tab4Hour2Keywords.drag-from-bank .blank,
+#tab6Hour2Reading.drag-from-bank .blank,
+#tab7Reading.drag-from-bank .blank,
 #tabHour2Writing.drag-from-bank .blank,
+#tab5Hour2Writing.drag-from-bank .blank,
+#tab6Hour2Writing.drag-from-bank .blank,
 #tab3Hour2Writing.drag-from-bank .blank,
 #tab4Hour2Writing.drag-from-bank .blank,
+#tab7Hour2Writing.drag-from-bank .blank,
+#tab8Hour2Writing.drag-from-bank .blank,
 #tab3Hour2Recall.drag-from-bank .blank,
 #tabMockWriting.drag-from-bank .blank{
   border-style: dashed !important;
@@ -219,27 +472,32 @@
   background: rgba(var(--dnd-accent-rgb), .16);
 }
 
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank.is-correct,
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank.is-wrong{
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank.is-correct,
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank.is-wrong{
   border-style: dashed !important;
 }
 
 /* Keep placed tokens stable in blanks (no hover scale jitter) */
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank .token,
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank .token:hover,
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank .token:active,
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank .token.is-dragging{
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank .token,
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank .token:hover,
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank .token:active,
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab6Hour2Reading, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank .token.is-dragging{
   transform: none !important;
   color: rgba(28,27,34,.94) !important;
 }
 
+/* Module 7: placed tokens feel "fixed" inside sentence blanks */
+:is(#tab7Exercise, #tab7Keywords, #tab7Practice, #tab7Reading, #tab7Revision) .blank .token{
+  cursor: default !important;
+}
+
 /* Result coloring for tokens after Submit */
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank .token.is-correct{
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank .token.is-correct{
   border-color: rgba(18,133,77,.72) !important;
   background: rgba(18,133,77,.18) !important;
 }
 
-:is(#tabPractice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tabSpeaking, #tab3Speaking, #tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank .token.is-wrong{
+:is(#tabPractice, #tab6Practice, #tab3Practice, #tab4Practice, #tab3Exercise, #tab4Exercise, #tab7Exercise, #tab7Practice, #tab7Reading, #tabSpeaking, #tab3Speaking, #tab7Speaking, #tabHour2Keywords, #tab5Hour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Keywords, #tab7Keywords, #tab5Revision, #tabHour2Writing, #tab5Hour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing, #tab3Hour2Recall, #tabMockWriting) .blank .token.is-wrong{
   border-color: rgba(209,42,42,.72) !important;
   background: rgba(209,42,42,.18) !important;
 }

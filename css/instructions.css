@@ -21,12 +21,21 @@
 #tab3Practice,
 #tab4Practice,
 #tab1Practice,
-#tabHour2Recall,
-#tab1Hour2Recall,
-[data-panel="h2_recall"],
-[data-panel="m1_h2_recall"]{
+#tab6Practice,
+#tab7Practice{
   --instr-accent-rgb: var(--theme-brown-rgb);
   --instr-accent-ink-rgb: 126,78,58;
+}
+
+#tabHour2Recall,
+#tab1Hour2Recall,
+#tab5Hour2Recall,
+#tab6Hour2Recall,
+#tab7Hour2Recall,
+[data-panel="h2_recall"],
+[data-panel="m1_h2_recall"]{
+  --instr-accent-rgb: var(--theme-red-rgb);
+  --instr-accent-ink-rgb: 183,52,73;
 }
 
 #tab3Hour2Recall{
@@ -44,13 +53,25 @@
 #tab3Speaking,
 #tab4Speaking,
 #tab1Speaking,
+#tab7Speaking,
+#tab5Practice,
+#tab8Exercise,
+#tab8Keywords,
+#tab8Speaking,
+#tab5Revision,
 #tabHour2Writing,
 #tab3Hour2Writing,
 #tab4Hour2Writing,
 #tab1Hour2Writing,
+#tab5Hour2Writing,
+#tab6Hour2Writing,
+#tab7Hour2Writing,
+#tab8Hour2Writing,
 #tabRevision,
 #tab3Revision,
-#tab1Revision{
+#tab1Revision,
+#tab6Revision,
+#tab7Revision{
   --instr-accent-rgb: var(--theme-green-rgb);
   --instr-accent-ink-rgb: 47,107,87;
 }
@@ -59,10 +80,17 @@
 #tab3Hour2Keywords,
 #tab4Hour2Keywords,
 #tab1Hour2Keywords,
+#tab5Hour2Keywords,
+#tab6Hour2Keywords,
+#tab7Hour2Keywords,
+#tab6Hour2Reading,
 #tabKeywords,
 #tab3Keywords,
 #tab4Keywords,
-#tab1Keywords{
+#tab1Keywords,
+#tab5Keywords,
+#tab6Keywords,
+#tab7Keywords{
   --instr-accent-rgb: var(--theme-blue-rgb);
   --instr-accent-ink-rgb: 47,79,138;
 }
@@ -71,10 +99,20 @@
 #tab3Reading,
 #tab4Reading,
 #tab1Reading,
+#tab6Reading,
+#tab7Reading,
 #tabHour2Reading,
 #tab3Hour2Reading,
 #tab4Hour2Reading,
-#tab1Hour2Reading{
+#tab1Hour2Reading,
+#tab5Hour2Reading,
+#tab6Hour2Reading2,
+#tab7Hour2Reading{
+  --instr-accent-rgb: var(--theme-red-rgb);
+  --instr-accent-ink-rgb: 123,59,82;
+}
+
+#tab8Hour2Reading{
   --instr-accent-rgb: var(--theme-red-rgb);
   --instr-accent-ink-rgb: 123,59,82;
 }
@@ -86,7 +124,15 @@
 #tab3Hour2Listening,
 #tab4Hour2Listening,
 #tab4Listening,
-#tab1Hour2Listening{
+#tab1Hour2Listening,
+#tab5Listening,
+#tab5Hour2Exercise,
+#tab6Listening,
+#tab6Hour2Listening,
+#tab7Listening,
+#tab7Hour2Listening,
+#tab8Listening,
+#tab8Hour2Listening{
   --instr-accent-rgb: var(--theme-listening-rgb);
   --instr-accent-ink-rgb: 140,91,150;
 }

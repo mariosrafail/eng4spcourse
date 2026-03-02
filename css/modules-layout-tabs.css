@@ -383,6 +383,93 @@
   box-shadow: 0 0 0 4px rgba(122,103,201,.14);
 }
 
+/* Module 5: Hour 2 "I. Listening" reuses `h2_exercise` but should be listening-colored */
+nav[aria-label="Module 5 Tabs"] .tab-btn[data-tab="h2_exercise"]{
+  background: rgba(var(--theme-listening-rgb), .10);
+}
+nav[aria-label="Module 5 Tabs"] .tab-btn[data-tab="h2_exercise"]:hover{
+  background: rgba(var(--theme-listening-rgb), .14);
+}
+nav[aria-label="Module 5 Tabs"] .tab-btn[data-tab="h2_exercise"].is-active{
+  background: linear-gradient(180deg, rgba(var(--theme-listening-rgb), .22), rgba(var(--theme-listening-rgb), .10));
+  border-color: rgba(var(--theme-listening-rgb), .45);
+}
+nav[aria-label="Module 5 Tabs"] .tab-btn[data-tab="h2_exercise"] .tab-dot{
+  background: rgba(var(--theme-listening-rgb), 1);
+  box-shadow: 0 0 0 4px rgba(var(--theme-listening-rgb), .14);
+}
+
+/* Module 6: Hour 2 "IV. Key Words" reuses `h2_reading` but should be blue-colored */
+nav[aria-label="Module 6 Tabs"] .tab-btn[data-tab="h2_reading"]{
+  background: rgba(111,143,203,.10);
+}
+nav[aria-label="Module 6 Tabs"] .tab-btn[data-tab="h2_reading"]:hover{
+  background: rgba(111,143,203,.14);
+}
+nav[aria-label="Module 6 Tabs"] .tab-btn[data-tab="h2_reading"].is-active{
+  background: linear-gradient(180deg, rgba(111,143,203,.22), rgba(111,143,203,.10));
+  border-color: rgba(111,143,203,.45);
+}
+nav[aria-label="Module 6 Tabs"] .tab-btn[data-tab="h2_reading"] .tab-dot{
+  background: var(--blue-500);
+  box-shadow: 0 0 0 4px rgba(111,143,203,.14);
+}
+
+/* Module 10: Final Appendix A tabs should be blue-themed (like Key Words) */
+nav[aria-label="Final Appendix A Tabs"]{
+  --nav-accent-rgb: 111,143,203;
+}
+
+nav[aria-label="Final Appendix A Tabs"] .tab-btn{
+  background: rgba(111,143,203,.10);
+  color: var(--blue-700);
+}
+nav[aria-label="Final Appendix A Tabs"] .tab-btn:hover{
+  background: rgba(111,143,203,.14);
+}
+nav[aria-label="Final Appendix A Tabs"] .tab-btn.is-active{
+  background: linear-gradient(180deg, rgba(111,143,203,.22), rgba(111,143,203,.10));
+  border-color: rgba(111,143,203,.45);
+}
+nav[aria-label="Final Appendix A Tabs"] .tab-btn .tab-dot{
+  background: var(--blue-500);
+  box-shadow: 0 0 0 4px rgba(111,143,203,.14);
+}
+
+/* Module 8: make Activity 1/2/3 tabs green-themed */
+nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Exercise"],
+nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Keywords"],
+nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Speaking"]{
+  background: rgba(47,107,87,.10);
+  color: rgba(18,72,58,.95);
+}
+nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Exercise"]:hover,
+nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Keywords"]:hover,
+nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Speaking"]:hover{
+  background: rgba(47,107,87,.14);
+}
+nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Exercise"].is-active,
+nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Keywords"].is-active,
+nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Speaking"].is-active{
+  background: linear-gradient(180deg, rgba(47,107,87,.22), rgba(47,107,87,.10));
+  border-color: rgba(47,107,87,.45);
+}
+nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Exercise"] .tab-dot,
+nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Keywords"] .tab-dot,
+nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Speaking"] .tab-dot{
+  background: var(--green-500);
+  box-shadow: 0 0 0 4px rgba(47,107,87,.14);
+}
+
+/* Module 8: One-hour mock test section should be olive-themed in the menu */
+nav[aria-label="Module 8 Tabs"] .tab-divider[aria-label="Second hour"]{
+  border-top-color: rgba(85,107,63,.36);
+  border-bottom-color: rgba(85,107,63,.20);
+}
+nav[aria-label="Module 8 Tabs"] .tab-divider[aria-label="Second hour"] .tab-divider-text{
+  color: rgba(85,107,63,.92);
+}
+
 /* Key Words (blue) */
 .tab-btn[data-tab="h2_keywords"]{background: rgba(111,143,203,.10);}
 .tab-btn[data-tab="m1_h2_keywords"]{background: rgba(111,143,203,.10);}
@@ -510,18 +597,21 @@
 /* Reading (burgundy) */
 .tab-btn[data-tab="reading"],
 .tab-btn[data-tab="h2_reading"],
+.tab-btn[data-tab="h2_reading2"],
 .tab-btn[data-tab="m1_reading"],
 .tab-btn[data-tab="m1_h2_reading"]{
   background: rgba(123,59,82,.10);
 }
 .tab-btn[data-tab="reading"]:hover,
 .tab-btn[data-tab="h2_reading"]:hover,
+.tab-btn[data-tab="h2_reading2"]:hover,
 .tab-btn[data-tab="m1_reading"]:hover,
 .tab-btn[data-tab="m1_h2_reading"]:hover{
   background: rgba(123,59,82,.14);
 }
 .tab-btn[data-tab="reading"].is-active,
 .tab-btn[data-tab="h2_reading"].is-active,
+.tab-btn[data-tab="h2_reading2"].is-active,
 .tab-btn[data-tab="m1_reading"].is-active,
 .tab-btn[data-tab="m1_h2_reading"].is-active{
   background: linear-gradient(180deg, rgba(123,59,82,.18), rgba(123,59,82,.10));
@@ -529,9 +619,10 @@
 }
 .tab-btn[data-tab="reading"] .tab-dot,
 .tab-btn[data-tab="h2_reading"] .tab-dot,
+.tab-btn[data-tab="h2_reading2"] .tab-dot,
 .tab-btn[data-tab="m1_reading"] .tab-dot,
 .tab-btn[data-tab="m1_h2_reading"] .tab-dot{
-  background: var(--burgundy-500);
+  background: var(--burgundy-700);
   box-shadow: 0 0 0 4px rgba(123,59,82,.14);
 }
 

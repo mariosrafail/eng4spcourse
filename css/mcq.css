@@ -10,11 +10,17 @@
 #tab1Listening :is(.quiz, .quiz-form, .li-quiz),
 #tabHour2Listening :is(.quiz, .quiz-form, .li-quiz),
 #tab3Hour2Listening :is(.quiz, .quiz-form, .li-quiz),
-#tab5Listening :is(.quiz, .quiz-form, .li-quiz),
 #tab4Listening :is(.quiz, .quiz-form, .li-quiz),
+#tab6Listening :is(.quiz, .quiz-form, .li-quiz),
 #tab4Hour2Listening :is(.quiz, .quiz-form, .li-quiz),
 #tab1Hour2Listening :is(.quiz, .quiz-form, .li-quiz),
-#tab5Hour2Exercise :is(.quiz, .quiz-form, .li-quiz){
+#tab5Listening :is(.quiz, .quiz-form, .li-quiz),
+#tab5Hour2Exercise :is(.quiz, .quiz-form, .li-quiz),
+#tab6Hour2Listening :is(.quiz, .quiz-form, .li-quiz),
+#tab7Listening :is(.quiz, .quiz-form, .li-quiz),
+#tab7Hour2Listening :is(.quiz, .quiz-form, .li-quiz),
+#tab8Listening :is(.quiz, .quiz-form, .li-quiz),
+#tab8Hour2Listening :is(.quiz, .quiz-form, .li-quiz){
   --mcq-accent-rgb: var(--theme-listening-rgb);
 }
 
@@ -44,9 +50,16 @@
 #tab3Reading :is(.quiz, .quiz-form, .li-quiz),
 #tab4Reading :is(.quiz, .quiz-form, .li-quiz),
 #tab1Reading :is(.quiz, .quiz-form, .li-quiz),
+#tab6Reading :is(.quiz, .quiz-form, .li-quiz),
 #tabHour2Reading :is(.quiz, .quiz-form, .li-quiz),
 #tab3Hour2Reading :is(.quiz, .quiz-form, .li-quiz),
-#tab4Hour2Reading :is(.quiz, .quiz-form, .li-quiz){
+#tab4Hour2Reading :is(.quiz, .quiz-form, .li-quiz),
+#tab5Hour2Reading :is(.quiz, .quiz-form, .li-quiz),
+#tab6Hour2Reading :is(.quiz, .quiz-form, .li-quiz),
+#tab6Hour2Reading2 :is(.quiz, .quiz-form, .li-quiz),
+#tab7Reading :is(.quiz, .quiz-form, .li-quiz),
+#tab7Hour2Reading :is(.quiz, .quiz-form, .li-quiz),
+#tab8Hour2Reading :is(.quiz, .quiz-form, .li-quiz){
   --mcq-accent-rgb: var(--theme-red-rgb);
 }
 

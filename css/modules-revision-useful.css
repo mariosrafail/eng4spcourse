@@ -42,6 +42,26 @@
 .kw-card[data-theme="brown"] .kw-head svg{color:#fff;}
 .kw-card[data-theme="brown"] .kw-title{color:#fff;}
 
+/* Module 7 - Hour 1 - I. Useful Language (purple theme) */
+#tab7Exercise .practice-card{
+  border-color: rgba(var(--theme-purple-rgb), .36);
+  background: rgba(255,255,255,.88);
+}
+
+#tab7Exercise .practice-instructions{
+  border-color: rgba(var(--theme-purple-rgb), .34);
+  background: rgba(var(--theme-purple-rgb), .12);
+}
+
+#tab7Exercise .practice-instr-title{
+  color: rgba(95,74,167,.98);
+}
+
+#tab7Exercise .practice-bank{
+  background: rgba(var(--theme-purple-rgb), .12);
+  border-color: rgba(var(--theme-purple-rgb), .18);
+}
+
 
 .rev-box{
   border: 2px solid rgba(47,107,87,.55);
@@ -62,6 +82,153 @@
   border-left: 3px solid rgba(47,107,87,.45);
   color: rgba(28,27,34,.88);
   font-style: italic;
+}
+
+/* Module 8 - Activity 2: green instruction boxes inside revision parts */
+#tab8Keywords .m7rev-instructions{
+  border: 2px solid rgba(47,107,87,.55);
+  background: rgba(230,244,238,.88);
+  border-radius: 16px;
+  padding: 12px 14px;
+}
+#tab8Keywords .m7rev-instr-title{
+  font-weight: 900;
+  letter-spacing: .2px;
+  color: rgba(26,90,72,.98);
+  margin-bottom: 4px;
+}
+#tab8Keywords .m7rev-instr-text{
+  color: rgba(28,27,34,.92);
+  font-weight: 700;
+}
+
+/* Module 8 - Activity 2: Part A should look like a table */
+#tab8Keywords .m8a2a-table{
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 2px solid rgba(47,107,87,.55);
+  background: rgba(255,255,255,.86);
+}
+
+#tab8Keywords .m8a2a-table th,
+#tab8Keywords .m8a2a-table td{
+  padding: 10px 12px;
+  vertical-align: top;
+  border-top: 1px solid rgba(47,107,87,.20);
+}
+
+#tab8Keywords .m8a2a-table tr:first-child th{
+  border-top: 0;
+}
+
+#tab8Keywords .m8a2a-table th[scope="row"]{
+  width: min(240px, 42%);
+  font-weight: 950;
+  color: rgba(26,90,72,.98);
+  background: rgba(230,244,238,.88);
+  border-right: 1px solid rgba(47,107,87,.18);
+}
+
+#tab8Keywords .m8a2a-table td{
+  color: rgba(28,27,34,.92);
+  font-weight: 400;
+}
+
+#tab8Keywords .m8a2a-table tr.m8a2a-section th{
+  border-top: 0;
+  padding: 10px 12px;
+  background: rgba(47,107,87,.12);
+  color: rgba(26,90,72,.98);
+  font-weight: 950;
+  letter-spacing: .2px;
+  text-align: left;
+}
+
+#tab8Keywords .m8a2a-table tr.m8a2a-section + tr th,
+#tab8Keywords .m8a2a-table tr.m8a2a-section + tr td{
+  border-top: 1px solid rgba(47,107,87,.28);
+}
+
+/* Module 8 - Activity 2: Part C layout polish */
+#tab8Keywords .m8a2c-title{
+  margin: 2px 0 10px 0;
+  text-align: center;
+  font-weight: 950;
+  letter-spacing: .4px;
+  color: rgba(26,90,72,.95);
+}
+
+#tab8Keywords .m8a2c-card .m8a2c-group{
+  margin: 12px 0 8px 0;
+}
+
+#tab8Keywords .m8a2c-card .m8a2c-group-title{
+  font-weight: 950;
+  letter-spacing: .2px;
+  color: rgba(26,90,72,.95);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+#tab8Keywords .m8a2c-card .m8a2c-group-list{
+  margin-top: 4px;
+  color: rgba(47,107,87,.95);
+  font-weight: 800;
+}
+
+#tab8Keywords .m8a2c-card .practice-qs{
+  margin: 0;
+  padding-left: 22px;
+  line-height: 1.7;
+}
+
+#tab8Keywords .m8a2c-card .practice-qs li{
+  margin-bottom: 10px;
+}
+
+#tab8Keywords .m8a2c-card .practice-qs li:last-child{
+  margin-bottom: 0;
+}
+
+/* Module 6 - IV. Language Revision (green info layout) */
+#tab6Revision .m6rev-instructions{
+  border: 2px solid rgba(47,107,87,.55);
+  background: rgba(47,107,87,.08);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+#tab6Revision .m6rev-instr-title{
+  font-weight: 900;
+  letter-spacing: .2px;
+  color: rgba(26,90,72,.98);
+  margin-bottom: 4px;
+}
+#tab6Revision .m6rev-instr-text{
+  color: rgba(28,27,34,.92);
+  font-weight: 700;
+}
+
+#tab6Revision .m6rev-functions-head{
+  margin: 12px 0 12px 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(26,90,72,.92);
+  color: #fff;
+  text-align: center;
+  font-weight: 950;
+  letter-spacing: .8px;
+}
+
+#tab6Revision .m6rev-example{
+  border: 2px solid rgba(47,107,87,.55);
+  background: rgba(255,255,255,.92);
+  border-radius: 14px;
+  padding: 12px 14px;
 }
 
 /* Module 5 - IV. Language Revision (matching DnD) */
@@ -120,8 +287,16 @@
 
 #tab5Revision .m5rev-match .token{
   border-color: rgba(47,107,87,.30);
-  width: 64px;
+  width: 160px;
+  padding: 10px 14px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  text-align: center;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 #tab5Revision .m5rev-qs{

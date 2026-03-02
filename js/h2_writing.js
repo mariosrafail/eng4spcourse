@@ -1,10 +1,8 @@
 (() => {
   // Second Hour - V. Writing
   // Task 1: drag & drop gap fill
-  function setupWritingTaskOne(){
-    const root = document.querySelector('#tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing');
+  function setupWritingTaskOne(root){
     if(!root) return;
-
     const bank = root.querySelector('#h2wBank');
     const tokens = Array.from(root.querySelectorAll('#h2wBank .token'));
     const blanks = Array.from(root.querySelectorAll('.writing-gap-text .blank'));
@@ -16,7 +14,11 @@
       (
         root.id === 'tab4Hour2Writing'
           ? 'module4_h2_writing_task1'
-          : (root.id === 'tab3Hour2Writing' ? 'module3_h2_writing_task1' : 'module2_h2_writing_task1')
+          : (
+            root.id === 'tab5Hour2Writing'
+              ? 'module5_h2_writing_task1'
+              : (root.id === 'tab3Hour2Writing' ? 'module3_h2_writing_task1' : 'module2_h2_writing_task1')
+          )
       );
 
     let selectedToken = null;
@@ -205,10 +207,8 @@
   }
 
   // Task 2: writing checker (offline heuristic)
-  function setupWritingTaskTwo(){
-    const root = document.querySelector('#tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing');
+  function setupWritingTaskTwo(root){
     if(!root) return;
-
     const writingTaskTwoType = root.dataset.writingTaskTwoType || 'hotel_request';
     const textarea = root.querySelector('#h2EmailText');
     const countEl = root.querySelector('#h2EmailCount');
@@ -359,6 +359,91 @@
         if(hasAny(text, ['would like','could you','please','i would like'])){ score += 1; } else { notes.push('Use a polite request phrase (e.g., "Could you please confirm...").'); }
 
         issues = basicGrammarFlags(text, { requireGreeting: true, requireThanks: true, requireClosing: true });
+      }else if(writingTaskTwoType === 'complaint_report'){
+        const req = {
+          manager: hasAny(text, ['mr koulouris','koulouris','manager']),
+          guest: hasAny(text, ['ms lambert','lambert']),
+          roomService: hasAny(text, ['room service']),
+          slow: hasAny(text, ['slow','delay','late','took long','took a long time']),
+          apology: hasAny(text, ['apolog','sorry']),
+          response: hasAny(text, ['i explained','i offered','i arranged','i promised','i assured','we will','we have','i will'])
+        };
+
+        minGoodWords = 25;
+        firstStepMsg = 'Write your email first.';
+
+        if(req.manager){ score += 1; } else { notes.push('Mention: Mr Koulouris / the manager.'); }
+        if(req.guest){ score += 1; } else { notes.push('Mention: Ms Lambert.'); }
+        if(req.roomService){ score += 1; } else { notes.push('Mention: room service.'); }
+        if(req.slow){ score += 1; } else { notes.push('Describe: the delay / slow service.'); }
+        if(req.apology){ score += 1; } else { notes.push('Include an apology.'); }
+        if(req.response){ score += 1; } else { notes.push('Explain: how you responded / what solution you offered.'); }
+
+        issues = basicGrammarFlags(text, { requireGreeting: true, requireThanks: true, requireClosing: true });
+      }else if(writingTaskTwoType === 'pickup_confirmation'){
+        const req = {
+          athenaHotel: hasAny(text, ['athena hotel','athena']),
+          reception: hasAny(text, ['reception','receptionist','front desk']),
+          romeros: hasAny(text, ['romero','romeros']),
+          alicia: hasAny(text, ['alicia']),
+          tomorrow: hasAny(text, ['tomorrow']),
+          pickup: hasAny(text, ['pick up','pickup','pick-up','pick up time','pickup time']),
+          sixAm: hasAny(text, ['6am','6 a.m','6 a.m.','6 am'])
+        };
+
+        minGoodWords = 20;
+        firstStepMsg = 'Write your message first.';
+
+        if(req.athenaHotel){ score += 1; } else { notes.push('Mention: Athena Hotel.'); }
+        if(req.reception){ score += 1; } else { notes.push('Mention: reception / receptionist / front desk.'); }
+        if(req.romeros){ score += 1; } else { notes.push('Mention: Mr & Mrs Romero (the Romeros).'); }
+        if(req.alicia){ score += 1; } else { notes.push('Mention: Alicia.'); }
+        if(req.tomorrow){ score += 1; } else { notes.push('Mention: tomorrow\'s tour.'); }
+        if(req.pickup && req.sixAm){ score += 1; } else { notes.push('Ask to confirm: the arranged 6am pickup time.'); }
+
+        issues = basicGrammarFlags(text, { requireGreeting: false, requireThanks: false, requireClosing: false });
+      }else if(writingTaskTwoType === 'it_service_request'){
+        const req = {
+          itTeam: hasAny(text, ['it team','it department','it support','tech support','technical support','helpdesk','help desk']),
+          frontDesk: hasAny(text, ['front desk','reception','receptionist']),
+          slowOrFreeze: hasAny(text, ['slow','very slow','freez','not responding','lag']),
+          printer: hasAny(text, ['printer']),
+          serviceVisit: hasAny(text, ['service visit','service','visit','repair','fix','check','maintenance','technician']),
+          availability: hasAny(text, ['monday','tuesday','wednesday','thursday','friday','saturday','sunday','between','from']) || hasDateLike(text)
+        };
+
+        minGoodWords = 25;
+        firstStepMsg = 'Write your email first.';
+
+        if(req.itTeam){ score += 1; } else { notes.push('Address: IT team / IT department / IT support.'); }
+        if(req.frontDesk){ score += 1; } else { notes.push('Mention: front desk / reception.'); }
+        if(req.slowOrFreeze){ score += 1; } else { notes.push('Describe: the system is slow / freezes / not responding.'); }
+        if(req.printer){ score += 1; } else { notes.push('Mention: the printer (and the problem).'); }
+        if(req.serviceVisit){ score += 1; } else { notes.push('Request: a service visit / technician help.'); }
+        if(req.availability){ score += 1; } else { notes.push('Include: your availability (days and hours).'); }
+
+        issues = basicGrammarFlags(text, { requireGreeting: true, requireThanks: true, requireClosing: true });
+      }else if(writingTaskTwoType === 'day_off_email'){
+        const req = {
+          yesterdayOrDayOff: hasAny(text, ['yesterday', 'day off', 'day-off']),
+          town: hasAny(text, ['town', 'city', 'village']) || hasAny(text, ['rethymno', 'rethymnon', 'chania', 'heraklion', 'agios nikolaos']),
+          activities: hasAny(text, ['walk', 'walked', 'beach', 'swim', 'swimming', 'rent', 'rented', 'bicycle', 'bike', 'museum', 'shopping', 'park', 'coffee', 'café', 'cafe']),
+          lunchPlace: hasAny(text, ['lunch', 'restaurant', 'taverna', 'cafe', 'café']),
+          enjoyed: hasAny(text, ['enjoy', 'enjoyed', 'loved', 'liked']),
+          didntEnjoy: hasAny(text, ["didn't enjoy", "did not enjoy", 'disliked', "didn't like", 'did not like', 'hate', 'hated'])
+        };
+
+        minGoodWords = 30;
+        firstStepMsg = 'Write your email first.';
+
+        if(req.yesterdayOrDayOff){ score += 1; } else { notes.push('Mention: yesterday / my day off.'); }
+        if(req.town){ score += 1; } else { notes.push('Mention: the tourist town you live in.'); }
+        if(req.activities){ score += 1; } else { notes.push('Include: 2–3 activities you did.'); }
+        if(req.lunchPlace){ score += 1; } else { notes.push('Mention: where you ate lunch (restaurant/café).'); }
+        if(req.enjoyed){ score += 1; } else { notes.push('Say: what you enjoyed/liked.'); }
+        if(req.didntEnjoy){ score += 1; } else { notes.push('Say: what you didn’t enjoy/disliked.'); }
+
+        issues = basicGrammarFlags(text, { requireGreeting: true, requireThanks: false, requireClosing: true });
       }else{
         const req = {
           rethymno: hasAny(text, ['rethymno']),
@@ -434,13 +519,15 @@
     });
   }
   function init(){
-    const root = document.querySelector('#tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing');
-    if(!root) return;
-    if(root.dataset.h2wInitialized === '1') return;
-    root.dataset.h2wInitialized = '1';
+    const roots = Array.from(document.querySelectorAll('#tabHour2Writing, #tab3Hour2Writing, #tab4Hour2Writing, #tab5Hour2Writing, #tab6Hour2Writing, #tab7Hour2Writing, #tab8Hour2Writing'));
+    if(roots.length === 0) return;
 
-    setupWritingTaskOne();
-    setupWritingTaskTwo();
+    roots.forEach((root) => {
+      if(root.dataset.h2wInitialized === '1') return;
+      root.dataset.h2wInitialized = '1';
+      setupWritingTaskOne(root);
+      setupWritingTaskTwo(root);
+    });
   }
 
   // Expose re-init for dynamically injected module content

@@ -6,8 +6,32 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { Pool } from "pg";
 
-const HOST = "127.0.0.1";
-const PORT = 8000;
+function readCliFlagValue(flagNames) {
+  const flags = Array.isArray(flagNames) ? flagNames : [flagNames];
+  const argv = process.argv.slice(2);
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+    if (!flags.includes(arg)) continue;
+    const next = argv[i + 1];
+    if (!next || next.startsWith("-")) return null;
+    return next;
+  }
+  return null;
+}
+
+function normalizePort(value, fallback) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return fallback;
+  const asInt = Math.trunc(n);
+  if (asInt < 1 || asInt > 65535) return fallback;
+  return asInt;
+}
+
+const HOST = readCliFlagValue(["--host"]) || process.env.HOST || "127.0.0.1";
+const PORT = normalizePort(
+  readCliFlagValue(["--port", "-p"]) ?? process.env.PORT,
+  8000
+);
 const SESSION_DAYS = 30;
 const REGISTER_CODE_MINUTES = 10;
 const REGISTER_CODE_MAX_ATTEMPTS = 5;
@@ -36,7 +60,17 @@ const QUIZ_ANSWERS = {
   module3_keywords_listening: { m3kq1: "b", m3kq2: "a", m3kq3: "c" },
   module5_listening: { m5lq1: "b", m5lq2: "d", m5lq3: "a", m5lq4: "c" },
   module5_h2_listening: { m5h2lq1: "d", m5h2lq2: "b", m5h2lq3: "c", m5h2lq4: "a" },
+  module5_h2_reading: { m5h2r1: "a", m5h2r2: "b" },
+  module6_listening: { m6lq1: "c", m6lq2: "b", m6lq3: "c" },
+  module7_listening: { m7lq1: "b", m7lq2: "a", m7lq3: "b" },
+  module6_reading: { m6r1: "a", m6r2: "b", m6r3: "b" },
+  module6_h2_listening: { m6h2lq1: "b", m6h2lq2: "a", m6h2lq3: "a", m6h2lq4: "a" },
+  module7_h2_listening: { m7h2lq1: "a", m7h2lq2: "a", m7h2lq3: "b", m7h2lq4: "b" },
+  module7_h2_reading: { m7h2r1: "b", m7h2r2: "a" },
   module5_speaking: { m5sp1: "b", m5sp2: "a" },
+  module8_h2_mock_listening: { m8h2lq1: "a", m8h2lq2: "b", m8h2lq3: "c", m8h2lq4: "a", m8h2lq5: "c", m8h2lq6: "b", m8h2lq7: "b", m8h2lq8: "a" },
+  module8_h2_mock_reading_a: { m8h2ra1: "a", m8h2ra2: "a", m8h2ra3: "b", m8h2ra4: "a" },
+  module8_h2_mock_reading_b: { m8h2rb5: "c", m8h2rb6: "a", m8h2rb7: "a", m8h2rb8: "c" },
   mini_mock_listening_1a: { mq1: "b", mq2: "c" },
   mini_mock_listening_1b: { mq3: "a", mq4: "b", mq5: "c" },
   mini_mock_reading_1: { mqr1: "b", mqr2: "a", mqr3: "b", mqr4: "b" },
@@ -49,14 +83,30 @@ const DND_ANSWERS = {
   module1_h2_keywords: ["F", "C", "E", "A", "D", "B"],
   module1_h2_writing_task1: ["flight", "visit", "island", "travel", "ferry"],
   module3_activity2: ["C", "F", "A", "D", "E", "B"],
+  module7_activity2: ["E", "C", "A", "F", "B", "D"],
+  module7_h1_keywords: ["A", "I", "E", "G", "F", "H", "D", "C", "B"],
+  module7_practice: ["are", "be", "are", "is"],
+  module7_h1_reading_terms: ["open", "search", "log in", "save"],
+  module7_speaking: ["c", "b", "d", "a", "e"],
   module3_h2_writing_task1: ["A", "C", "E", "B", "F"],
+  module7_h2_writing_task1: ["will", "you", "there", "be", "have", "us"],
+  module8_h1_activity1: ["E", "B", "D", "C", "A"],
+  module8_h1_activity2_partb: ["B", "A", "E", "D", "C", "J", "F", "H", "G", "I"],
+  module8_h1_activity2_partc: ["get up", "get rid of", "get in touch", "get ready", "take a photo", "take a shower", "take time", "take a break"],
+  module8_h2_mock_writing_task1: ["for", "plans", "to", "give"],
   module3_h2_recall: ["C", "A", "B", "D"],
   module4_activity2: ["C", "A", "D", "B", "E"],
   module4_practice: ["baggage", "shuttle bus", "included", "nearest", "safe", "there", "leave", "walked", "was"],
   module4_h2_keywords: ["D", "C", "A", "F", "E", "B"],
   module4_h2_writing_task1: ["G", "E", "C", "D", "B"],
   module5_h1_keywords: ["cockroach", "impatient", "disappointed", "front desk assistant", "angry", "upset"],
+  module5_h2_keywords: ["G", "E", "A", "C", "F", "B", "D"],
   module5_h1_revision: ["D", "C", "B", "A"],
+  module5_h2_writing_task1: ["A", "D", "F", "C", "E", "B"],
+  module6_h2_keywords: ["D", "B", "E", "A", "C"],
+  module6_practice: ["a", "c"],
+  module6_h2_writing_task1: ["F", "C", "B", "A"],
+  module6_h2_reading_heard: ["hear", "empathise", "apologise", "resolve", "diagnose"],
   module2_practice: ["doesn't like", "she", "likes", "do", "flies"],
   module2_speaking: ["c", "d", "b", "f", "a", "e"],
   module2_h2_keywords: ["E", "C", "B", "D", "F", "A"],

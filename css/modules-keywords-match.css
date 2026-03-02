@@ -6,14 +6,18 @@
 
 #tabHour2Keywords .h2kw-bank,
 #tab3Hour2Keywords .h2kw-bank,
-#tab4Hour2Keywords .h2kw-bank{
+#tab4Hour2Keywords .h2kw-bank,
+#tab5Hour2Keywords .h2kw-bank,
+#tab6Hour2Reading .h2kw-bank{
   background: rgba(47,79,138,.10);
   border-color: rgba(47,79,138,.22);
 }
 
 #tabHour2Keywords .token,
 #tab3Hour2Keywords .token,
-#tab4Hour2Keywords .token{
+#tab4Hour2Keywords .token,
+#tab5Hour2Keywords .token,
+#tab6Hour2Reading .token{
   border-color: rgba(47,79,138,.30);
   max-width: 100%;
   white-space: normal;
@@ -21,7 +25,9 @@
 
 #tabHour2Keywords .blank,
 #tab3Hour2Keywords .blank,
-#tab4Hour2Keywords .blank{
+#tab4Hour2Keywords .blank,
+#tab5Hour2Keywords .blank,
+#tab6Hour2Reading .blank{
   width: 420px;
   min-width: 420px;
   max-width: 420px;
@@ -37,28 +43,36 @@
 
 #tabHour2Keywords .blank.is-over,
 #tab3Hour2Keywords .blank.is-over,
-#tab4Hour2Keywords .blank.is-over{
+#tab4Hour2Keywords .blank.is-over,
+#tab5Hour2Keywords .blank.is-over,
+#tab6Hour2Reading .blank.is-over{
   border-bottom-color: rgba(47,79,138,.75);
   background: rgba(47,79,138,.16);
 }
 
 #tabHour2Keywords .blank.is-correct,
 #tab3Hour2Keywords .blank.is-correct,
-#tab4Hour2Keywords .blank.is-correct{
+#tab4Hour2Keywords .blank.is-correct,
+#tab5Hour2Keywords .blank.is-correct,
+#tab6Hour2Reading .blank.is-correct{
   border-bottom-color: rgba(18,133,77,.82);
   background: rgba(18,133,77,.20);
 }
 
 #tabHour2Keywords .blank.is-wrong,
 #tab3Hour2Keywords .blank.is-wrong,
-#tab4Hour2Keywords .blank.is-wrong{
+#tab4Hour2Keywords .blank.is-wrong,
+#tab5Hour2Keywords .blank.is-wrong,
+#tab6Hour2Reading .blank.is-wrong{
   border-bottom-color: rgba(209,42,42,.82);
   background: rgba(209,42,42,.20);
 }
 
 #tabHour2Keywords .h2kw-qs li,
 #tab3Hour2Keywords .h2kw-qs li,
-#tab4Hour2Keywords .h2kw-qs li{
+#tab4Hour2Keywords .h2kw-qs li,
+#tab5Hour2Keywords .h2kw-qs li,
+#tab6Hour2Reading .h2kw-qs li{
   display: flex;
   align-items: center;
   gap: 14px;
@@ -67,19 +81,25 @@
 
 #tabHour2Keywords .h2kw-qs li:last-child,
 #tab3Hour2Keywords .h2kw-qs li:last-child,
-#tab4Hour2Keywords .h2kw-qs li:last-child{
+#tab4Hour2Keywords .h2kw-qs li:last-child,
+#tab5Hour2Keywords .h2kw-qs li:last-child,
+#tab6Hour2Reading .h2kw-qs li:last-child{
   margin-bottom: 0;
 }
 
 #tabHour2Keywords .h2kw-qs br,
 #tab3Hour2Keywords .h2kw-qs br,
-#tab4Hour2Keywords .h2kw-qs br{
+#tab4Hour2Keywords .h2kw-qs br,
+#tab5Hour2Keywords .h2kw-qs br,
+#tab6Hour2Reading .h2kw-qs br{
   display: none;
 }
 
 #tabHour2Keywords .blank .token,
 #tab3Hour2Keywords .blank .token,
-#tab4Hour2Keywords .blank .token{
+#tab4Hour2Keywords .blank .token,
+#tab5Hour2Keywords .blank .token,
+#tab6Hour2Reading .blank .token{
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -95,9 +115,25 @@
   border-radius: 999px;
 }
 
+/* Module 5 - Hour 2 Key Words includes long definitions: wrap inside blanks */
+#tab5Hour2Keywords .blank .token,
+#tab6Hour2Reading .blank .token{
+  height: auto;
+  min-height: 42px;
+  display: flex;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  text-align: center;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 #tabHour2Keywords.drag-from-bank .blank,
 #tab3Hour2Keywords.drag-from-bank .blank,
-#tab4Hour2Keywords.drag-from-bank .blank{
+#tab4Hour2Keywords.drag-from-bank .blank,
+#tab5Hour2Keywords.drag-from-bank .blank,
+#tab6Hour2Reading.drag-from-bank .blank{
   border-bottom-color: rgba(47,79,138,.72);
   box-shadow: 0 0 0 4px rgba(47,79,138,.12);
   background: rgba(47,79,138,.15);
@@ -105,7 +141,9 @@
 
 #tabHour2Keywords.drag-from-blank .h2kw-bank,
 #tab3Hour2Keywords.drag-from-blank .h2kw-bank,
-#tab4Hour2Keywords.drag-from-blank .h2kw-bank{
+#tab4Hour2Keywords.drag-from-blank .h2kw-bank,
+#tab5Hour2Keywords.drag-from-blank .h2kw-bank,
+#tab6Hour2Reading.drag-from-blank .h2kw-bank{
   box-shadow: 0 0 0 4px rgba(47,79,138,.16), 0 12px 24px rgba(30,18,60,.12);
   border-color: rgba(47,79,138,.45);
   background: rgba(47,79,138,.18);
@@ -113,10 +151,22 @@
 
 #tabHour2Keywords.drag-from-blank .blank,
 #tab3Hour2Keywords.drag-from-blank .blank,
-#tab4Hour2Keywords.drag-from-blank .blank{
+#tab4Hour2Keywords.drag-from-blank .blank,
+#tab5Hour2Keywords.drag-from-blank .blank,
+#tab6Hour2Reading.drag-from-blank .blank{
   border-bottom-color: rgba(47,79,138,.62);
   box-shadow: 0 0 0 4px rgba(47,79,138,.10);
   background: rgba(47,79,138,.14);
+}
+
+#tab6Hour2Reading .practice-actions .btn{
+  border-color: rgba(47,79,138,.40);
+  color: rgba(47,79,138,.98);
+  background: rgba(47,79,138,.06);
+}
+#tab6Hour2Reading .practice-actions .btn:hover{
+  border-color: rgba(47,79,138,.56);
+  background: rgba(47,79,138,.10);
 }
 
 
@@ -131,24 +181,93 @@
 .kw-card[data-theme="blue"] .kw-title{color:#fff;}
 
 /* Module 5, Hour 1 - II. Key Words (Reading-like layout, blue theme) */
-#tab5Keywords .reading-keywords{
+#tab5Keywords .reading-keywords,
+#tab6Keywords .reading-keywords,
+#tab7Keywords .reading-keywords{
+  border-color: rgba(47,79,138,.30);
+  background: #fff;
+}
+
+#tab6Keywords .reading-keywords{
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+#tab5Keywords .reading-kw-head.reading-task-head,
+#tab6Keywords .reading-kw-head.reading-task-head,
+#tab7Keywords .reading-kw-head.reading-task-head{
+  color: rgba(47,79,138,.98);
+}
+
+#tab5Keywords .reading-kw-head.reading-task-head,
+#tab6Keywords .reading-kw-head.reading-task-head,
+#tab7Keywords .reading-kw-head.reading-task-head{
+  font-weight: 900;
+  letter-spacing: .4px;
+  font-size: 18px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+#tab5Keywords .speak-btn,
+#tab6Keywords .speak-btn,
+#tab7Keywords .speak-btn{
+  border-color: rgba(47,79,138,.25);
+}
+#tab5Keywords .speak-btn,
+#tab6Keywords .speak-btn,
+#tab7Keywords .speak-btn{
+  padding: 8px 14px;
+  font-size: 17px;
+}
+#tab5Keywords .speak-ico,
+#tab6Keywords .speak-ico,
+#tab7Keywords .speak-ico{
+  width: 18px;
+  height: 18px;
+}
+#tab5Keywords .speak-btn:focus-visible,
+#tab6Keywords .speak-btn:focus-visible,
+#tab7Keywords .speak-btn:focus-visible{
+  outline-color: rgba(47,79,138,.22);
+}
+
+#tab5Keywords .reading-instr-inline,
+#tab6Keywords .reading-instr-inline,
+#tab7Keywords .reading-instr-inline{
+  border-color: rgba(47,79,138,.25);
+  background: rgba(47,79,138,.08);
+}
+
+#tab6Keywords .reading-instr-inline{
+  border-color: rgba(138,162,216,.95);
+  background: rgba(231,239,255,.85);
+}
+
+#tab5Keywords .reading-instr-inline{
+  border-color: rgba(138,162,216,.95);
+  background: rgba(231,239,255,.85);
+}
+
+#tab7Keywords .reading-instr-inline{
+  border-color: rgba(138,162,216,.95);
+  background: rgba(231,239,255,.85);
+}
+
+/* Module 5, Hour 1 - II. Key Words (Reading-like practice card) */
+#tab5Keywords .reading-card{
   border-color: rgba(47,79,138,.30);
   background: rgba(255,255,255,.92);
 }
 
-#tab5Keywords .reading-kw-head.reading-task-head{
-  color: rgba(47,79,138,.98);
-}
-
-#tab5Keywords .speak-btn{
-  border-color: rgba(47,79,138,.25);
-}
-#tab5Keywords .speak-btn:focus-visible{
-  outline-color: rgba(47,79,138,.22);
-}
-
-#tab5Keywords .reading-instr-inline{
-  border-color: rgba(47,79,138,.25);
-  background: rgba(47,79,138,.08);
+#tab5Keywords .reading-section-title.reading-task-head{
+  font-weight: 900;
+  letter-spacing: .4px;
+  font-size: 18px;
+  color: rgba(47,79,138,.95);
+  text-align: left;
+  margin-bottom: 10px;
 }
 

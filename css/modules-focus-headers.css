@@ -130,7 +130,13 @@
 #tab1Listening .unit-title,
 #tabHour2Listening .unit-title,
 #tab3Hour2Listening .unit-title,
-#tab4Hour2Listening .unit-title{
+#tab4Hour2Listening .unit-title,
+#tab5Hour2Exercise .unit-title,
+#tab5Listening .unit-title,
+#tab6Listening .unit-title,
+#tab6Hour2Listening .unit-title,
+#tab7Listening .unit-title,
+#tab7Hour2Listening .unit-title{
   color: rgba(95,55,106,.98);
 }
 #tab4Listening .unit-title{
@@ -153,7 +159,13 @@
 #tab1Listening .unit-icon,
 #tabHour2Listening .unit-icon,
 #tab3Hour2Listening .unit-icon,
-#tab4Hour2Listening .unit-icon{
+#tab4Hour2Listening .unit-icon,
+#tab5Hour2Exercise .unit-icon,
+#tab5Listening .unit-icon,
+#tab6Listening .unit-icon,
+#tab6Hour2Listening .unit-icon,
+#tab7Listening .unit-icon,
+#tab7Hour2Listening .unit-icon{
   background: rgba(140,91,150,.10);
   border-color: rgba(140,91,150,.35);
   color: rgba(95,55,106,.95);
@@ -188,7 +200,23 @@
 #tabPractice .unit-title{
   color: rgba(126,78,58,.98);
 }
+#tab6Practice .unit-title{
+  color: rgba(126,78,58,.98);
+}
+#tab7Practice .unit-title{
+  color: rgba(126,78,58,.98);
+}
 #tabPractice .unit-icon{
+  background: rgba(126,78,58,.10);
+  border-color: rgba(126,78,58,.28);
+  color: rgba(126,78,58,.95);
+}
+#tab6Practice .unit-icon{
+  background: rgba(126,78,58,.10);
+  border-color: rgba(126,78,58,.28);
+  color: rgba(126,78,58,.95);
+}
+#tab7Practice .unit-icon{
   background: rgba(126,78,58,.10);
   border-color: rgba(126,78,58,.28);
   color: rgba(126,78,58,.95);
@@ -199,7 +227,12 @@
 #tab4Reading .unit-title,
 #tabHour2Reading .unit-title,
 #tab3Hour2Reading .unit-title,
-#tab4Hour2Reading .unit-title{
+#tab4Hour2Reading .unit-title,
+#tab5Hour2Reading .unit-title,
+#tab6Reading .unit-title,
+#tab7Reading .unit-title,
+#tab7Hour2Reading .unit-title,
+#tab6Hour2Reading2 .unit-title{
   color: rgba(123,59,82,.98);
 }
 #tabReading .unit-icon,
@@ -207,7 +240,12 @@
 #tab4Reading .unit-icon,
 #tabHour2Reading .unit-icon,
 #tab3Hour2Reading .unit-icon,
-#tab4Hour2Reading .unit-icon{
+#tab4Hour2Reading .unit-icon,
+#tab5Hour2Reading .unit-icon,
+#tab6Reading .unit-icon,
+#tab7Reading .unit-icon,
+#tab7Hour2Reading .unit-icon,
+#tab6Hour2Reading2 .unit-icon{
   background: rgba(123,59,82,.10);
   border-color: rgba(123,59,82,.30);
   color: rgba(123,59,82,.95);
@@ -220,6 +258,12 @@
   color: rgba(47,107,87,.98);
 }
 #tab4Speaking .unit-title{
+  color: rgba(47,107,87,.98);
+}
+#tab7Speaking .unit-title{
+  color: rgba(47,107,87,.98);
+}
+#tab5Practice .unit-title{
   color: rgba(47,107,87,.98);
 }
 #tabSpeaking .unit-icon{
@@ -237,15 +281,49 @@
   border-color: rgba(47,107,87,.30);
   color: rgba(47,107,87,.95);
 }
+#tab7Speaking .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.30);
+  color: rgba(47,107,87,.95);
+}
+#tab5Practice .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.30);
+  color: rgba(47,107,87,.95);
+}
 
 #tabHour2Keywords .unit-title,
 #tab3Hour2Keywords .unit-title,
-#tab4Hour2Keywords .unit-title{
+#tab4Hour2Keywords .unit-title,
+#tab5Keywords .unit-title,
+#tab6Keywords .unit-title,
+#tab5Hour2Keywords .unit-title,
+#tab6Hour2Keywords .unit-title,
+#tab6Hour2Reading .unit-title,
+#tab7Keywords .unit-title,
+#tab7Hour2Keywords .unit-title{
   color: rgba(47,79,138,.98);
 }
 #tabHour2Keywords .unit-icon,
 #tab3Hour2Keywords .unit-icon,
-#tab4Hour2Keywords .unit-icon{
+#tab4Hour2Keywords .unit-icon,
+#tab5Keywords .unit-icon,
+#tab6Keywords .unit-icon,
+#tab5Hour2Keywords .unit-icon,
+#tab6Hour2Keywords .unit-icon,
+#tab6Hour2Reading .unit-icon,
+#tab7Keywords .unit-icon,
+#tab7Hour2Keywords .unit-icon{
+  background: rgba(47,79,138,.10);
+  border-color: rgba(47,79,138,.30);
+  color: rgba(47,79,138,.95);
+}
+
+/* Module 10: Final Appendix A (blue) */
+[id^="tabAppendix"] .unit-title{
+  color: rgba(47,79,138,.98);
+}
+[id^="tabAppendix"] .unit-icon{
   background: rgba(47,79,138,.10);
   border-color: rgba(47,79,138,.30);
   color: rgba(47,79,138,.95);
@@ -258,6 +336,15 @@
   color: rgba(18,72,58,.98);
 }
 #tab4Hour2Writing .unit-title{
+  color: rgba(18,72,58,.98);
+}
+#tab5Hour2Writing .unit-title{
+  color: rgba(18,72,58,.98);
+}
+#tab6Hour2Writing .unit-title{
+  color: rgba(18,72,58,.98);
+}
+#tab7Hour2Writing .unit-title{
   color: rgba(18,72,58,.98);
 }
 #tabHour2Writing .unit-icon{
@@ -275,12 +362,71 @@
   border-color: rgba(47,107,87,.35);
   color: rgba(18,72,58,.95);
 }
+#tab5Hour2Writing .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.35);
+  color: rgba(18,72,58,.95);
+}
+#tab6Hour2Writing .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.35);
+  color: rgba(18,72,58,.95);
+}
+#tab7Hour2Writing .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.35);
+  color: rgba(18,72,58,.95);
+}
+
+/* Module 8: Activity 1 (green) */
+#tab8Exercise .unit-title{
+  color: rgba(26,90,72,.98);
+}
+#tab8Exercise .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.30);
+  color: rgba(26,90,72,.95);
+}
+
+#tab8Keywords .unit-title{
+  color: rgba(26,90,72,.98);
+}
+#tab8Keywords .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.30);
+  color: rgba(26,90,72,.95);
+}
+
+#tab8Speaking .unit-title{
+  color: rgba(26,90,72,.98);
+}
+#tab8Speaking .unit-icon{
+  background: rgba(47,107,87,.10);
+  border-color: rgba(47,107,87,.30);
+  color: rgba(26,90,72,.95);
+}
 
 #tab3Hour2Recall .unit-title{
   color: rgba(183,52,73,.98);
 }
 
 #tab3Hour2Recall .unit-icon{
+  background: rgba(183,52,73,.10);
+  border-color: rgba(183,52,73,.30);
+  color: rgba(183,52,73,.95);
+}
+
+#tabHour2Recall .unit-title,
+#tab5Hour2Recall .unit-title,
+#tab6Hour2Recall .unit-title,
+#tab7Hour2Recall .unit-title{
+  color: rgba(183,52,73,.98);
+}
+
+#tabHour2Recall .unit-icon,
+#tab5Hour2Recall .unit-icon,
+#tab6Hour2Recall .unit-icon,
+#tab7Hour2Recall .unit-icon{
   background: rgba(183,52,73,.10);
   border-color: rgba(183,52,73,.30);
   color: rgba(183,52,73,.95);

@@ -27,14 +27,6 @@
     <span aria-hidden="true" class="tab-dot"></span>
     <span class="tab-label">V. Speaking</span>
   </button>
-  <button aria-controls="tab5Reading" aria-selected="false" class="tab-btn" data-tab="reading" type="button">
-    <span aria-hidden="true" class="tab-dot"></span>
-    <span class="tab-label">VI. Reading</span>
-  </button>
-  <button aria-controls="tab5Speaking" aria-selected="false" class="tab-btn" data-tab="speaking" type="button">
-    <span aria-hidden="true" class="tab-dot"></span>
-    <span class="tab-label">VII. Speaking</span>
-  </button>
   <div aria-label="Second hour" class="tab-divider" role="separator">
     <span class="tab-divider-text">Second Hour</span>
   </div>
@@ -46,21 +38,17 @@
     <span aria-hidden="true" class="tab-dot"></span>
     <span class="tab-label">II. Key Words</span>
   </button>
-  <button aria-controls="tab5Hour2Listening" aria-selected="false" class="tab-btn" data-tab="h2_listening" type="button">
-    <span aria-hidden="true" class="tab-dot"></span>
-    <span class="tab-label">III. Listening</span>
-  </button>
   <button aria-controls="tab5Hour2Reading" aria-selected="false" class="tab-btn" data-tab="h2_reading" type="button">
     <span aria-hidden="true" class="tab-dot"></span>
-    <span class="tab-label">IV. Reading</span>
+    <span class="tab-label">III. Reading</span>
   </button>
   <button aria-controls="tab5Hour2Writing" aria-selected="false" class="tab-btn" data-tab="h2_writing" type="button">
     <span aria-hidden="true" class="tab-dot"></span>
-    <span class="tab-label">V. Writing</span>
+    <span class="tab-label">IV. Writing</span>
   </button>
   <button aria-controls="tab5Hour2Recall" aria-selected="false" class="tab-btn" data-tab="h2_recall" type="button">
     <span aria-hidden="true" class="tab-dot"></span>
-    <span class="tab-label">VI. Learning Recall</span>
+    <span class="tab-label">V. Learning Recall</span>
   </button>
 </nav>
 
@@ -115,34 +103,51 @@
 
   <div class="exercise-shell">
     <div class="exercise-left">
-      <div aria-label="Module 5 useful language phrases" class="practice-card m5ul-card" role="region">
-        <div class="practice-instructions">
-          <div class="practice-instr-title">INSTRUCTIONS:</div>
-          <div class="practice-instr-text">Read the expressions below. Then, listen to them and practise saying them after the Robot.</div>
+      <aside aria-label="Instructions" class="exercise-right">
+        <div class="sticky-card">
+          <div class="card-title">INSTRUCTIONS:</div>
+          <p class="card-p">Read the expressions below. Then, listen to them and practise saying them after the Robot.</p>
         </div>
+      </aside>
+      <br>
 
-        <div class="robot-card">
-          <div aria-hidden="true" class="robot-wrap">
-            <img alt="" class="robot" src="img/robot.png">
-          </div>
-          <div class="robot-text">
-            <div class="robot-name">Robot</div>
-            <div class="robot-line" style="margin-top:6px;">
-              Section 1: Expressions used when making a complaint:<br>
-              1. "I’m afraid there’s a problem with the key card."<br>
-              2. "I’m not happy with the service in the restaurant."<br>
-              3. "Could you do something about this?"<br><br>
-              Section 2: Expressions used to respond to a complaint (to restate, empathise, apologise):<br>
-              1. "I’m sorry about your accident."<br>
-              2. "I understand that you would like to change rooms."<br>
-              3. "My apologies for the inconvenience."<br><br>
-              Section 3: Expressions used for proposing solutions:<br>
-              1. "Let me take care of this for you right away."<br>
-              2. "I can order a taxi for you."<br>
-              3. "Let me take care of this for you right away."
-            </div>
+      <div class="robot-card">
+        <div aria-hidden="true" class="robot-wrap">
+          <img alt="" class="robot" src="img/robot.png">
+        </div>
+        <div class="robot-text">
+          <div class="robot-name">Robot</div>
+          <div class="robot-line" style="margin-top:6px;">
+            <strong>Section 1: Expressions used when making a complaint:</strong><br>
+            1. "I’m afraid there’s a problem with the key card."<br>
+            2. "I’m not happy with the service in the restaurant."<br>
+            3. "Could you do something about this?"<br><br>
+            <strong>Section 2: Expressions used to respond to a complaint (to restate, empathise, apologise):</strong><br>
+            1. "I’m sorry about your accident."<br>
+            2. "I understand that you would like to change rooms."<br>
+            3. "My apologies for the inconvenience."<br><br>
+            <strong>Section 3: Expressions used for proposing solutions:</strong><br>
+            1. "Let me take care of this for you right away."<br>
+            2. "I can order a taxi for you."<br>
+            3. "Let me take care of this for you right away."
           </div>
         </div>
+      </div>
+
+      <div aria-label="Audio player" role="region">
+        <audio id="m5ulAudio" preload="metadata">
+          <source src="sound/mod5_ul_1.mp3" type="audio/mpeg"></source>
+        </audio>
+        <div class="audio-controls">
+          <button class="btn primary" id="m5ulPlayBtn" type="button">Play</button>
+          <button class="btn" id="m5ulPauseBtn" type="button">Pause</button>
+          <button class="btn" id="m5ulRestartBtn" type="button">Restart</button>
+          <div aria-live="polite" class="audio-status" id="m5ulAudioStatus">Ready</div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" id="m5ulProgressBar" style="width:0%"></div>
+        </div>
+        <div class="note">Tip: you can replay the audio anytime before moving on.</div>
       </div>
     </div>
   </div>
@@ -161,11 +166,10 @@
 
   <div class="exercise-shell">
     <div class="exercise-left">
-      <div aria-label="Key words" class="reading-keywords m5kw-reading" role="region">
+      <div aria-label="Reading keywords" class="reading-keywords" role="region">
         <div class="reading-kw-head reading-task-head">KEY WORDS</div>
-        <div class="reading-instr-inline m5kw-instr">
-          <strong>INSTRUCTIONS:</strong> Search online for each one of the key words to find their meaning and pronunciation sound bite.
-          Click the speaker icon to confirm its pronunciation.
+        <div class="reading-instr-inline">
+          <strong>INSTRUCTIONS:</strong> Search online for each one of the key words to find their meaning and pronunciation sound bite. Click the speaker icon to confirm its pronunciation.
         </div>
         <div class="reading-kw-list">
           <button aria-label="Hear pronunciation: upset" class="speak-btn" data-word="upset" type="button">
@@ -195,34 +199,36 @@
         </div>
       </div>
 
-      <div aria-label="Key words practice" class="practice-card m5kw-dnd" data-exercise-id="module5_h1_keywords" role="region">
-        <div class="practice-instructions">
-          <div class="practice-instr-title">INSTRUCTIONS:</div>
-          <div class="practice-instr-text">Fill in the blanks in the sentences below.</div>
+      <div aria-label="Key words activity" class="reading-card" role="region">
+        <div class="reading-section-title reading-task-head">PRACTICE</div>
+        <div class="reading-instr-inline">
+          <strong>INSTRUCTIONS:</strong> Fill in the blanks in the sentences below.
         </div>
 
-        <div aria-label="Word bank" class="practice-bank" role="list">
-          <div class="token" data-word="cockroach" draggable="true" role="listitem" tabindex="0">cockroach</div>
-          <div class="token" data-word="impatient" draggable="true" role="listitem" tabindex="0">impatient</div>
-          <div class="token" data-word="disappointed" draggable="true" role="listitem" tabindex="0">disappointed</div>
-          <div class="token" data-word="front desk assistant" draggable="true" role="listitem" tabindex="0">front desk assistant</div>
-          <div class="token" data-word="angry" draggable="true" role="listitem" tabindex="0">angry</div>
-          <div class="token" data-word="upset" draggable="true" role="listitem" tabindex="0">upset</div>
-        </div>
+        <div aria-label="Key words practice" class="practice-card m5kw-dnd" data-exercise-id="module5_h1_keywords" role="region">
+          <div aria-label="Word bank" class="practice-bank" role="list">
+            <div class="token" data-word="cockroach" draggable="true" role="listitem" tabindex="0">cockroach</div>
+            <div class="token" data-word="impatient" draggable="true" role="listitem" tabindex="0">impatient</div>
+            <div class="token" data-word="disappointed" draggable="true" role="listitem" tabindex="0">disappointed</div>
+            <div class="token" data-word="front desk assistant" draggable="true" role="listitem" tabindex="0">front desk assistant</div>
+            <div class="token" data-word="angry" draggable="true" role="listitem" tabindex="0">angry</div>
+            <div class="token" data-word="upset" draggable="true" role="listitem" tabindex="0">upset</div>
+          </div>
 
-        <ol aria-label="Sentences" class="practice-qs">
-          <li>I want that <span aria-label="Blank 1" class="blank" tabindex="0"></span> out of my room.</li>
-          <br><br>
-          <li>Mr Smith seems <span aria-label="Blank 2" class="blank" tabindex="0"></span>; he looks at his watch every 10 seconds.</li>
-          <br><br>
-          <li>Sarah expected better service than she received and she feels <span aria-label="Blank 3" class="blank" tabindex="0"></span>.</li>
-          <br><br>
-          <li>Did you give your bag to the <span aria-label="Blank 4" class="blank" tabindex="0"></span> to take to the storage room?</li>
-          <br><br>
-          <li>When the manager gets <span aria-label="Blank 5" class="blank" tabindex="0"></span>, he raises his voice.</li>
-          <br><br>
-          <li>I feel <span aria-label="Blank 6" class="blank" tabindex="0"></span> when I hear him shouting.</li>
-        </ol>
+          <ol aria-label="Sentences" class="practice-qs">
+            <li>I want that <span aria-label="Blank 1" class="blank" tabindex="0"></span> out of my room.</li>
+            <br><br>
+            <li>Mr Smith seems <span aria-label="Blank 2" class="blank" tabindex="0"></span>; he looks at his watch every 10 seconds.</li>
+            <br><br>
+            <li>Sarah expected better service than she received and she feels <span aria-label="Blank 3" class="blank" tabindex="0"></span>.</li>
+            <br><br>
+            <li>Did you give your bag to the <span aria-label="Blank 4" class="blank" tabindex="0"></span> to take to the storage room?</li>
+            <br><br>
+            <li>When the manager gets <span aria-label="Blank 5" class="blank" tabindex="0"></span>, he raises his voice.</li>
+            <br><br>
+            <li>I feel <span aria-label="Blank 6" class="blank" tabindex="0"></span> when I hear him shouting.</li>
+          </ol>
+        </div>
 
         <div class="practice-actions">
           <button class="btn ghost" id="practiceCheck" type="button">Submit</button>
@@ -246,7 +252,7 @@
   </div>
   <div class="exercise-shell">
     <div class="exercise-left">
-      <div class="questions-head">Activity 1</div>
+      <div class="questions-head">ACTIVITY 1</div>
       <aside aria-label="Instructions" class="exercise-right">
         <div class="sticky-card sticky-card--purple">
           <div class="card-title">INSTRUCTIONS</div>
@@ -345,7 +351,6 @@
 
 <!-- TAB 5: IV. Language Revision -->
 <section class="tab-panel" data-panel="revision" hidden="" id="tab5Revision">
-  <!--
   <div class="kw-wrap">
     <div class="kw-card" data-theme="green">
       <div class="kw-head">
@@ -355,105 +360,133 @@
         <div class="kw-title">IV. Language Revision</div>
       </div>
       <div class="kw-body">
-        <div aria-label="Language revision matching activity" class="rev-box" role="region">
-          <div class="rev-text">
-            <div class="m5rev-instructions" role="region" aria-label="Instructions">
-              <div class="m5rev-instr-title">INSTRUCTIONS:</div>
-              <div class="m5rev-instr-text">Match the language function with the appropriate phrase / expression.</div>
-            </div>
+        <div aria-label="Language revision instructions" class="m5rev-instructions" role="region">
+          <div class="m5rev-instr-title">INSTRUCTIONS:</div>
+          <div >Match the language function with the appropriate phrase / expression.</div>
+        </div>
 
-            <div class="m5rev-choose">
-              <div class="m5rev-choose-title"><strong>Choose from these phrases / expressions:</strong></div>
-              <div class="m5rev-choose-list" role="list">
-                <div role="listitem"><strong>A.</strong> Would you like to...? Could I suggest that...?</div>
-                <div role="listitem"><strong>B.</strong> I understand that you feel... and I'm sorry.</div>
-                <div role="listitem"><strong>C.</strong> I would like to... / I want to speak with...</div>
-                <div role="listitem"><strong>D.</strong> I'm not satisfied with / disappointed / upset about...</div>
-              </div>
-            </div>
+        <!-- <div aria-label="Phrases to choose from" class="m5rev-choose" role="region">
+          <div class="m5rev-choose-title">Choose from these phrases / expressions:</div>
+          <div class="m5rev-choose-list">
+            <div>Would you like to...? / Could I suggest that...?</div>
+            <div>I understand that you feel... and I'm sorry.</div>
+            <div>I would like to... / I want to speak with...</div>
+            <div>I'm not satisfied with / disappointed / upset about...</div>
+          </div>
+        </div> -->
 
-            <div class="m5rev-functions-head">LANGUAGE FUNCTIONS</div>
+        <div class="m5rev-functions-head">LANGUAGE FUNCTIONS</div>
 
-            <div class="m5rev-match-wrap">
-              <div aria-label="Matching drag and drop" class="practice-card m5rev-match" data-exercise-id="module5_h1_revision" role="region">
-                <div aria-label="Letters to drag" class="practice-bank m5rev-bank" role="list">
-                  <div class="token" data-word="A" draggable="true" role="listitem" tabindex="0">A</div>
-                  <div class="token" data-word="B" draggable="true" role="listitem" tabindex="0">B</div>
-                  <div class="token" data-word="C" draggable="true" role="listitem" tabindex="0">C</div>
-                  <div class="token" data-word="D" draggable="true" role="listitem" tabindex="0">D</div>
-                </div>
+        <div aria-label="Language functions matching activity" class="practice-card m5rev-match" data-exercise-id="module5_h1_revision" role="region">
+          <div aria-label="Phrase bank (drag these)" class="practice-bank m5rev-bank" role="list">
+            <div class="token" data-word="A" draggable="true" role="listitem" tabindex="0">Would you like to...? / Could I suggest that...?</div>
+            <div class="token" data-word="B" draggable="true" role="listitem" tabindex="0">I understand that you feel... and I'm sorry.</div>
+            <div class="token" data-word="C" draggable="true" role="listitem" tabindex="0">I would like to... / I want to speak with...</div>
+            <div class="token" data-word="D" draggable="true" role="listitem" tabindex="0">I'm not satisfied with / disappointed / upset about...</div>
+          </div>
 
-                <ol aria-label="Language functions (drop a letter in each blank)" class="practice-qs m5rev-qs">
-                  <li><strong>EXPRESSING FEELINGS.</strong> How the clients may feel: <span aria-label="Blank 1" class="blank" tabindex="0"></span></li>
-                  <li><strong>MAKING A COMPLAINT.</strong> How they express their dissatisfaction: <span aria-label="Blank 2" class="blank" tabindex="0"></span></li>
-                  <li><strong>HANDLING COMPLAINTS / APOLOGIZING.</strong> How the tourist professional acknowledges what the client says and empathizes: <span aria-label="Blank 3" class="blank" tabindex="0"></span></li>
-                  <li><strong>SUGGESTING SOLUTIONS.</strong> How the tourist professional begins to find a solution / resolve a problem: <span aria-label="Blank 4" class="blank" tabindex="0"></span></li>
-                </ol>
+          <ol aria-label="Language functions (drop answers in the gaps)" class="practice-qs m5rev-qs">
+            <li>
+              <div><strong>1. EXPRESSING FEELINGS.</strong> How the clients may feel:</div>
+              <span aria-label="Blank 1" class="blank" tabindex="0"></span>
+            </li>
+            <li>
+              <div><strong>2. MAKING A COMPLAINT.</strong> How they express their dissatisfaction:</div>
+              <span aria-label="Blank 2" class="blank" tabindex="0"></span>
+            </li>
+            <li>
+              <div><strong>3. HANDLING COMPLAINTS / APOLOGIZING.</strong> How the tourist professional acknowledges what the client says and empathizes:</div>
+              <span aria-label="Blank 3" class="blank" tabindex="0"></span>
+            </li>
+            <li>
+              <div><strong>4. SUGGESTING SOLUTIONS.</strong> How the tourist professional begins to find a solution / resolve a problem:</div>
+              <span aria-label="Blank 4" class="blank" tabindex="0"></span>
+            </li>
+          </ol>
 
-                <div class="practice-actions">
-                  <button class="btn ghost" id="m5revCheck" type="button">Submit</button>
-                  <button class="btn btn-ghost" id="m5revReset" type="button">Reset</button>
-                  <div aria-live="polite" class="practice-feedback" id="m5revFeedback" role="status"></div>
-                </div>
-              </div>
-            </div>
+          <div class="practice-actions">
+            <button class="btn ghost" id="m5revCheck" type="button">Submit</button>
+            <button class="btn ghost" id="m5revReset" type="button">Reset</button>
+            <div aria-live="polite" class="practice-feedback" id="m5revFeedback"></div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  -->
-
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">IV. Language Revision</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
     </div>
   </div>
 </section>
 
 <!-- TAB 6: V. Language Practice -->
 <section class="tab-panel" data-panel="practice" hidden="" id="tab5Practice">
-  <!--
-    <div class="kw-wrap"> ... </div>
-  -->
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">V. Speaking - “What would you say?”</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon unit-icon--green">
+        <img alt="" src="img/speaking.png">
+      </div>
+      <h1 class="unit-title">V. Speaking - “What would you say?”</h1>
+    </div>
+  </div>
+
+  <div class="exercise-shell">
+    <div class="exercise-left">
+        <div class="practice-instructions">
+          <div class="practice-instr-title">INSTRUCTIONS:</div>
+          <div>
+            You are at the desk and receive the following phone calls. Choose the most polite answer.
+            <br><br>
+            <strong class="instr-example-label">EXAMPLE:</strong><br>
+            <strong>GUEST ON PHONE:</strong> This room is hot and too stuffy. Can I turn up the air conditioning?<br>
+            A. Yes. Of course, you can.<br>
+            B. The remote control is on the wall near the mirror.<br>
+            C. I’m sorry that you are uncomfortable; I’ll send an attendant to your room right away to regulate the temperature for you.<br>
+            <em>The correct answer is: C.</em>
+          </div>
+        </div>
+
+      <div class="questions-head">QUESTIONS:</div>
+      <form aria-label="Speaking questions" class="quiz-form" data-server-quiz-id="module5_speaking" id="m5SpeakingForm">
+        <div class="q" data-q="m5sp1">
+          <div class="q-head">
+            <div class="q-num">1</div>
+            <div class="q-text">
+              <strong>GUEST ON PHONE:</strong> I’m afraid there’s a problem in the room. There is a bad smell here.
+            </div>
+          </div>
+          <div aria-label="Question 1 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="m5sp1" type="radio" value="a">What can I say?</label>
+            <label class="opt"><input name="m5sp1" type="radio" value="b">I’m sorry for the inconvenience. Let me take care of this right away.</label>
+            <label class="opt"><input name="m5sp1" type="radio" value="c">I’ll ask the cleaner to come to your room immediately.</label>
+          </div>
+        </div>
+
+        <div class="q" data-q="m5sp2">
+          <div class="q-head">
+            <div class="q-num">2</div>
+            <div class="q-text">
+              <strong>GUEST ON PHONE:</strong> Would it be possible for you to help me? I ordered a burger from room service over an hour ago. Honestly!
+            </div>
+          </div>
+          <div aria-label="Question 2 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="m5sp2" type="radio" value="a">I understand your frustration. I’ll call to check on your order immediately.</label>
+            <label class="opt"><input name="m5sp2" type="radio" value="b">Please be patient.</label>
+            <label class="opt"><input name="m5sp2" type="radio" value="c">They are very busy in the kitchen right now.</label>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn ghost" type="submit">Submit</button>
+          <button class="btn" id="m5spResetBtn" type="button">Reset</button>
+        </div>
+        <div aria-live="polite" class="feedback" id="m5spFeedback"></div>
+      </form>
     </div>
   </div>
 </section>
 
-<!-- TAB 7: VI. Reading -->
-<section class="tab-panel" data-panel="reading" hidden="" id="tab5Reading">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">VI. Reading</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
-    </div>
-  </div>
-</section>
-
-<!-- TAB 8: VII. Speaking -->
-<section class="tab-panel" data-panel="speaking" hidden="" id="tab5Speaking">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">VII. Speaking</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
-    </div>
-  </div>
-</section>
-
-<!-- TAB 9: I. Useful Language -->
+<!-- TAB 9: I. Listening -->
 <section class="tab-panel" data-panel="h2_exercise" hidden="" id="tab5Hour2Exercise">
   <div class="page-title">
     <div class="unit-head">
-      <div aria-hidden="true" class="unit-icon unit-icon--purple">
+      <div aria-hidden="true" class="unit-icon">
         <img alt="" src="img/listening.png">
       </div>
       <h1 class="unit-title">I. Listening</h1>
@@ -461,7 +494,7 @@
   </div>
   <div class="exercise-shell">
     <div class="exercise-left">
-      <div class="questions-head">Activity 2</div>
+      <div class="questions-head">ACTIVITY 2</div>
       <aside aria-label="Instructions" class="exercise-right">
         <div class="sticky-card sticky-card--purple">
           <div class="card-title">INSTRUCTIONS</div>
@@ -560,57 +593,230 @@
 
 <!-- TAB 10: II. Key Words -->
 <section class="tab-panel" data-panel="h2_keywords" hidden="" id="tab5Hour2Keywords">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">II. Key Words</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+  <div class="kw-wrap">
+    <div class="page-title">
+      <div class="unit-head">
+        <div aria-hidden="true" class="unit-icon unit-icon--burgundy">
+          <img alt="" src="img/icon-key.png">
+        </div>
+        <h1 class="unit-title">II. Key Words</h1>
+      </div>
+    </div>
+    <div class="kw-card" data-theme="blue">
+      <div class="kw-body">
+        <div aria-label="Key words instructions" class="kw-instructions" role="region">
+          <div class="kw-instr-title">INSTRUCTIONS:</div>
+          <div class="kw-instr-text h2kw-instr-text instr-example">
+            Match each key word in the left Column with its correct definition in the right Column.
+            If you wish to check, search online for each one of the key words to find their meaning and pronunciation.
+            <br><br>
+            <span class="h2kw-instr-label">EXAMPLE:</span><br>
+            <em>Accurate - Exact, correct</em>
+          </div>
+        </div>
+
+        <div class="speaking-match">
+          <div aria-label="Key words matching" class="practice-card practice-card--blue" data-exercise-id="module5_h2_keywords" role="region">
+            <div aria-label="Definitions (drag these)" class="practice-bank h2kw-bank">
+              <div class="token" data-word="E" draggable="true" tabindex="0">To cause to happen</div>
+              <div class="token" data-word="B" draggable="true" tabindex="0">To reply, answer</div>
+              <div class="token" data-word="D" draggable="true" tabindex="0">To look into, search for reasons</div>
+              <div class="token" data-word="A" draggable="true" tabindex="0">A sum of money given to one who has paid and is not happy with the service provided</div>
+              <div class="token" data-word="G" draggable="true" tabindex="0">Exact, correct</div>
+              <div class="token" data-word="C" draggable="true" tabindex="0">A lower price than normal</div>
+              <div class="token" data-word="F" draggable="true" tabindex="0">To give, offer</div>
+            </div>
+            <ol aria-label="Key words (drop in the gaps)" class="practice-qs h2kw-qs">
+              <li>Accurate <span aria-label="Blank 1" class="blank" tabindex="0"></span></li>
+              <br>
+              <li>Lead to (PAST led to) <span aria-label="Blank 2" class="blank" tabindex="0"></span></li>
+              <br>
+              <li>Refund <span aria-label="Blank 3" class="blank" tabindex="0"></span></li>
+              <br>
+              <li>Discount <span aria-label="Blank 4" class="blank" tabindex="0"></span></li>
+              <br>
+              <li>Provide <span aria-label="Blank 5" class="blank" tabindex="0"></span></li>
+              <br>
+              <li>Respond <span aria-label="Blank 6" class="blank" tabindex="0"></span></li>
+              <br>
+              <li>Investigate <span aria-label="Blank 7" class="blank" tabindex="0"></span></li>
+            </ol>
+          </div>
+          <div class="practice-actions">
+            <button class="btn ghost" id="h2kwCheck" type="button">Submit</button>
+            <button class="btn btn-ghost" id="h2kwReset" type="button">Reset</button>
+            <div aria-live="polite" class="practice-feedback" id="h2kwFeedback" role="status"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- TAB 11: III. Listening -->
-<section class="tab-panel" data-panel="h2_listening" hidden="" id="tab5Hour2Listening">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <img alt="" src="img/listening.png" style="width:72px;height:auto;display:block;margin:0 auto 12px auto;">
-      <div class="module-focus-title">III. Listening</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
-    </div>
-  </div>
-</section>
-
-<!-- TAB 12: IV. Reading -->
+<!-- TAB 11: III. Reading -->
 <section class="tab-panel" data-panel="h2_reading" hidden="" id="tab5Hour2Reading">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">IV. Reading</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon unit-icon--burgundy">
+        <img alt="" src="img/reading.png">
+      </div>
+      <h1 class="unit-title">III. Reading</h1>
+    </div>
+  </div>
+
+  <div class="exercise-shell">
+    <div class="exercise-left">
+      <div aria-label="Reading activity" class="reading-card" role="region">
+        <div class="reading-section-title reading-task-head">READING TEXT</div>
+        <div class="reading-instr-inline">
+          <strong>INSTRUCTIONS:</strong> Read the text below and answer the questions.
+        </div>
+        <div class="reading-text">
+          <div class="reading-text-title">Apology Letter</div>
+          <div class="reading-text-body">
+            <p>Dear Ms. Smith,</p>
+            <p>
+              I sincerely apologise for your recent experience with Midas Travel.
+              Your guide did not provide accurate information, and his mistake led to your family's delayed departure.
+              We take full responsibility. Please accept our apologies and a full refund of the guide fee, plus a discount on your next tour.
+            </p>
+            <p>
+              Yours sincerely,<br>
+              Gregory Whitehall<br>
+              Midas Travel, Manager
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="questions-head">QUESTIONS:</div>
+      <form aria-label="Second hour reading questions" class="quiz-form" data-server-quiz-id="module5_h2_reading" id="m5h2ReadingForm">
+        <div class="q" data-q="m5h2r1">
+          <div class="q-head">
+            <div class="q-num">1</div>
+            <div class="q-text">The reason that Mr Whitehall is writing to Ms Smith is that…</div>
+          </div>
+          <div aria-label="Question 1 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="m5h2r1" type="radio" value="a"> he is sorry that she was dissatisfied with his company’s service.</label>
+            <label class="opt"><input name="m5h2r1" type="radio" value="b"> he wants to invite her to his office.</label>
+          </div>
+        </div>
+
+        <div class="q" data-q="m5h2r2">
+          <div class="q-head">
+            <div class="q-num">2</div>
+            <div class="q-text">Ms Smith was unhappy with the performance of the tour guide, …</div>
+          </div>
+          <div aria-label="Question 2 options" class="opts" role="radiogroup">
+            <label class="opt"><input name="m5h2r2" type="radio" value="a"> his behavior and his speaking voice.</label>
+            <label class="opt"><input name="m5h2r2" type="radio" value="b"> his lack of knowledge and time management.</label>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn ghost" type="submit">Submit</button>
+          <button class="btn" id="m5h2ReadingReset" type="button">Reset</button>
+        </div>
+        <div aria-live="polite" class="feedback" id="m5h2ReadingFeedback"></div>
+      </form>
     </div>
   </div>
 </section>
 
-<!-- TAB 13: V. Writing -->
-<section class="tab-panel" data-panel="h2_writing" hidden="" id="tab5Hour2Writing">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">V. Writing</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+<!-- TAB 12: IV. Writing -->
+<section class="tab-panel" data-panel="h2_writing" hidden="" id="tab5Hour2Writing" data-writing-exercise-id="module5_h2_writing_task1" data-writing-task-two-type="complaint_report">
+  <div class="page-title">
+    <div class="unit-head">
+      <div aria-hidden="true" class="unit-icon unit-icon--green">
+        <img alt="" src="img/pencil.png">
+      </div>
+      <h1 class="unit-title">IV. Writing</h1>
+    </div>
+  </div>
+
+  <div class="exercise-shell">
+    <div class="exercise-left">
+      <div class="writing-card" role="region" aria-label="Writing task one">
+        <div class="writing-task">
+          <div class="writing-task-head">TASK ONE</div>
+          <div class="writing-instructions">
+            <div class="writing-instr-title">INSTRUCTIONS:</div>
+            <div class="writing-instr-text">Fill in the missing verbs.</div>
+          </div>
+          <div class="writing-bank-wrap">
+            <div class="practice-bank writing-bank" id="h2wBank" aria-label="Word bank" role="list">
+              <span class="token" draggable="true" tabindex="0" role="listitem" data-word="A">complain</span>
+              <span class="token" draggable="true" tabindex="0" role="listitem" data-word="B">respond</span>
+              <span class="token" draggable="true" tabindex="0" role="listitem" data-word="C">miss</span>
+              <span class="token" draggable="true" tabindex="0" role="listitem" data-word="D">gave</span>
+              <span class="token" draggable="true" tabindex="0" role="listitem" data-word="E">investigate</span>
+              <span class="token" draggable="true" tabindex="0" role="listitem" data-word="F">caused</span>
+            </div>
+          </div>
+          <div class="writing-gap-text" aria-label="Gap fill text">
+            Dear Sir or Madam,<br><br>
+            I am writing to <span class="blank" tabindex="0" role="button" aria-label="Blank 1"></span> about the tour I took with your company last week.
+            Our tour guide was poorly informed and <span class="blank" tabindex="0" role="button" aria-label="Blank 2"></span> incorrect instructions,
+            which <span class="blank" tabindex="0" role="button" aria-label="Blank 3"></span> my family and me to <span class="blank" tabindex="0" role="button" aria-label="Blank 4"></span> our planned departure.
+            This delay was very stressful and disrupted our travel plans.
+            I hope you will <span class="blank" tabindex="0" role="button" aria-label="Blank 5"></span> this matter and <span class="blank" tabindex="0" role="button" aria-label="Blank 6"></span> appropriately.<br><br>
+            Yours faithfully,<br>
+            Ms Smith
+          </div>
+          <div class="actions">
+            <button class="btn ghost" id="h2wCheck" type="button">Submit</button>
+            <button class="btn" id="h2wReset" type="button">Reset</button>
+          </div>
+          <div aria-live="polite" class="feedback" id="h2wFeedback"></div>
+        </div>
+      </div>
+
+      <div class="writing-card" role="region" aria-label="Writing task two">
+        <div class="writing-task">
+          <div class="writing-task-head">TASK TWO</div>
+          <div class="writing-instructions">
+            <div class="writing-instr-title">INSTRUCTIONS:</div>
+            <div class="writing-instr-text">
+              Write a 50-word email to Mr Koulouris, the manager of the hotel where you work as a receptionist.
+              Write to him about the complaint made by Ms Lambert (that room service was very slow) and how you responded to what she said.
+            </div>
+          </div>
+          <div class="writing-compose">
+            <div class="writing-meta">
+              <div class="wordcount" id="h2EmailCount" aria-live="polite">Words: 0/50</div>
+              <div class="hint">Tip: mention Mr Koulouris, Ms Lambert, room service delay, apology, and your solution/response.</div>
+            </div>
+            <textarea class="writing-textarea" id="h2EmailText" rows="7" placeholder="Write your email here..." aria-label="Email text (max 50 words)"></textarea>
+            <div class="actions">
+              <button class="btn ghost" id="h2EmailCheck" type="button">Submit</button>
+              <button class="btn" id="h2EmailReset" type="button">Clear</button>
+            </div>
+            <div class="writing-score" id="h2EmailScore" aria-live="polite"></div>
+            <div class="writing-feedback" id="h2EmailFeedback" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- TAB 14: VI. Learning Recall -->
+<!-- TAB 13: V. Learning Recall -->
 <section class="tab-panel" data-panel="h2_recall" hidden="" id="tab5Hour2Recall">
-  <div class="module-card">
-    <div class="module-top">
-      <br>
-      <div class="module-focus-title">VI. Learning Recall</div>
-      <div class="module-focus-sub">Content will be added soon.</div>
+  <div class="kw-wrap">
+    <div class="kw-card" data-theme="brown">
+      <div class="kw-head">
+        <div aria-hidden="true" class="kw-icon">
+          <img alt="" src="img/arrows.png">
+        </div>
+        <div class="kw-title">V. Learning Recall<br><span class="kw-title-small">(optional)</span></div>
+      </div>
+      <div class="kw-body">
+        <div aria-label="Learning recall" class="rev-box" role="region">
+          <div class="rev-text">
+            Take 2-3 minutes to reflect and to write down in your notebook 1-2 phrases used to restate a complaint and 1-2 phrases of apology you learnt or reviewed in Module 5.
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-

@@ -97,6 +97,83 @@
   font-weight: 700;
 }
 
+/* Module 5 - Hour 2 - III. Reading: compact paragraph spacing (match Module 2 reading text look) */
+#tab5Hour2Reading .reading-text-body p{
+  margin: 0 0 10px 0;
+}
+
+#tab5Hour2Reading .reading-text-body p:last-child{
+  margin-bottom: 0;
+}
+
+.heard-word{
+  font-weight: 950;
+  color: rgba(123,59,82,.95);
+}
+.heard-word--hear{ color: rgba(123,59,82,.95); }
+.heard-word--empathise{ color: rgba(140,91,150,.95); }
+.heard-word--apologise{ color: rgba(183,52,73,.95); }
+.heard-word--resolve{ color: rgba(47,107,87,.95); }
+.heard-word--diagnose{ color: rgba(47,79,138,.95); }
+
+.dotted-line{
+  display:inline-block;
+  vertical-align: baseline;
+  width: min(560px, 100%);
+  max-width: 560px;
+  border-bottom: 3px dotted rgba(123,59,82,.45);
+  transform: translateY(-2px);
+}
+
+/* Module 8 - Hour 2 - Reading: make Exercise A/B headers match "TASK ONE" styling */
+#tab8Hour2Reading .reading-section-title.reading-task-head{
+  text-align: left;
+  font-weight: 900;
+  letter-spacing: .4px;
+  font-size: 18px;
+  color: rgba(123,59,82,.95);
+  margin: 0 0 10px 0;
+}
+
+/* Module 6 - Hour 2 - V. Reading (HEARD drag & drop) */
+#tab6Hour2Reading2 .practice-card--burgundy{
+  border-color: rgba(123,59,82,.35);
+  background: rgba(255,255,255,.90);
+}
+
+/* Module 7 - Hour 1 - VI. Reading (IT terms drag & drop) */
+#tab7Reading .practice-card{
+  border-color: rgba(123,59,82,.35);
+  background: rgba(255,255,255,.90);
+}
+
+#tab7Reading .practice-bank{
+  background: rgba(123,59,82,.10);
+  border-color: rgba(123,59,82,.22);
+}
+
+#tab6Hour2Reading2 .practice-card--burgundy .practice-bank{
+  /* Match the "INSTRUCTIONS" box background */
+  background: rgba(242,219,227,.45);
+  border-color: rgba(123,59,82,.25);
+}
+
+#tab6Hour2Reading2 .practice-card--burgundy .token{
+  border-color: rgba(var(--dnd-accent-rgb), .30);
+  white-space: normal;
+  max-width: 100%;
+}
+
+#tab6Hour2Reading2 .practice-actions .btn{
+  border-color: rgba(123,59,82,.38);
+  color: rgba(123,59,82,.98);
+}
+
+#tab6Hour2Reading2 .practice-actions .btn:hover{
+  border-color: rgba(123,59,82,.56);
+  background: rgba(123,59,82,.08);
+}
+
 #tabMockReading .reading-card,
 #tabMockReadingB .reading-card{
   border-color: rgba(85,107,63,.38);
@@ -143,9 +220,15 @@
 #tabReading .reading-keywords,
 #tab3Reading .reading-keywords,
 #tab4Reading .reading-keywords,
+#tab6Reading .reading-keywords,
 #tabHour2Reading .reading-keywords,
 #tab3Hour2Reading .reading-keywords,
-#tab4Hour2Reading .reading-keywords{
+#tab4Hour2Reading .reading-keywords,
+#tab5Hour2Reading .reading-keywords,
+#tab6Hour2Reading .reading-keywords,
+#tab6Hour2Reading2 .reading-keywords,
+#tab7Reading .reading-keywords,
+#tab7Hour2Reading .reading-keywords{
   background: #fff;
 }
 
@@ -155,12 +238,24 @@
 #tab3Reading .reading-section-title.reading-task-head,
 #tab4Reading .reading-kw-head.reading-task-head,
 #tab4Reading .reading-section-title.reading-task-head,
+#tab6Reading .reading-kw-head.reading-task-head,
+#tab6Reading .reading-section-title.reading-task-head,
 #tabHour2Reading .reading-kw-head.reading-task-head,
 #tabHour2Reading .reading-section-title.reading-task-head,
 #tab3Hour2Reading .reading-kw-head.reading-task-head,
 #tab3Hour2Reading .reading-section-title.reading-task-head,
 #tab4Hour2Reading .reading-kw-head.reading-task-head,
-#tab4Hour2Reading .reading-section-title.reading-task-head{
+#tab4Hour2Reading .reading-section-title.reading-task-head,
+#tab5Hour2Reading .reading-kw-head.reading-task-head,
+#tab5Hour2Reading .reading-section-title.reading-task-head,
+#tab6Hour2Reading .reading-kw-head.reading-task-head,
+#tab6Hour2Reading .reading-section-title.reading-task-head,
+#tab6Hour2Reading2 .reading-kw-head.reading-task-head,
+#tab6Hour2Reading2 .reading-section-title.reading-task-head,
+#tab7Reading .reading-kw-head.reading-task-head,
+#tab7Reading .reading-section-title.reading-task-head,
+#tab7Hour2Reading .reading-kw-head.reading-task-head,
+#tab7Hour2Reading .reading-section-title.reading-task-head{
   font-weight: 900;
   letter-spacing: .4px;
   font-size: 18px;
@@ -172,9 +267,15 @@
 #tabReading .speak-btn,
 #tab3Reading .speak-btn,
 #tab4Reading .speak-btn,
+#tab6Reading .speak-btn,
 #tabHour2Reading .speak-btn,
 #tab3Hour2Reading .speak-btn,
-#tab4Hour2Reading .speak-btn{
+#tab4Hour2Reading .speak-btn,
+#tab5Hour2Reading .speak-btn,
+#tab6Hour2Reading .speak-btn,
+#tab6Hour2Reading2 .speak-btn,
+#tab7Reading .speak-btn,
+#tab7Hour2Reading .speak-btn{
   padding: 8px 14px;
   font-size: 17px;
 }
@@ -182,9 +283,15 @@
 #tabReading .speak-ico,
 #tab3Reading .speak-ico,
 #tab4Reading .speak-ico,
+#tab6Reading .speak-ico,
 #tabHour2Reading .speak-ico,
 #tab3Hour2Reading .speak-ico,
-#tab4Hour2Reading .speak-ico{
+#tab4Hour2Reading .speak-ico,
+#tab5Hour2Reading .speak-ico,
+#tab6Hour2Reading .speak-ico,
+#tab6Hour2Reading2 .speak-ico,
+#tab7Reading .speak-ico,
+#tab7Hour2Reading .speak-ico{
   width: 18px;
   height: 18px;
 }
