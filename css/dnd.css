@@ -166,6 +166,13 @@
   box-shadow: none !important;
 }
 
+:is(#tab8Exercise, #tab8Keywords) .blank .token,
+:is(#tab8Exercise, #tab8Keywords) .blank .token:hover,
+:is(#tab8Exercise, #tab8Keywords) .blank .token:active,
+:is(#tab8Exercise, #tab8Keywords) .blank .token.is-dragging{
+  transform: none !important;
+}
+
 :is(#tab8Exercise, #tab8Keywords) .blank{
   border-style: dashed !important;
   border-width: 2px !important;

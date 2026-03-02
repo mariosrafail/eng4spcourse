@@ -461,13 +461,13 @@ nav[aria-label="Module 8 Tabs"] .tab-btn[aria-controls="tab8Speaking"] .tab-dot{
   box-shadow: 0 0 0 4px rgba(47,107,87,.14);
 }
 
-/* Module 8: One-hour mock test section should be olive-themed in the menu */
+/* Module 8: One-hour mock test divider should follow the active tab theme (Listening/Reading/Writing). */
 nav[aria-label="Module 8 Tabs"] .tab-divider[aria-label="Second hour"]{
-  border-top-color: rgba(85,107,63,.36);
-  border-bottom-color: rgba(85,107,63,.20);
+  border-top-color: rgba(var(--nav-accent-rgb), .36);
+  border-bottom-color: rgba(var(--nav-accent-rgb), .20);
 }
 nav[aria-label="Module 8 Tabs"] .tab-divider[aria-label="Second hour"] .tab-divider-text{
-  color: rgba(85,107,63,.92);
+  color: rgba(var(--nav-accent-rgb), .82);
 }
 
 /* Key Words (blue) */

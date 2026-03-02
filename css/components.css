@@ -94,6 +94,14 @@ h1{
   border: 1px solid rgba(205,191,232,.65);
   overflow:hidden;
 }
+.progress.is-seekable{
+  cursor: pointer;
+  touch-action: none;
+}
+.progress.is-seekable:focus-visible{
+  outline: 3px solid rgba(122,103,201,.25);
+  outline-offset: 2px;
+}
 .progress-bar{
   height: 100%;
   width: 0%;

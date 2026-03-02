@@ -53,6 +53,170 @@ window.updateAmbientThemeForTab = function updateAmbientThemeForTab(tabKey){
 
 // Wrap everything in a function that can be called multiple times (for dynamic module loading)
 window.initializeApp = function initializeApp() {
+  function parseTimeRanges(text){
+    const raw = String(text || '')
+      .replace(/[–—]/g, '-')
+      .split(/[\n,;|]+/g)
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    const ranges = [];
+    raw.forEach((item) => {
+      const parts = item.split('-').map((p) => p.trim()).filter(Boolean);
+      if(parts.length === 1){
+        const t = Number(parts[0]);
+        if(Number.isFinite(t) && t >= 0){
+          ranges.push([t, t + 0.5]);
+        }
+        return;
+      }
+      if(parts.length >= 2){
+        const start = Number(parts[0]);
+        const end = Number(parts[1]);
+        if(Number.isFinite(start) && Number.isFinite(end) && start >= 0 && end >= 0){
+          const s = Math.min(start, end);
+          const e = Math.max(start, end);
+          ranges.push([s, e]);
+        }
+      }
+    });
+
+    ranges.sort((a, b) => a[0] - b[0]);
+    // Merge overlaps for stability
+    const merged = [];
+    for(const r of ranges){
+      const last = merged[merged.length - 1];
+      if(!last){
+        merged.push(r);
+        continue;
+      }
+      if(r[0] <= last[1] + 0.05){
+        last[1] = Math.max(last[1], r[1]);
+      }else{
+        merged.push(r);
+      }
+    }
+    return merged;
+  }
+
+  function initRobotAnimations(){
+    const robots = Array.from(document.querySelectorAll('[data-robot-audio][data-robot-storage-key]'));
+    robots.forEach((robot) => {
+      const audioId = String(robot.dataset.robotAudio || '');
+      const storageKey = String(robot.dataset.robotStorageKey || '');
+      const audio = audioId ? document.getElementById(audioId) : null;
+      if(!audio || !storageKey) return;
+
+      const panel = document.querySelector(`.robot-cue-panel[data-robot-panel-for="${CSS.escape(storageKey)}"]`);
+      const modeInputs = panel ? Array.from(panel.querySelectorAll('input[type="radio"][value]')) : [];
+      const textarea = panel ? panel.querySelector('.robot-cue-text') : null;
+      const applyBtn = panel ? panel.querySelector('.robot-cue-apply') : null;
+      const clearBtn = panel ? panel.querySelector('.robot-cue-clear') : null;
+      const status = panel ? panel.querySelector('.robot-cue-status') : null;
+
+      const defaultMode = String(robot.dataset.robotDefaultMode || '').toLowerCase() === 'cues' ? 'cues' : 'playback';
+      const defaultCuesText = String(robot.dataset.robotDefaultCues || '').replace(/\|/g, '\n').trim();
+      const defaults = { mode: defaultMode, cuesText: defaultCuesText };
+
+      function loadState(){
+        // If the editor UI is not present, treat defaults as authoritative and skip per-device overrides.
+        if(!panel){
+          return defaults;
+        }
+
+        try{
+          const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+          if(saved && typeof saved === 'object'){
+            return {
+              mode: saved.mode === 'cues' ? 'cues' : defaults.mode,
+              cuesText: typeof saved.cuesText === 'string' ? saved.cuesText : defaults.cuesText
+            };
+          }
+        }catch(_e){}
+        return defaults;
+      }
+
+      function saveState(mode, cuesText){
+        if(!panel) return;
+        try{
+          localStorage.setItem(storageKey, JSON.stringify({ mode, cuesText }));
+        }catch(_e){}
+      }
+
+      let state = loadState();
+      let ranges = parseTimeRanges(state.cuesText);
+
+      function setStatus(msg){
+        if(status) status.textContent = msg || '';
+      }
+
+      function setModeUI(mode){
+        modeInputs.forEach((i) => i.checked = String(i.value) === mode);
+        if(textarea){
+          textarea.disabled = mode !== 'cues';
+          textarea.setAttribute('aria-disabled', mode !== 'cues' ? 'true' : 'false');
+        }
+      }
+
+      function isSpeakingAt(t){
+        if(state.mode !== 'cues') return !audio.paused && !audio.ended;
+        if(audio.paused || audio.ended) return false;
+        return ranges.some(([s, e]) => t >= s && t <= e);
+      }
+
+      function updateSpeakingClass(){
+        try{
+          robot.classList.toggle('is-speaking', isSpeakingAt(audio.currentTime || 0));
+        }catch(_e){}
+      }
+
+      // Init UI
+      if(textarea) textarea.value = state.cuesText;
+      setModeUI(state.mode);
+      updateSpeakingClass();
+
+      // Audio bindings
+      audio.addEventListener('timeupdate', updateSpeakingClass);
+      audio.addEventListener('play', updateSpeakingClass);
+      audio.addEventListener('pause', updateSpeakingClass);
+      audio.addEventListener('ended', updateSpeakingClass);
+      audio.addEventListener('seeked', updateSpeakingClass);
+
+      // Panel bindings
+      modeInputs.forEach((input) => {
+        input.addEventListener('change', () => {
+          state.mode = input.checked ? String(input.value) : state.mode;
+          setModeUI(state.mode);
+          saveState(state.mode, state.cuesText);
+          setStatus('Saved.');
+          updateSpeakingClass();
+        });
+      });
+
+      applyBtn?.addEventListener('click', () => {
+        const nextText = String(textarea?.value || '').trim();
+        const nextRanges = parseTimeRanges(nextText);
+        state.cuesText = nextText;
+        ranges = nextRanges;
+        state.mode = state.mode === 'cues' ? 'cues' : 'playback';
+        setModeUI(state.mode);
+        saveState(state.mode, state.cuesText);
+        setStatus(state.mode === 'cues' ? 'Cues saved.' : 'Saved.');
+        updateSpeakingClass();
+      });
+
+      clearBtn?.addEventListener('click', () => {
+        state = { mode: 'playback', cuesText: '' };
+        ranges = [];
+        if(textarea) textarea.value = '';
+        setModeUI(state.mode);
+        try{ localStorage.removeItem(storageKey); }catch(_e){}
+        setStatus('Cleared.');
+        updateSpeakingClass();
+      });
+    });
+  }
+
   function normalizeInstructionLabels(){
     const fixed = 'INSTRUCTIONS:';
 
@@ -141,6 +305,7 @@ window.initializeApp = function initializeApp() {
   }
 
   normalizeInstructionLabels();
+  initRobotAnimations();
 
   // Hover highlight position for buttons and tabs
   function updateRadialVars(el, clientX, clientY){
@@ -166,19 +331,77 @@ window.initializeApp = function initializeApp() {
     const restartBtn = document.getElementById(cfg.restartId);
     const audioStatus = document.getElementById(cfg.statusId);
     const progressBar = document.getElementById(cfg.progressId);
+    const progressTrack = progressBar ? progressBar.parentElement : null;
+
+    let isSeeking = false;
+    let baseStatus = 'Ready';
+
+    function formatClock(seconds){
+      const s = Math.max(0, Number(seconds) || 0);
+      const m = Math.floor(s / 60);
+      const r = Math.floor(s % 60);
+      return `${m}:${String(r).padStart(2, '0')}`;
+    }
+
+    function updateStatusWithTime(){
+      if(!audioStatus) return;
+      if(!audio || !Number.isFinite(audio.duration) || audio.duration <= 0){
+        audioStatus.textContent = baseStatus;
+        return;
+      }
+      const cur = formatClock(audio.currentTime || 0);
+      const dur = formatClock(audio.duration);
+      audioStatus.textContent = `${baseStatus} • ${cur} / ${dur}`;
+    }
 
     function setStatus(text){
-      if (audioStatus) audioStatus.textContent = text;
+      baseStatus = String(text || '').trim() || 'Ready';
+      updateStatusWithTime();
+    }
+
+    function clamp01(n){
+      return Math.max(0, Math.min(1, n));
+    }
+
+    function canSeek(){
+      return !!audio && Number.isFinite(audio.duration) && audio.duration > 0;
+    }
+
+    function seekToRatio(ratio){
+      if(!audio) return;
+      if(!canSeek()) return;
+      const r = clamp01(ratio);
+      audio.currentTime = r * audio.duration;
+    }
+
+    function seekFromClientX(clientX){
+      if(!audio || !progressTrack) return;
+      if(!canSeek()) return;
+      const rect = progressTrack.getBoundingClientRect();
+      if(!rect.width) return;
+      const ratio = (clientX - rect.left) / rect.width;
+      seekToRatio(ratio);
+      updateProgress();
     }
 
     function updateProgress(){
       if (!audio || !progressBar) return;
       if (!audio.duration || Number.isNaN(audio.duration)){
         progressBar.style.width = '0%';
+        updateStatusWithTime();
         return;
       }
       const pct = Math.max(0, Math.min(1, audio.currentTime / audio.duration)) * 100;
       progressBar.style.width = pct.toFixed(2) + '%';
+      updateStatusWithTime();
+
+      if(progressTrack && progressTrack.getAttribute('role') === 'slider'){
+        try{
+          progressTrack.setAttribute('aria-valuemin', '0');
+          progressTrack.setAttribute('aria-valuemax', String(Math.floor(audio.duration)));
+          progressTrack.setAttribute('aria-valuenow', String(Math.floor(audio.currentTime || 0)));
+        }catch(_e){}
+      }
     }
 
     function safePlay(){
@@ -208,6 +431,71 @@ window.initializeApp = function initializeApp() {
       updateProgress();
       if (typeof cfg.onEnded === 'function') cfg.onEnded();
     });
+
+    // Seek/scrub on the progress bar
+    if(progressTrack){
+      progressTrack.classList.add('is-seekable');
+      if(!progressTrack.hasAttribute('tabindex')) progressTrack.tabIndex = 0;
+      if(!progressTrack.hasAttribute('role')) progressTrack.setAttribute('role', 'slider');
+      if(!progressTrack.hasAttribute('aria-label')) progressTrack.setAttribute('aria-label', 'Audio position');
+
+      progressTrack.addEventListener('pointerdown', (e) => {
+        if(!canSeek()) return;
+        isSeeking = true;
+        try{ progressTrack.setPointerCapture(e.pointerId); }catch(_e){}
+        seekFromClientX(e.clientX);
+      });
+
+      progressTrack.addEventListener('pointermove', (e) => {
+        if(!isSeeking) return;
+        seekFromClientX(e.clientX);
+      });
+
+      progressTrack.addEventListener('pointerup', (e) => {
+        if(!isSeeking) return;
+        isSeeking = false;
+        seekFromClientX(e.clientX);
+        try{ progressTrack.releasePointerCapture(e.pointerId); }catch(_e){}
+      });
+
+      progressTrack.addEventListener('pointercancel', () => {
+        isSeeking = false;
+      });
+
+      progressTrack.addEventListener('keydown', (e) => {
+        if(!audio) return;
+        if(!canSeek()) return;
+
+        const step = e.shiftKey ? 10 : 5;
+        if(e.key === 'ArrowLeft'){
+          e.preventDefault();
+          audio.currentTime = Math.max(0, (audio.currentTime || 0) - step);
+          updateProgress();
+          return;
+        }
+        if(e.key === 'ArrowRight'){
+          e.preventDefault();
+          audio.currentTime = Math.min(audio.duration, (audio.currentTime || 0) + step);
+          updateProgress();
+          return;
+        }
+        if(e.key === 'Home'){
+          e.preventDefault();
+          audio.currentTime = 0;
+          updateProgress();
+          return;
+        }
+        if(e.key === 'End'){
+          e.preventDefault();
+          audio.currentTime = audio.duration;
+          updateProgress();
+          return;
+        }
+      });
+
+      audio?.addEventListener('loadedmetadata', updateProgress);
+      audio?.addEventListener('durationchange', updateProgress);
+    }
 
     // Init
     updateProgress();

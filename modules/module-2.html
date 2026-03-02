@@ -117,7 +117,13 @@
       <br>
       <div class="robot-card">
         <div aria-hidden="true" class="robot-wrap">
-          <img alt="" class="robot" src="img/robot.png">
+          <div class="robot-anim" data-robot-audio="dialogueAudio" data-robot-storage-key="m2_h1_useful_language_robot" data-robot-default-mode="cues" data-robot-default-cues="31.2-32.5|39.5-41|44-45|48-49|61.3-64.5|66-68.5|70-72.8">
+            <div class="robot-anim-inner" aria-hidden="true">
+              <img alt="" class="robot" src="img/robot.png">
+              <span aria-hidden="true" class="robot-mouth"></span>
+            </div>
+            <span aria-hidden="true" class="robot-waves"></span>
+          </div>
         </div>
         <div class="robot-text">
           <div class="robot-name">Robot</div>
@@ -128,6 +134,28 @@
           </div>
         </div>
       </div>
+
+      <!--
+      <details class="robot-cue-panel" data-robot-panel-for="m2_h1_useful_language_robot">
+        <summary>Robot motion settings</summary>
+        <div class="robot-cue-body">
+          <div class="robot-cue-row">
+            <label class="robot-cue-mode"><input checked="" name="m2h1RobotMode" type="radio" value="playback"> Animate while audio plays</label>
+            <label class="robot-cue-mode"><input name="m2h1RobotMode" type="radio" value="cues"> Animate only at specific times</label>
+          </div>
+          <div class="robot-cue-help">
+            For “specific times”, enter time ranges (in seconds), one per line. Example: <code>1.20-2.40</code>
+          </div>
+          <textarea aria-label="Time ranges where the robot is speaking" class="robot-cue-text" placeholder="e.g.\n0.80-1.60\n3.10-3.70"></textarea>
+          <div class="robot-cue-actions">
+            <button class="btn ghost robot-cue-apply" type="button">Save</button>
+            <button class="btn robot-cue-clear" type="button">Clear</button>
+            <span aria-live="polite" class="robot-cue-status" role="status"></span>
+          </div>
+        </div>
+      </details>
+      -->
+
       <div aria-label="Audio player" role="region">
         <audio id="dialogueAudio" preload="metadata">
           <source src="sound/mod2_ul_1st.mp3" type="audio/mpeg"></source>
