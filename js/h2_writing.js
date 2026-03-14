@@ -239,6 +239,14 @@
       fbEl.innerHTML = html || '';
     }
 
+    function getTaskPrompt(){
+      return (root.querySelector('.writing-instr-text')?.textContent || '').trim();
+    }
+
+    function getTaskHint(){
+      return (root.querySelector('.hint')?.textContent || '').trim();
+    }
+
     function enforceMaxWords(){
       const w = words(textarea.value);
       if(w.length > 50){
@@ -272,6 +280,112 @@
       return /\b\d+\s*(day|days|night|nights)\b/i.test(t);
     }
 
+    function analyzeNonsense(text){
+      const raw = (text || '').trim();
+      const tokenList = words(raw);
+      if(tokenList.length < 8){
+        return { isNonsense: false, reasons: [] };
+      }
+
+      const alphaTokens = tokenList
+        .map(token => token.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g, ''))
+        .filter(Boolean);
+
+      if(alphaTokens.length < 6){
+        return { isNonsense: false, reasons: [] };
+      }
+
+      const commonWords = new Set([
+        'a','an','and','are','at','be','can','customer','dear','for','from','gluten','hello','hi','hotel',
+        'i','include','is','it','ketchup','kind','lemonade','meal','my','of','on','please','prepare','regards',
+        'request','staff','team','thank','thanks','the','this','to','we','will','with','would','you','your'
+      ]);
+      const verbWords = new Set([
+        'add','address','apologise','apologize','arrange','ask','be','bring','call','check','confirm','contact',
+        'could','deliver','ensure','explain','fix','handle','help','include','inform','is','let','need','order',
+        'pass','please','prepare','provide','remind','reply','request','send','serve','take','tell','thank','update',
+        'visit','will','would','write'
+      ]);
+
+      const uniqueTokens = new Set(alphaTokens);
+      const repeatedCounts = new Map();
+      alphaTokens.forEach((token) => repeatedCounts.set(token, (repeatedCounts.get(token) || 0) + 1));
+
+      const repeatedTokenCount = Array.from(repeatedCounts.values()).filter(count => count >= 4).length;
+      const dominantTokenCount = Math.max(...repeatedCounts.values());
+      const commonWordHits = alphaTokens.filter(token => commonWords.has(token)).length;
+      const suspiciousTokens = alphaTokens.filter((token) => {
+        const noVowel = !/[aeiouy]/.test(token);
+        const longConsonantRun = /[bcdfghjklmnpqrstvwxyz]{5,}/.test(token);
+        const repeatedChars = /(.)\1{3,}/.test(token);
+        return token.length >= 6 && (noVowel || longConsonantRun || repeatedChars);
+      }).length;
+      const verbHits = alphaTokens.filter(token => verbWords.has(token) || /(ed|ing)$/.test(token)).length;
+      const commaCount = (raw.match(/,/g) || []).length;
+      const sentenceCount = Math.max(1, (raw.match(/[.!?]+/g) || []).length);
+      const commaRatio = commaCount / Math.max(1, alphaTokens.length);
+
+      const avgWordLength = alphaTokens.reduce((sum, token) => sum + token.length, 0) / alphaTokens.length;
+      const uniqueRatio = uniqueTokens.size / alphaTokens.length;
+      const suspiciousRatio = suspiciousTokens / alphaTokens.length;
+      const commonRatio = commonWordHits / alphaTokens.length;
+      const verbRatio = verbHits / alphaTokens.length;
+      const reasons = [];
+
+      if(commonRatio < 0.12) reasons.push('Use normal English words and linking words, not random strings.');
+      if(suspiciousRatio >= 0.22) reasons.push('Several words look like random letter combinations.');
+      if(repeatedTokenCount >= 2 || dominantTokenCount / alphaTokens.length >= 0.18){
+        reasons.push('Avoid repeating the same word or letter pattern many times.');
+      }
+      if(uniqueRatio < 0.55 && alphaTokens.length >= 12){
+        reasons.push('The text is too repetitive to count as a real message.');
+      }
+      if(avgWordLength > 7.5 && commonWordHits <= 2){
+        reasons.push('The text does not read like a natural short English message.');
+      }
+      if(alphaTokens.length >= 14 && verbRatio < 0.06){
+        reasons.push('Use full message sentences with actions, not only isolated words.');
+      }
+      if(alphaTokens.length >= 18 && commaRatio > 0.18 && sentenceCount <= 2){
+        reasons.push('This looks like a list of words, not a short message or email.');
+      }
+      if(alphaTokens.length >= 18 && uniqueRatio > 0.9 && commonRatio < 0.08 && verbRatio < 0.08){
+        reasons.push('The text has almost no sentence structure, so it cannot be graded as a real response.');
+      }
+
+      return {
+        isNonsense: reasons.length >= 2,
+        reasons
+      };
+    }
+
+    async function scoreWritingOnServer(text){
+      const res = await fetch('/api/score-writing', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text,
+          taskType: writingTaskTwoType,
+          taskPrompt: getTaskPrompt(),
+          taskHint: getTaskHint(),
+          maxWords: 50
+        })
+      });
+
+      if(!res.ok){
+        let message = `Writing score failed with status ${res.status}.`;
+        try{
+          const data = await res.json();
+          if(data?.error) message = data.error;
+        }catch(_err){
+          // Keep the default message if parsing fails.
+        }
+        throw new Error(message);
+      }
+
+      return res.json();
+    }
+
     function basicGrammarFlags(text, opts = {}){
       const requireGreeting = opts.requireGreeting !== false;
       const requireThanks = opts.requireThanks !== false;
@@ -297,6 +411,17 @@
       let issues = [];
       let minGoodWords = 35;
       let firstStepMsg = 'Write your email first.';
+      const nonsenseCheck = analyzeNonsense(text);
+
+      if(nonsenseCheck.isNonsense){
+        notes.push('Your answer does not look like a meaningful English message.');
+        return {
+          score: 0,
+          wc,
+          notes: notes.concat(nonsenseCheck.reasons),
+          issues: ['Write clear, connected sentences that match the task.']
+        };
+      }
 
       if(writingTaskTwoType === 'memo_kitchen'){
         const req = {
@@ -484,11 +609,7 @@
       return { score, wc, notes, issues };
     }
 
-    checkBtn.addEventListener('click', () => {
-      const text = textarea.value || '';
-      enforceMaxWords();
-      const r = scoreWritingTaskText(text);
-
+    function renderWritingFeedback(r){
       setScore(`Score: ${r.score}/10`);
 
       const list = (title, items) => {
@@ -497,18 +618,46 @@
         return `<div class="wf-block"><div class="wf-title">${title}</div><ul>${li}</ul></div>`;
       };
 
-      const okMsg = (r.score >= 8)
-        ? '<div class="wf-ok">Strong answer. Minor tweaks only.</div>'
-        : (r.score >= 5)
-          ? '<div class="wf-mid">Good start. Improve the missing points below.</div>'
-          : '<div class="wf-bad">Needs work. Follow the checklist below.</div>';
+      const summary = (r.summary || '').trim();
+      const summaryClass = (r.score >= 8)
+        ? 'wf-ok'
+        : (r.score >= 5 ? 'wf-mid' : 'wf-bad');
 
       setFeedback(
-        `${okMsg}` +
+        `<div class="${summaryClass}">${summary || 'Checked.'}</div>` +
         `<div class="wf-small">Words: ${r.wc}/50</div>` +
         list('Missing or improve', r.notes) +
         list('Writing checks', r.issues)
       );
+    }
+
+    checkBtn.addEventListener('click', async () => {
+      const text = textarea.value || '';
+      enforceMaxWords();
+      const localResult = scoreWritingTaskText(textarea.value || '');
+
+      if(localResult.score === 0 && localResult.notes.some(note => note.includes('meaningful English message'))){
+        localResult.summary = 'Needs work. Follow the checklist below.';
+        renderWritingFeedback(localResult);
+        return;
+      }
+
+      setScore('Checking...');
+      setFeedback('<div class="wf-small">Checking your writing...</div>');
+
+      try{
+        const aiResult = await scoreWritingOnServer(textarea.value || '');
+        renderWritingFeedback({
+          score: Number.isFinite(Number(aiResult?.score)) ? Number(aiResult.score) : localResult.score,
+          wc: localResult.wc,
+          notes: Array.isArray(aiResult?.notes) ? aiResult.notes : localResult.notes,
+          issues: Array.isArray(aiResult?.issues) ? aiResult.issues : localResult.issues,
+          summary: typeof aiResult?.summary === 'string' ? aiResult.summary : ''
+        });
+      }catch(_err){
+        localResult.summary = 'AI check is unavailable right now. Showing local feedback.';
+        renderWritingFeedback(localResult);
+      }
     });
 
     resetBtn.addEventListener('click', () => {

@@ -13,6 +13,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/score-writing"
+  to = "/.netlify/functions/score-writing"
+  status = 200
+
+[[redirects]]
   from = "/api/auth/register"
   to = "/.netlify/functions/auth-register"
   status = 200

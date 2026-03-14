@@ -5,6 +5,7 @@ import nodemailer from "nodemailer";
 import path from "path";
 import { fileURLToPath } from "url";
 import { Pool } from "pg";
+import { scoreWritingWithAI } from "./netlify/functions/_lib/writing-score.js";
 
 function readCliFlagValue(flagNames) {
   const flags = Array.isArray(flagNames) ? flagNames : [flagNames];
@@ -410,6 +411,24 @@ app.post("/api/check-dnd", (req, res) => {
     total: expected.length,
     correctByIndex
   });
+});
+
+app.post("/api/score-writing", async (req, res) => {
+  try {
+    const text = String(req.body?.text || "");
+    const taskPrompt = String(req.body?.taskPrompt || "");
+    const taskHint = String(req.body?.taskHint || "");
+    const maxWords = Number(req.body?.maxWords || 50);
+
+    if (!text.trim()) {
+      return res.status(400).json({ error: "text is required." });
+    }
+
+    const result = await scoreWritingWithAI({ text, taskPrompt, taskHint, maxWords });
+    return res.status(200).json(result);
+  } catch (error) {
+    return res.status(500).json({ error: error?.message || "Writing scoring failed." });
+  }
 });
 
 app.post("/api/auth/register", async (req, res) => {
