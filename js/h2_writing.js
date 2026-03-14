@@ -654,8 +654,11 @@
           issues: Array.isArray(aiResult?.issues) ? aiResult.issues : localResult.issues,
           summary: typeof aiResult?.summary === 'string' ? aiResult.summary : ''
         });
-      }catch(_err){
-        localResult.summary = 'AI check is unavailable right now. Showing local feedback.';
+      }catch(err){
+        const reason = (err && typeof err.message === 'string' && err.message.trim())
+          ? err.message.trim()
+          : 'AI check is unavailable right now.';
+        localResult.summary = `${reason} Showing local feedback.`;
         renderWritingFeedback(localResult);
       }
     });
