@@ -112,6 +112,7 @@
   ])).sort((left, right) => prettifyTabKey(left).localeCompare(prettifyTabKey(right), undefined, { numeric: true }));
   const FALLBACK_MODULE_IDS = Array.from({ length: 10 }, (_, index) => String(index + 1));
   const TIMER_DISABLED_TAB_KEYS = new Set(['m1_info', 'info']);
+  const TIMER_HIDDEN_TAB_KEYS = new Set(['m1_info', 'info']);
   const MODULE_TAB_KEYS = Object.freeze({
     '1': ['m1_info', 'm1_exercise', 'm1_keywords', 'm1_listening', 'm1_revision', 'm1_practice', 'm1_reading', 'm1_speaking', 'm1_h2_exercise', 'm1_h2_keywords', 'm1_h2_listening', 'm1_h2_reading', 'm1_h2_writing', 'm1_h2_recall'],
     '2': ['info', 'exercise', 'keywords', 'listening', 'revision', 'practice', 'reading', 'speaking', 'h2_exercise', 'h2_keywords', 'h2_listening', 'h2_reading', 'h2_writing', 'h2_recall'],
@@ -671,10 +672,10 @@
   function getAvailableTabKeys(moduleId){
     const cleanModuleId = String(moduleId || '').trim();
     if(cleanModuleId && Array.isArray(MODULE_TAB_KEYS[cleanModuleId])){
-      return [...MODULE_TAB_KEYS[cleanModuleId]];
+      return MODULE_TAB_KEYS[cleanModuleId].filter((key) => !TIMER_HIDDEN_TAB_KEYS.has(key));
     }
 
-    return KNOWN_TAB_KEYS.filter((key) => !key.startsWith('m1_'));
+    return KNOWN_TAB_KEYS.filter((key) => !key.startsWith('m1_') && !TIMER_HIDDEN_TAB_KEYS.has(key));
   }
 
   function getSettingsFormState(){
