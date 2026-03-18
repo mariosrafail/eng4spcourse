@@ -72,11 +72,9 @@
 
       overlay.classList.add('is-exiting');
       overlay.classList.remove('is-running');
-
-      window.setTimeout(() => {
-        overlay.classList.remove('is-active', 'is-exiting');
-        overlay.setAttribute('aria-hidden', 'true');
-      }, EXIT_DURATION_MS);
+      await wait(EXIT_DURATION_MS);
+      overlay.classList.remove('is-active', 'is-exiting');
+      overlay.setAttribute('aria-hidden', 'true');
     });
 
     return activeRun;

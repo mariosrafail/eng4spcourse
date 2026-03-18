@@ -18,6 +18,11 @@
   pointer-events: all;
 }
 
+.unlock-transition.is-exiting{
+  opacity: 0;
+  pointer-events: none;
+}
+
 .unlock-transition__wash,
 .unlock-transition__noise,
 .unlock-transition__panel{
