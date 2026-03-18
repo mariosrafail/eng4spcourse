@@ -382,7 +382,65 @@
     unlockNextButton.textContent = done ? 'All Unlocked (testing)' : (unlockNextInFlight ? 'Updating... (testing)' : 'Unlock Next (testing)');
   }
 
-  async function unlockNextPart(){
+  function findNextUnlockedDestination(options = {}){
+    const {
+      originModuleId = '',
+      originTabIndex = -1,
+      previousProgress = currentProgress,
+      nextProgress = currentProgress
+    } = options;
+
+    if(normalizeProgress(nextProgress) <= normalizeProgress(previousProgress)) return null;
+
+    const activeModulePanel = getActiveModulePanel();
+    const normalizedOriginModuleId = String(originModuleId || '').trim();
+    if(activeModulePanel && normalizedOriginModuleId && String(activeModulePanel.dataset.module || '') === normalizedOriginModuleId){
+      const tabButtons = Array.from(activeModulePanel.querySelectorAll('.tab-btn'));
+      for(let index = originTabIndex + 1; index < tabButtons.length; index += 1){
+        const button = tabButtons[index];
+        const wasUnlocked = isTabUnlockedByProgress(normalizedOriginModuleId, index, previousProgress);
+        const isUnlocked = isTabUnlockedByProgress(normalizedOriginModuleId, index, nextProgress);
+        if(!wasUnlocked && isUnlocked){
+          return {
+            moduleId: normalizedOriginModuleId,
+            preferredTab: String(button.dataset.tab || '').trim(),
+            forceFirstTab: false
+          };
+        }
+      }
+    }
+
+    const moduleOrder = [...MODULE_SEQUENCE, FINAL_APPENDIX_MODULE_ID];
+    const nextModuleId = moduleOrder.find((moduleId) => {
+      return !isModuleUnlockedByProgress(moduleId, previousProgress) && isModuleUnlockedByProgress(moduleId, nextProgress);
+    });
+
+    if(nextModuleId){
+      return {
+        moduleId: nextModuleId,
+        preferredTab: '',
+        forceFirstTab: true
+      };
+    }
+
+    return null;
+  }
+
+  function navigateToUnlockedDestination(destination){
+    if(!destination?.moduleId) return;
+    setActive(destination.moduleId, {
+      forceFirstTab: destination.forceFirstTab !== false,
+      focusActiveTab: true,
+      preferredTab: destination.preferredTab || ''
+    });
+  }
+
+  async function unlockNextPart(options = {}){
+    const {
+      navigateToNewlyUnlocked = false,
+      originModuleId = '',
+      originTabIndex = -1
+    } = options;
     if(unlockNextInFlight) return;
     if(!isAuthenticated()) return;
     if(currentCompletedParts >= TOTAL_PARTS){
@@ -392,6 +450,7 @@
 
     unlockNextInFlight = true;
     updateUnlockNextButtonsState();
+    const previousProgress = currentProgress;
 
     try{
       const targetProgress = getProgressForUnit(currentCompletedParts + 1);
@@ -401,6 +460,16 @@
       const safeProgress = normalizeProgress(currentProgress);
       document.dispatchEvent(new CustomEvent('progress:updated', { detail: { progress: safeProgress } }));
       document.dispatchEvent(new CustomEvent('auth:statechange', { detail: { authenticated: true, progress: safeProgress } }));
+
+      if(navigateToNewlyUnlocked){
+        const destination = findNextUnlockedDestination({
+          originModuleId,
+          originTabIndex,
+          previousProgress,
+          nextProgress: safeProgress
+        });
+        navigateToUnlockedDestination(destination);
+      }
     }catch(_e){
       // no-op: auth panel feedback handles explicit controls, this is a quick unlock helper
     }finally{
@@ -459,7 +528,11 @@
     const isPanelComplete = trackedTaskKeys.every((key) => solvedTasks.has(key));
     if(!isPanelComplete) return;
 
-    await unlockNextPart();
+    await unlockNextPart({
+      navigateToNewlyUnlocked: true,
+      originModuleId: moduleId,
+      originTabIndex: tabIndex
+    });
   }
 
   function ensureGlobalUnlockNextButton(){
@@ -477,7 +550,7 @@
       button.type = 'button';
       button.className = 'btn unlock-next-btn';
       button.textContent = 'Unlock Next (testing)';
-      button.addEventListener('click', unlockNextPart);
+      button.addEventListener('click', () => unlockNextPart({ navigateToNewlyUnlocked: true }));
       wrap.appendChild(button);
     }
 
