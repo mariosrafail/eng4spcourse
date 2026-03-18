@@ -91,6 +91,12 @@
   animation: unlockPanelOut 280ms ease forwards;
 }
 
+.unlock-transition.is-exiting .unlock-transition__wash,
+.unlock-transition.is-exiting .unlock-transition__noise{
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
 .unlock-transition__eyebrow{
   font: 700 13px/1.2 'Poppins', 'Segoe UI', sans-serif;
   letter-spacing: .28em;
