@@ -283,7 +283,7 @@
     function analyzeNonsense(text){
       const raw = (text || '').trim();
       const tokenList = words(raw);
-      if(tokenList.length < 8){
+      if(tokenList.length === 0){
         return { isNonsense: false, reasons: [] };
       }
 
@@ -291,7 +291,7 @@
         .map(token => token.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g, ''))
         .filter(Boolean);
 
-      if(alphaTokens.length < 6){
+      if(alphaTokens.length === 0){
         return { isNonsense: false, reasons: [] };
       }
 
@@ -312,7 +312,7 @@
       alphaTokens.forEach((token) => repeatedCounts.set(token, (repeatedCounts.get(token) || 0) + 1));
 
       const repeatedTokenCount = Array.from(repeatedCounts.values()).filter(count => count >= 4).length;
-      const dominantTokenCount = Math.max(...repeatedCounts.values());
+      const dominantTokenCount = Math.max(0, ...repeatedCounts.values());
       const commonWordHits = alphaTokens.filter(token => commonWords.has(token)).length;
       const suspiciousTokens = alphaTokens.filter((token) => {
         const noVowel = !/[aeiouy]/.test(token);
@@ -331,6 +331,16 @@
       const commonRatio = commonWordHits / alphaTokens.length;
       const verbRatio = verbHits / alphaTokens.length;
       const reasons = [];
+
+      if(alphaTokens.length <= 2 && commonWordHits === 0){
+        reasons.push('The response looks like random text, not a real message.');
+      }
+      if(alphaTokens.length <= 4 && commonWordHits === 0 && suspiciousTokens >= 1){
+        reasons.push('Write short English sentences, not keyboard-like strings.');
+      }
+      if(alphaTokens.length <= 5 && verbHits === 0 && !/[.!?]/.test(raw) && commonWordHits <= 1){
+        reasons.push('Use a complete message with an action, not only isolated words.');
+      }
 
       if(commonRatio < 0.12) reasons.push('Use normal English words and linking words, not random strings.');
       if(suspiciousRatio >= 0.22) reasons.push('Several words look like random letter combinations.');
@@ -354,36 +364,9 @@
       }
 
       return {
-        isNonsense: reasons.length >= 2,
+        isNonsense: alphaTokens.length <= 5 ? reasons.length >= 1 : reasons.length >= 2,
         reasons
       };
-    }
-
-    async function scoreWritingOnServer(text){
-      const res = await fetch('/api/score-writing', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text,
-          taskType: writingTaskTwoType,
-          taskPrompt: getTaskPrompt(),
-          taskHint: getTaskHint(),
-          maxWords: 50
-        })
-      });
-
-      if(!res.ok){
-        let message = `Writing score failed with status ${res.status}.`;
-        try{
-          const data = await res.json();
-          if(data?.error) message = data.error;
-        }catch(_err){
-          // Keep the default message if parsing fails.
-        }
-        throw new Error(message);
-      }
-
-      return res.json();
     }
 
     function basicGrammarFlags(text, opts = {}){
@@ -393,14 +376,38 @@
       const issues = [];
       const t = (text || '').trim();
       if(!t) return issues;
+      const sentenceStartsLower = /(?:^|[.!?]\s+)[a-z]/.test(t);
+      const lowerOnlyLongText = words(t).length >= 8 && !/[A-Z]/.test(t);
 
       if(!/[.!?]$/.test(t)) issues.push('Add a full stop at the end.');
       if(/\bi\b/.test(t) && !/\bI\b/.test(t)) issues.push('Use capital "I".');
       if(/\s{2,}/.test(t)) issues.push('Remove extra spaces.');
+      if(sentenceStartsLower) issues.push('Start each sentence with a capital letter.');
+      if(lowerOnlyLongText) issues.push('Use capitals where needed, not all lower-case text.');
+      if(words(t).length >= 12 && !/[.!?]/.test(t)) issues.push('Use full sentences with punctuation, not only a word list.');
       if(requireGreeting && !/\b(dear|hello|hi)\b/i.test(t)) issues.push('Add a greeting (e.g., Dear Sir/Madam).');
       if(requireThanks && !/\b(thank|thanks)\b/i.test(t)) issues.push('Add a closing thanks.');
       if(requireClosing && !/\b(sincerely|kind regards|regards)\b/i.test(t)) issues.push('Add a polite closing (Kind regards, ...).');
-      return issues;
+      return Array.from(new Set(issues));
+    }
+
+    function buildLocalSummary(result){
+      if(result.isNonsense){
+        return 'Needs work. Write a clear English message that matches the task.';
+      }
+      if(result.score >= 9){
+        return 'Very strong answer. The task is covered clearly.';
+      }
+      if(result.score >= 7){
+        return 'Good answer. Improve the points below for a higher score.';
+      }
+      if(result.score >= 5){
+        return 'Fair attempt. The main idea is there, but some task points are missing.';
+      }
+      if(result.wc === 0){
+        return 'Write your response first.';
+      }
+      return 'Needs work. Follow the checklist below.';
     }
 
     function scoreWritingTaskText(text){
@@ -418,8 +425,10 @@
         return {
           score: 0,
           wc,
+          summary: 'Needs work. Write a clear English message that matches the task.',
           notes: notes.concat(nonsenseCheck.reasons),
-          issues: ['Write clear, connected sentences that match the task.']
+          issues: ['Write clear, connected sentences that match the task.'],
+          isNonsense: true
         };
       }
 
@@ -606,7 +615,14 @@
         score += 1;
       }
 
-      return { score, wc, notes, issues };
+      return {
+        score,
+        wc,
+        notes,
+        issues,
+        summary: buildLocalSummary({ score, wc, notes, issues, isNonsense: false }),
+        isNonsense: false
+      };
     }
 
     function renderWritingFeedback(r){
@@ -631,36 +647,10 @@
       );
     }
 
-    checkBtn.addEventListener('click', async () => {
-      const text = textarea.value || '';
+    checkBtn.addEventListener('click', () => {
       enforceMaxWords();
       const localResult = scoreWritingTaskText(textarea.value || '');
-
-      if(localResult.score === 0 && localResult.notes.some(note => note.includes('meaningful English message'))){
-        localResult.summary = 'Needs work. Follow the checklist below.';
-        renderWritingFeedback(localResult);
-        return;
-      }
-
-      setScore('Checking...');
-      setFeedback('<div class="wf-small">Checking your writing...</div>');
-
-      try{
-        const aiResult = await scoreWritingOnServer(textarea.value || '');
-        renderWritingFeedback({
-          score: Number.isFinite(Number(aiResult?.score)) ? Number(aiResult.score) : localResult.score,
-          wc: localResult.wc,
-          notes: Array.isArray(aiResult?.notes) ? aiResult.notes : localResult.notes,
-          issues: Array.isArray(aiResult?.issues) ? aiResult.issues : localResult.issues,
-          summary: typeof aiResult?.summary === 'string' ? aiResult.summary : ''
-        });
-      }catch(err){
-        const reason = (err && typeof err.message === 'string' && err.message.trim())
-          ? err.message.trim()
-          : 'AI check is unavailable right now.';
-        localResult.summary = `${reason} Showing local feedback.`;
-        renderWritingFeedback(localResult);
-      }
+      renderWritingFeedback(localResult);
     });
 
     resetBtn.addEventListener('click', () => {
