@@ -152,7 +152,7 @@
 
 .tab-timer-settings__grid{
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 12px;
   margin-top: 18px;
 }
@@ -286,10 +286,6 @@
     margin-top: 16px;
     padding: 18px;
     width: min(100vw - 16px, 680px);
-  }
-
-  .tab-timer-settings__grid{
-    grid-template-columns: 1fr;
   }
 
   .tab-timer-settings__title{

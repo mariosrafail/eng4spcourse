@@ -112,6 +112,18 @@
   ])).sort((left, right) => prettifyTabKey(left).localeCompare(prettifyTabKey(right), undefined, { numeric: true }));
   const FALLBACK_MODULE_IDS = Array.from({ length: 10 }, (_, index) => String(index + 1));
   const TIMER_DISABLED_TAB_KEYS = new Set(['m1_info', 'info']);
+  const MODULE_TAB_KEYS = Object.freeze({
+    '1': ['m1_info', 'm1_exercise', 'm1_keywords', 'm1_listening', 'm1_revision', 'm1_practice', 'm1_reading', 'm1_speaking', 'm1_h2_exercise', 'm1_h2_keywords', 'm1_h2_listening', 'm1_h2_reading', 'm1_h2_writing', 'm1_h2_recall'],
+    '2': ['info', 'exercise', 'keywords', 'listening', 'revision', 'practice', 'reading', 'speaking', 'h2_exercise', 'h2_keywords', 'h2_listening', 'h2_reading', 'h2_writing', 'h2_recall'],
+    '3': ['info', 'exercise', 'keywords', 'revision', 'practice', 'reading', 'speaking', 'h2_exercise', 'h2_keywords', 'h2_listening', 'h2_reading', 'h2_writing', 'h2_recall'],
+    '4': ['info', 'exercise', 'keywords', 'listening', 'revision', 'practice', 'reading', 'speaking', 'h2_exercise', 'h2_keywords', 'h2_listening', 'h2_reading', 'h2_writing', 'h2_recall'],
+    '5': ['info', 'exercise', 'keywords', 'listening', 'revision', 'practice', 'h2_exercise', 'h2_keywords', 'h2_reading', 'h2_writing', 'h2_recall'],
+    '6': ['info', 'exercise', 'keywords', 'listening', 'revision', 'practice', 'reading', 'h2_exercise', 'h2_keywords', 'h2_listening', 'h2_reading', 'h2_reading2', 'h2_writing', 'h2_recall'],
+    '7': ['info', 'exercise', 'keywords', 'listening', 'revision', 'practice', 'reading', 'speaking', 'h2_exercise', 'h2_keywords', 'h2_listening', 'h2_reading', 'h2_writing', 'h2_recall'],
+    '8': ['info', 'exercise', 'keywords', 'speaking', 'h2_listening', 'h2_reading', 'h2_writing'],
+    '9': ['mock_listening_1', 'mock_listening_2', 'mock_reading', 'mock_reading_b', 'mock_writing'],
+    '10': ['a1', 'a2', 'b1', 'b2', 'travel_1', 'purpose_1', 'purpose_2', 'purpose_3', 'purpose_4', 'purpose_5', 'quick_ref']
+  });
 
   let isAuthenticated = document.body.classList.contains('is-authenticated');
   let activeTab = null;
@@ -142,7 +154,7 @@
   function getTabDisplayLabel(tabKey){
     const key = String(tabKey || '').trim();
     const friendly = prettifyTabKey(key);
-    return friendly && friendly !== key ? `${friendly} (${key})` : friendly || key;
+    return friendly || key;
   }
 
   function getModuleLabel(moduleId){
@@ -656,6 +668,15 @@
       .map(([id, label]) => ({ id, label }));
   }
 
+  function getAvailableTabKeys(moduleId){
+    const cleanModuleId = String(moduleId || '').trim();
+    if(cleanModuleId && Array.isArray(MODULE_TAB_KEYS[cleanModuleId])){
+      return [...MODULE_TAB_KEYS[cleanModuleId]];
+    }
+
+    return KNOWN_TAB_KEYS.filter((key) => !key.startsWith('m1_'));
+  }
+
   function getSettingsFormState(){
     const modal = ensureSettingsUi();
     return {
@@ -692,14 +713,15 @@
     }
 
     if(tabSelect){
+      const availableTabKeys = getAvailableTabKeys(current.moduleId);
       tabSelect.innerHTML = '<option value="">Select a tab</option>';
-      KNOWN_TAB_KEYS.forEach((key) => {
+      availableTabKeys.forEach((key) => {
         const option = document.createElement('option');
         option.value = key;
         option.textContent = getTabDisplayLabel(key);
         tabSelect.appendChild(option);
       });
-      tabSelect.value = current.tabKey;
+      tabSelect.value = availableTabKeys.includes(current.tabKey) ? current.tabKey : '';
     }
   }
 
@@ -864,7 +886,10 @@
       populateMinutesForInputs();
     });
 
-    modal.querySelector('#tabTimerModuleSelect')?.addEventListener('change', populateMinutesForInputs);
+    modal.querySelector('#tabTimerModuleSelect')?.addEventListener('change', () => {
+      populateSettingsSelectOptions();
+      populateMinutesForInputs();
+    });
     modal.querySelector('#tabTimerTabKeySelect')?.addEventListener('change', populateMinutesForInputs);
 
     return modal;
