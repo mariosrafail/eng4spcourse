@@ -349,16 +349,27 @@
     return descriptors.find((descriptor) => descriptor.tabKey === String(tabKey || '').trim())?.label || '';
   }
 
+  function getCurrentActiveTabKey(){
+    const activeModulePanel = getActiveModulePanel();
+    if(!activeModulePanel) return '';
+    const activeTabButton = Array.from(activeModulePanel.querySelectorAll('.tab-btn'))
+      .find((button) => button.classList.contains('is-active'));
+    return String(activeTabButton?.dataset?.tab || '').trim();
+  }
+
   function buildUnlockTransitionPayload(destination){
     if(!destination?.moduleId) return null;
 
     const resolvedTabKey = destination.preferredTab || getFirstUnlockedTabKeyForModule(destination.moduleId, currentProgress);
     const tabLabel = getTabLabelForModule(destination.moduleId, resolvedTabKey);
     const moduleTitle = getModuleTitle(destination.moduleId);
+    const currentTabKey = getCurrentActiveTabKey();
 
     return {
       durationMs: 4000,
-      currentRgb: getComputedStyle(document.documentElement).getPropertyValue('--ambient-rgb').trim() || '122,103,201',
+      currentRgb: window.getAmbientThemeColorForTab?.(currentTabKey)
+        || getComputedStyle(document.documentElement).getPropertyValue('--ambient-rgb').trim()
+        || '122,103,201',
       nextRgb: window.getAmbientThemeColorForTab?.(resolvedTabKey) || '122,103,201',
       message: tabLabel ? `${tabLabel} unlocked` : `${moduleTitle} unlocked`,
       context: moduleTitle,

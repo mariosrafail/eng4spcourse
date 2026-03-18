@@ -30,17 +30,17 @@
 
 .unlock-transition__wash--from{
   background:
-    radial-gradient(88% 88% at 18% 16%, rgba(var(--unlock-from-rgb), .94), transparent 60%),
-    radial-gradient(110% 88% at 80% 20%, rgba(var(--unlock-from-rgb), .74), transparent 62%),
-    linear-gradient(135deg, rgba(var(--unlock-from-rgb), .98), rgba(var(--unlock-from-rgb), .86));
+    radial-gradient(88% 88% at 18% 16%, rgba(var(--unlock-from-rgb), .72), transparent 60%),
+    radial-gradient(110% 88% at 80% 20%, rgba(var(--unlock-from-rgb), .52), transparent 62%),
+    linear-gradient(135deg, rgba(var(--unlock-from-rgb), .76), rgba(var(--unlock-from-rgb), .58));
   filter: saturate(1.12) blur(0);
 }
 
 .unlock-transition__wash--to{
   background:
-    radial-gradient(90% 90% at 82% 18%, rgba(var(--unlock-to-rgb), .96), transparent 58%),
-    radial-gradient(110% 90% at 18% 82%, rgba(var(--unlock-to-rgb), .72), transparent 60%),
-    linear-gradient(135deg, rgba(var(--unlock-to-rgb), .98), rgba(var(--unlock-to-rgb), .86));
+    radial-gradient(90% 90% at 82% 18%, rgba(var(--unlock-to-rgb), .74), transparent 58%),
+    radial-gradient(110% 90% at 18% 82%, rgba(var(--unlock-to-rgb), .50), transparent 60%),
+    linear-gradient(135deg, rgba(var(--unlock-to-rgb), .76), rgba(var(--unlock-to-rgb), .58));
   opacity: 0;
   transform: scale(1.08);
 }
@@ -61,7 +61,7 @@
     repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 1px, transparent 1px 26px);
   background-size: 24px 24px, 100% 100%, 26px 26px;
   mix-blend-mode: soft-light;
-  opacity: .38;
+  opacity: .26;
 }
 
 .unlock-transition__panel{
