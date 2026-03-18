@@ -21,7 +21,7 @@ export default async (req) => {
       ok: true,
       user: {
         ...auth.user,
-        progress: rows.length ? rows[0].progress : 0
+        progress: rows.length ? Number(rows[0].progress) : 0
       }
     });
   } catch (error) {

@@ -24,7 +24,7 @@ export default async (req) => {
       `SELECT progress FROM user_progress WHERE user_id = $1`,
       [user.id]
     );
-    const progress = rows.length ? rows[0].progress : 0;
+    const progress = rows.length ? Number(rows[0].progress) : 0;
 
     const session = await createSession(user.id);
     return json(200, {

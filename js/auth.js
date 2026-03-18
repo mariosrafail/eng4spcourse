@@ -41,7 +41,7 @@
 
   function setAuthState(isAuthenticated, progress = 0) {
     const numeric = Number(progress);
-    const safeProgress = Number.isFinite(numeric) ? Math.max(0, Math.min(100, Math.round(numeric))) : 0;
+    const safeProgress = Number.isFinite(numeric) ? Math.max(0, Math.min(100, Math.round(numeric * 100) / 100)) : 0;
     document.body.classList.toggle("is-authenticated", !!isAuthenticated);
     document.dispatchEvent(new CustomEvent("auth:statechange", { detail: { authenticated: !!isAuthenticated, progress: safeProgress } }));
   }
@@ -130,7 +130,7 @@
 
   function showUser(user) {
     const numeric = Number(user?.progress);
-    const progress = Number.isFinite(numeric) ? Math.max(0, Math.min(100, Math.round(numeric))) : 0;
+    const progress = Number.isFinite(numeric) ? Math.max(0, Math.min(100, Math.round(numeric * 100) / 100)) : 0;
     setAuthState(true, progress);
     userBox.hidden = false;
     loginForm.hidden = true;
@@ -253,7 +253,9 @@
         body: JSON.stringify({ progress: value })
       });
       const serverValue = Number(data?.progress);
-      const next = Number.isFinite(serverValue) ? Math.max(0, Math.min(100, Math.round(serverValue))) : Math.max(0, Math.min(100, Math.round(value)));
+      const next = Number.isFinite(serverValue)
+        ? Math.max(0, Math.min(100, Math.round(serverValue * 100) / 100))
+        : Math.max(0, Math.min(100, Math.round(value * 100) / 100));
       authProgressBig.textContent = formatProgressPercent(next);
       setAuthState(true, next);
       setFeedback("Progress updated (testing).", "is-ok");
@@ -264,7 +266,7 @@
 
   document.addEventListener("progress:updated", (event) => {
     const numeric = Number(event?.detail?.progress);
-    const next = Number.isFinite(numeric) ? Math.max(0, Math.min(100, Math.round(numeric))) : 0;
+    const next = Number.isFinite(numeric) ? Math.max(0, Math.min(100, Math.round(numeric * 100) / 100)) : 0;
     authProgressBig.textContent = formatProgressPercent(next);
   });
 

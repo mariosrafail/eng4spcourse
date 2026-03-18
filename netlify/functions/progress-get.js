@@ -17,7 +17,7 @@ export default async (req) => {
       [auth.user.id]
     );
 
-    return json(200, { ok: true, progress: rows.length ? rows[0].progress : 0 });
+    return json(200, { ok: true, progress: rows.length ? Number(rows[0].progress) : 0 });
   } catch (error) {
     return json(500, { error: error?.message || "Internal error" });
   }

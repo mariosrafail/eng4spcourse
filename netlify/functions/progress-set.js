@@ -17,7 +17,7 @@ export default async (req) => {
       return badRequest("progress must be a number between 0 and 100.");
     }
 
-    const rounded = Math.round(progress);
+    const rounded = Math.round(progress * 100) / 100;
     await ensureSchema();
     await getPool().query(
       `INSERT INTO user_progress (user_id, progress, updated_at)
@@ -27,7 +27,7 @@ export default async (req) => {
       [auth.user.id, rounded]
     );
 
-    return json(200, { ok: true, progress: rounded, completed: rounded === 100 });
+    return json(200, { ok: true, progress: rounded, completed: rounded >= 100 });
   } catch (error) {
     return json(500, { error: error?.message || "Internal error" });
   }

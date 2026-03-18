@@ -74,6 +74,15 @@
     };
   }
 
+  if(typeof window.reportCourseTaskPassed !== 'function'){
+    window.reportCourseTaskPassed = function reportCourseTaskPassed(taskKey){
+      if(!taskKey) return;
+      document.dispatchEvent(new CustomEvent('course:task-passed', {
+        detail: { taskKey: String(taskKey) }
+      }));
+    };
+  }
+
   // Task 1: drag & drop gap fill
   function setupWritingTaskOne(root){
     if(!root) return;
@@ -259,6 +268,7 @@
         });
         if(correct === blanks.length){
           setFeedback('Correct. Well done.');
+          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
         }else{
           setFeedback('Some answers are incorrect. Try again.');
         }
@@ -727,6 +737,9 @@
       enforceMaxWords();
       const localResult = scoreWritingTaskText(textarea.value || '');
       renderWritingFeedback(localResult);
+      if(localResult.score === 10){
+        window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
+      }
     });
 
     resetBtn.addEventListener('click', () => {

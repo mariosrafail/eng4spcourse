@@ -26,14 +26,14 @@
   };
   const MODULE_SEQUENCE = ['1', '2', '3', '4', '9', '5', '6', '7', '8'];
   const PARTS_PER_MODULE = Object.freeze({
-    '1': 13,
-    '2': 13,
-    '3': 12,
-    '4': 13,
-    '5': 10,
-    '6': 13,
-    '7': 13,
-    '8': 6,
+    '1': 12,
+    '2': 12,
+    '3': 11,
+    '4': 12,
+    '5': 9,
+    '6': 12,
+    '7': 12,
+    '8': 5,
     '9': 5
   });
   const TOTAL_PARTS = MODULE_SEQUENCE.reduce((sum, id) => sum + (PARTS_PER_MODULE[id] || 0), 0);
@@ -41,7 +41,7 @@
   const FINAL_APPENDIX_MODULE_ID = '10';
   const PROGRESS_BY_PART = Array.from({ length: TOTAL_PARTS + 1 }, (_v, parts) => {
     if(parts >= TOTAL_PARTS) return 100;
-    return Math.round((parts * 100) / TOTAL_PARTS);
+    return Math.round(((parts * 100) / TOTAL_PARTS) * 100) / 100;
   });
   const MODULE_START_UNITS = (() => {
     const out = {};
@@ -55,7 +55,12 @@
   let currentProgress = 0;
   let currentCompletedParts = 0;
   let unlockNextInFlight = false;
+  const completedPanelTasks = new Map();
   const unlockNextButton = ensureGlobalUnlockNextButton();
+
+  function moduleHasFocusTab(moduleId){
+    return String(moduleId) !== '9' && String(moduleId) !== FINAL_APPENDIX_MODULE_ID;
+  }
 
   function getModuleTitle(id){
     const key = String(id);
@@ -69,7 +74,11 @@
   function normalizeProgress(value){
     const numeric = Number(value);
     if(!Number.isFinite(numeric)) return 0;
-    return Math.max(0, Math.min(100, Math.round(numeric)));
+    return Math.max(0, Math.min(100, Math.round(numeric * 100) / 100));
+  }
+
+  function formatProgress(value){
+    return normalizeProgress(value).toFixed(2);
   }
 
   function getCompletedParts(progress = currentProgress){
@@ -100,12 +109,7 @@
   function getModuleUnlockUnit(moduleId){
     const id = String(moduleId);
     if(id === FINAL_APPENDIX_MODULE_ID) return TOTAL_PARTS;
-
-    const moduleStart = getModuleStartUnit(id);
-    if(id === '9'){
-      return moduleStart + 1;
-    }
-    return moduleStart;
+    return getModuleStartUnit(id);
   }
 
   function getTabUnlockUnit(moduleId, tabIndex){
@@ -116,12 +120,26 @@
     const moduleStart = getModuleStartUnit(id);
     if(partCount <= 0) return moduleStart;
 
-    if(id === '9'){
-      return moduleStart + Math.min(tabIndex + 1, partCount);
-    }
+    const offset = moduleHasFocusTab(id)
+      ? Math.max(0, tabIndex - 1)
+      : Math.max(0, tabIndex);
 
-    if(tabIndex === 0) return moduleStart;
-    return moduleStart + Math.min(tabIndex, partCount);
+    return moduleStart + Math.min(offset, partCount);
+  }
+
+  function getCompletionTargetUnit(moduleId, tabIndex){
+    const id = String(moduleId);
+    if(id === FINAL_APPENDIX_MODULE_ID) return TOTAL_PARTS;
+
+    const partCount = getModulePartCount(id);
+    const moduleStart = getModuleStartUnit(id);
+    if(partCount <= 0) return moduleStart;
+
+    const completedOffset = moduleHasFocusTab(id)
+      ? Math.max(0, tabIndex)
+      : Math.max(0, tabIndex + 1);
+
+    return moduleStart + Math.min(completedOffset, partCount);
   }
 
   function getProgressForUnit(unitIndex){
@@ -155,7 +173,7 @@
       btn.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
       if(!unlocked){
         const requiredUnit = getTabUnlockUnit(id, index);
-        btn.title = `Locked until ${getProgressForUnit(requiredUnit)}%`;
+        btn.title = `Locked until ${formatProgress(getProgressForUnit(requiredUnit))}%`;
       }else{
         btn.removeAttribute('title');
       }
@@ -233,6 +251,75 @@
       document.dispatchEvent(new CustomEvent('auth:statechange', { detail: { authenticated: true, progress: safeProgress } }));
     }catch(_e){
       // no-op: auth panel feedback handles explicit controls, this is a quick unlock helper
+    }finally{
+      unlockNextInFlight = false;
+      updateUnlockNextButtonsState();
+    }
+  }
+
+  function getVisibleTabPanel(activeTabKey){
+    if(!mainContent || !activeTabKey) return null;
+    return Array.from(mainContent.querySelectorAll('.tab-panel')).find((panel) => panel.dataset.panel === activeTabKey && !panel.hidden) || null;
+  }
+
+  function getTrackedTaskKeys(panel){
+    if(!panel) return [];
+
+    const keys = new Set();
+    panel.querySelectorAll('form.quiz[id]').forEach((form) => {
+      keys.add(`form:${form.id}`);
+    });
+    panel.querySelectorAll('button[id*="Check"]').forEach((button) => {
+      keys.add(`button:${button.id}`);
+    });
+
+    return Array.from(keys);
+  }
+
+  async function unlockNextTabFromTask(taskKey){
+    if(unlockNextInFlight || !isAuthenticated() || !taskKey) return;
+
+    const activeModulePanel = getActiveModulePanel();
+    if(!activeModulePanel) return;
+
+    const moduleId = String(activeModulePanel.dataset.module || '');
+    const tabButtons = Array.from(activeModulePanel.querySelectorAll('.tab-btn'));
+    const activeTabButton = tabButtons.find((button) => button.classList.contains('is-active'));
+    if(!activeTabButton) return;
+
+    const tabIndex = tabButtons.indexOf(activeTabButton);
+    if(tabIndex < 0) return;
+
+    const panel = getVisibleTabPanel(activeTabButton.dataset.tab || '');
+    if(!panel) return;
+
+    const trackedTaskKeys = getTrackedTaskKeys(panel);
+    if(trackedTaskKeys.length === 0 || !trackedTaskKeys.includes(taskKey)) return;
+
+    const targetUnit = getCompletionTargetUnit(moduleId, tabIndex);
+    if(getCompletedParts(currentProgress) >= targetUnit) return;
+
+    const panelKey = `${moduleId}:${panel.dataset.panel || activeTabButton.dataset.tab || tabIndex}`;
+    const solvedTasks = completedPanelTasks.get(panelKey) || new Set();
+    solvedTasks.add(taskKey);
+    completedPanelTasks.set(panelKey, solvedTasks);
+
+    const isPanelComplete = trackedTaskKeys.every((key) => solvedTasks.has(key));
+    if(!isPanelComplete) return;
+
+    unlockNextInFlight = true;
+    updateUnlockNextButtonsState();
+
+    try{
+      const targetProgress = getProgressForUnit(targetUnit);
+      const result = await setProgressOnServer(targetProgress);
+      syncProgressState(result?.progress ?? targetProgress);
+
+      const safeProgress = normalizeProgress(currentProgress);
+      document.dispatchEvent(new CustomEvent('progress:updated', { detail: { progress: safeProgress } }));
+      document.dispatchEvent(new CustomEvent('auth:statechange', { detail: { authenticated: true, progress: safeProgress } }));
+    }catch(_e){
+      // no-op: keep existing progress if the server update fails
     }finally{
       unlockNextInFlight = false;
       updateUnlockNextButtonsState();
@@ -561,7 +648,7 @@
       btn.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
       if(!unlocked){
         const requiredUnit = getModuleUnlockUnit(id);
-        btn.title = `Locked until ${getProgressForUnit(requiredUnit)}%`;
+        btn.title = `Locked until ${formatProgress(getProgressForUnit(requiredUnit))}%`;
       }else{
         btn.removeAttribute('title');
       }
@@ -676,6 +763,10 @@
     if(Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 10){
       setActive(moduleFromQuery);
     }
+  });
+
+  document.addEventListener('course:task-passed', (event) => {
+    unlockNextTabFromTask(String(event?.detail?.taskKey || ''));
   });
 
   modulesMenuToggle?.addEventListener('click', () => toggleMobileDrawer('modules'));

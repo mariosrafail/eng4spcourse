@@ -39,9 +39,14 @@ export async function ensureSchema() {
     await client.query(`
       CREATE TABLE IF NOT EXISTS user_progress (
         user_id BIGINT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-        progress SMALLINT NOT NULL DEFAULT 0 CHECK (progress >= 0 AND progress <= 100),
+        progress NUMERIC(5,2) NOT NULL DEFAULT 0 CHECK (progress >= 0 AND progress <= 100),
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       );
+    `);
+    await client.query(`
+      ALTER TABLE user_progress
+      ALTER COLUMN progress TYPE NUMERIC(5,2)
+      USING progress::NUMERIC(5,2);
     `);
     await client.query(`
       CREATE TABLE IF NOT EXISTS user_sessions (

@@ -74,6 +74,15 @@ if(typeof window.ensureEnglishOnlyTextareaGuard !== 'function'){
   };
 }
 
+if(typeof window.reportCourseTaskPassed !== 'function'){
+  window.reportCourseTaskPassed = function reportCourseTaskPassed(taskKey){
+    if(!taskKey) return;
+    document.dispatchEvent(new CustomEvent('course:task-passed', {
+      detail: { taskKey: String(taskKey) }
+    }));
+  };
+}
+
 // Ambient background tint by tab theme (kept intentionally subtle).
 window.updateAmbientThemeForTab = function updateAmbientThemeForTab(tabKey){
   const key = String(tabKey || '').toLowerCase();
@@ -925,6 +934,7 @@ window.initializeApp = function initializeApp() {
       if (wrongCount === 0){
         feedback.className = 'feedback is-good';
         feedback.textContent = cfg.goodText || 'All answers are correct. Well done.';
+        window.reportCourseTaskPassed?.(`form:${cfg.formId}`);
         if (cfg.onAllCorrect) cfg.onAllCorrect();
       }else{
         feedback.className = 'feedback is-bad';
@@ -1705,6 +1715,7 @@ window.initializeApp = function initializeApp() {
           });
           if(correct === blanks.length){
             setFeedback('Correct. Well done.');
+            window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
           }else{
             setFeedback('Some answers are incorrect. Try again.');
           }
@@ -2473,6 +2484,7 @@ window.initializeApp = function initializeApp() {
         });
         if(correct === blanks.length){
           setFeedback('Correct. Well done.');
+          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
         }else{
           setFeedback('Some answers are incorrect. Try again.');
         }
@@ -2661,6 +2673,7 @@ window.initializeApp = function initializeApp() {
         });
         if(correct === blanks.length){
           setFeedback('Correct. Well done.');
+          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
         }else{
           setFeedback('Some answers are incorrect. Try again.');
         }
@@ -2847,6 +2860,7 @@ window.initializeApp = function initializeApp() {
         });
         if(correct === blanks.length){
           setFeedback('Correct. Well done.');
+          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
         }else{
           setFeedback('Some answers are incorrect. Try again.');
         }
@@ -2855,6 +2869,7 @@ window.initializeApp = function initializeApp() {
       }
     });
 
+          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
     resetBtn?.addEventListener('click', () => {
       blanks.forEach((b) => {
         const t = getTokenInBlank(b);
@@ -2869,6 +2884,7 @@ window.initializeApp = function initializeApp() {
   }
 
   function setupMockWritingTaskTwo(){
+          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
     const root = document.querySelector('#tabMockWriting');
     if(!root) return;
 
@@ -2890,6 +2906,7 @@ window.initializeApp = function initializeApp() {
     }
 
     function setCount(n){
+          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
       countEl.textContent = `Words: ${n}/50`;
     }
 
@@ -2935,6 +2952,9 @@ window.initializeApp = function initializeApp() {
       }
 
       scoreEl.textContent = `Score: ${score}/5`;
+      if(score === 5){
+        window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
+      }
       if(issues.length === 0){
         fbEl.innerHTML = '<div class="wf-ok">Great. Your e-mail includes all required points.</div>';
       }else if(score >= 3){
@@ -3137,6 +3157,7 @@ window.initializeApp = function initializeApp() {
         });
         if(correct === blanks.length){
           setFeedback('All correct. Well done.');
+          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
         }else{
           setFeedback('Some answers are wrong. Try again.');
         }
@@ -3145,6 +3166,7 @@ window.initializeApp = function initializeApp() {
       }
     }
 
+            window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
     checkBtn?.addEventListener('click', check);
     resetBtn?.addEventListener('click', reset);
 
@@ -3152,6 +3174,7 @@ window.initializeApp = function initializeApp() {
   }
 
   // Hour 2 (Tab II) Key Words matching drag and drop
+          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
   function setupHour2KeywordsMatchDnD(){
     const roots = Array.from(document.querySelectorAll('#tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Hour2Keywords, #tab6Hour2Reading'));
     if(!roots.length) return;
