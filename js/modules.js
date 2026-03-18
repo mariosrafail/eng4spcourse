@@ -303,6 +303,69 @@
     return getCanonicalTabRouteAlias(match.dataset.tab || '') || '';
   }
 
+  function getTabLabelText(button){
+    return String(button?.querySelector('.tab-label')?.textContent || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function getModuleTabDescriptors(moduleId){
+    const normalizedId = String(moduleId || '').trim();
+    if(!normalizedId) return [];
+
+    const activeModulePanel = getActiveModulePanel();
+    if(activeModulePanel && String(activeModulePanel.dataset.module || '') === normalizedId){
+      return Array.from(activeModulePanel.querySelectorAll('.tab-btn')).map((button) => ({
+        tabKey: String(button.dataset.tab || '').trim(),
+        label: getTabLabelText(button)
+      }));
+    }
+
+    const cachedMenu = _cache[normalizedId]?.menu;
+    if(!cachedMenu) return [];
+
+    const temp = document.createElement('div');
+    temp.innerHTML = cachedMenu;
+    return Array.from(temp.querySelectorAll('.tab-btn')).map((button) => ({
+      tabKey: String(button.dataset.tab || '').trim(),
+      label: getTabLabelText(button)
+    }));
+  }
+
+  function getFirstUnlockedTabKeyForModule(moduleId, progress = currentProgress){
+    const descriptors = getModuleTabDescriptors(moduleId);
+    const normalizedId = String(moduleId || '').trim();
+    const firstUnlocked = descriptors.find((descriptor, index) => {
+      return isTabUnlockedByProgress(normalizedId, index, progress);
+    });
+
+    if(firstUnlocked?.tabKey) return firstUnlocked.tabKey;
+
+    if(normalizedId === '9') return 'mock_listening_1';
+    if(normalizedId === FINAL_APPENDIX_MODULE_ID) return 'a1';
+    return 'info';
+  }
+
+  function getTabLabelForModule(moduleId, tabKey){
+    const descriptors = getModuleTabDescriptors(moduleId);
+    return descriptors.find((descriptor) => descriptor.tabKey === String(tabKey || '').trim())?.label || '';
+  }
+
+  function buildUnlockTransitionPayload(destination){
+    if(!destination?.moduleId) return null;
+
+    const resolvedTabKey = destination.preferredTab || getFirstUnlockedTabKeyForModule(destination.moduleId, currentProgress);
+    const tabLabel = getTabLabelForModule(destination.moduleId, resolvedTabKey);
+    const moduleTitle = getModuleTitle(destination.moduleId);
+
+    return {
+      durationMs: 4000,
+      currentRgb: getComputedStyle(document.documentElement).getPropertyValue('--ambient-rgb').trim() || '122,103,201',
+      nextRgb: window.getAmbientThemeColorForTab?.(resolvedTabKey) || '122,103,201',
+      message: tabLabel ? `${tabLabel} unlocked` : `${moduleTitle} unlocked`,
+      context: moduleTitle,
+      nextTabKey: resolvedTabKey
+    };
+  }
+
   function writeRouteHash(route, { replace = true } = {}){
     const next = new URL(window.location.href);
     if(route?.view === 'home'){
@@ -426,8 +489,14 @@
     return null;
   }
 
-  function navigateToUnlockedDestination(destination){
+  async function navigateToUnlockedDestination(destination){
     if(!destination?.moduleId) return;
+    const transitionPayload = buildUnlockTransitionPayload(destination);
+    if(window.playUnlockTransition && transitionPayload){
+      try{
+        await window.playUnlockTransition(transitionPayload);
+      }catch(_e){}
+    }
     setActive(destination.moduleId, {
       forceFirstTab: destination.forceFirstTab !== false,
       focusActiveTab: true,
@@ -468,7 +537,7 @@
           previousProgress,
           nextProgress: safeProgress
         });
-        navigateToUnlockedDestination(destination);
+        await navigateToUnlockedDestination(destination);
       }
     }catch(_e){
       // no-op: auth panel feedback handles explicit controls, this is a quick unlock helper

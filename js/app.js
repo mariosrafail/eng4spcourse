@@ -83,12 +83,8 @@ if(typeof window.reportCourseTaskPassed !== 'function'){
   };
 }
 
-// Ambient background tint by tab theme (kept intentionally subtle).
-window.updateAmbientThemeForTab = function updateAmbientThemeForTab(tabKey){
+window.getAmbientThemeColorForTab = function getAmbientThemeColorForTab(tabKey){
   const key = String(tabKey || '').toLowerCase();
-  const root = document.documentElement;
-  const body = document.body;
-  if(!root || !body) return;
 
   let rgb = '122,103,201'; // purple default
   // Order matters: specific groups first, then broad pattern groups.
@@ -126,6 +122,16 @@ window.updateAmbientThemeForTab = function updateAmbientThemeForTab(tabKey){
   }else if(key.includes('listening')){
     rgb = '140,91,150'; // soft violet
   }
+
+  return rgb;
+};
+
+// Ambient background tint by tab theme (kept intentionally subtle).
+window.updateAmbientThemeForTab = function updateAmbientThemeForTab(tabKey){
+  const root = document.documentElement;
+  const body = document.body;
+  if(!root || !body) return;
+  const rgb = window.getAmbientThemeColorForTab?.(tabKey) || '122,103,201';
 
   root.style.setProperty('--ambient-rgb', rgb);
   root.style.setProperty('--nav-accent-rgb', rgb);
