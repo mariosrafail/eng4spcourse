@@ -39,6 +39,7 @@
   const TOTAL_PARTS = MODULE_SEQUENCE.reduce((sum, id) => sum + (PARTS_PER_MODULE[id] || 0), 0);
   const TOKEN_KEY = 'e4sp_auth_token';
   const FINAL_APPENDIX_MODULE_ID = '10';
+  let pendingRoute = null;
   const PROGRESS_BY_PART = Array.from({ length: TOTAL_PARTS + 1 }, (_v, parts) => {
     if(parts >= TOTAL_PARTS) return 100;
     return Math.round(((parts * 100) / TOTAL_PARTS) * 100) / 100;
@@ -190,6 +191,71 @@
         }
       }catch(_e){}
     });
+  }
+
+  function parseRouteHash(hashValue = window.location.hash){
+    const raw = String(hashValue || '').replace(/^#/, '').trim();
+    if(!raw) return null;
+
+    const params = new URLSearchParams(raw);
+    const view = String(params.get('view') || '').trim().toLowerCase();
+    const moduleId = String(params.get('module') || '').trim();
+    const tab = String(params.get('tab') || '').trim();
+
+    if(view === 'home'){
+      return { view: 'home', moduleId: '', tab: '' };
+    }
+
+    if(moduleId){
+      return { view: 'module', moduleId, tab };
+    }
+
+    if(raw.toLowerCase() === 'home'){
+      return { view: 'home', moduleId: '', tab: '' };
+    }
+
+    return null;
+  }
+
+  function writeRouteHash(route, { replace = true } = {}){
+    const next = new URL(window.location.href);
+    if(route?.view === 'home'){
+      next.hash = 'view=home';
+    }else if(route?.view === 'module' && route.moduleId){
+      const params = new URLSearchParams();
+      params.set('module', String(route.moduleId));
+      if(route.tab) params.set('tab', String(route.tab));
+      next.hash = params.toString();
+    }else{
+      next.hash = '';
+    }
+
+    if(replace){
+      window.history.replaceState(null, '', next);
+      return;
+    }
+    window.history.pushState(null, '', next);
+  }
+
+  function rememberRequestedRoute(moduleId, tab){
+    pendingRoute = {
+      view: 'module',
+      moduleId: String(moduleId || '').trim(),
+      tab: String(tab || '').trim()
+    };
+  }
+
+  function consumePendingRouteForModule(moduleId){
+    if(!pendingRoute) return '';
+    if(pendingRoute.view !== 'module') return '';
+    if(String(pendingRoute.moduleId) !== String(moduleId)) return '';
+    const tab = String(pendingRoute.tab || '').trim();
+    pendingRoute = null;
+    return tab;
+  }
+
+  function getRequestedRoute(){
+    return pendingRoute || parseRouteHash();
   }
 
   async function setProgressOnServer(nextProgress){
@@ -431,7 +497,7 @@
 
   // Initialize tab switching for dynamically loaded content
   function initTabs(options = {}){
-    const { forceFirstTab = false, focusActiveTab = false } = options;
+    const { forceFirstTab = false, focusActiveTab = false, preferredTab = '' } = options;
     const activeModulePanel = getActiveModulePanel();
     if(!activeModulePanel) return;
 
@@ -464,6 +530,11 @@
         requestAnimationFrame(() => target.classList.add('is-visible'));
       }
       window.updateAmbientThemeForTab?.(key);
+      writeRouteHash({
+        view: 'module',
+        moduleId,
+        tab: target ? key : ''
+      });
 
       // Scroll to top
       try{
@@ -493,7 +564,11 @@
     });
 
     // Set initial active tab
+    const preferredEnabledTab = preferredTab
+      ? freshTabButtons.find((b) => b.dataset.tab === preferredTab && !b.disabled)?.dataset.tab
+      : '';
     const initiallyActive =
+      preferredEnabledTab ||
       (forceFirstTab ? freshTabButtons.find((b) => !b.disabled)?.dataset.tab : null) ||
       freshTabButtons.find((b) => b.classList.contains('is-active') && !b.disabled)?.dataset.tab ||
       freshTabButtons.find((b) => !b.disabled)?.dataset.tab ||
@@ -520,7 +595,7 @@
   }
 
   async function loadModule(id, options = {}){
-    const { forceFirstTab = false, focusActiveTab = false } = options;
+    const { forceFirstTab = false, focusActiveTab = false, preferredTab = '' } = options;
     const panel = modulePanels.find(p => p.dataset.module === String(id));
     if(!panel || !mainContent) return;
     
@@ -528,7 +603,7 @@
     if(_cache[id]){ 
       panel.innerHTML = _cache[id].menu; 
       mainContent.innerHTML = _cache[id].content;
-      initTabs({ forceFirstTab, focusActiveTab });
+      initTabs({ forceFirstTab, focusActiveTab, preferredTab });
       reinitializeModuleFeatures();
       return; 
     }
@@ -542,7 +617,7 @@
       mainContent.innerHTML = parsed.content;
       
       // Initialize tabs after injection
-      initTabs({ forceFirstTab, focusActiveTab });
+      initTabs({ forceFirstTab, focusActiveTab, preferredTab });
       
       // Reinitialize app functionality without treating runtime init errors as load failures.
       reinitializeModuleFeatures();
@@ -563,7 +638,8 @@
     });
   }
 
-  function setActive(id){
+  function setActive(id, options = {}){
+    const { forceFirstTab = true, focusActiveTab = true, preferredTab = '' } = options;
     if(!document.body.classList.contains('is-authenticated')) return;
     const moduleButton = moduleButtons.find((b) => b.dataset.module === String(id));
     if(!moduleButton || moduleButton.disabled) return;
@@ -578,6 +654,8 @@
     if(activeModuleTitle){
       activeModuleTitle.textContent = getModuleTitle(id);
     }
+    rememberRequestedRoute(id, preferredTab);
+    writeRouteHash({ view: 'module', moduleId: id, tab: preferredTab || '' });
     pausePlayableMedia(mainContent);
     // Keep modules sidebar open on click; collapse only after cursor moves far away.
     if(collapseTimer){
@@ -591,7 +669,11 @@
       document.body.classList.add('mobile-course-open');
       syncMobileToggleState();
     }
-    loadModule(id, { forceFirstTab: true, focusActiveTab: true });
+    loadModule(id, {
+      forceFirstTab,
+      focusActiveTab,
+      preferredTab: preferredTab || consumePendingRouteForModule(id)
+    });
     setTimeout(() => prefetchModules(id), 220);
   }
 
@@ -616,6 +698,9 @@
     if(isMobileViewport()){
       closeMobileDrawers();
     }
+
+    pendingRoute = { view: 'home', moduleId: '', tab: '' };
+    writeRouteHash({ view: 'home' });
 
     // Reset ambient/nav theme to the default Home purple.
     if(typeof window.updateAmbientThemeForTab === 'function'){
@@ -652,7 +737,7 @@
     // Only click activates the module
     btn.addEventListener('click', () => {
       const id = btn.dataset.module;
-      setActive(id);
+      setActive(id, { forceFirstTab: true, focusActiveTab: true });
     });
     btn.addEventListener('keydown', (e)=>{
       if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); btn.click(); }
@@ -728,8 +813,23 @@
 
 
   const moduleFromQuery = Number(new URLSearchParams(window.location.search).get('module'));
-  if(isAuthenticated() && Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 10){
-    setActive(moduleFromQuery);
+  const routeFromHash = parseRouteHash();
+  if(routeFromHash){
+    pendingRoute = routeFromHash;
+  }
+
+  if(isAuthenticated()){
+    if(routeFromHash?.view === 'home'){
+      showHome();
+    }else if(routeFromHash?.view === 'module' && routeFromHash.moduleId){
+      setActive(routeFromHash.moduleId, {
+        forceFirstTab: false,
+        focusActiveTab: true,
+        preferredTab: routeFromHash.tab || ''
+      });
+    }else if(Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 10){
+      setActive(moduleFromQuery, { forceFirstTab: true, focusActiveTab: true });
+    }
   }
 
   document.addEventListener('auth:statechange', (event) => {
@@ -743,12 +843,55 @@
     applyModuleLocks();
 
     if(hasActiveModule()){
-      initTabs({ forceFirstTab: false, focusActiveTab: false });
+      const requestedRoute = getRequestedRoute();
+      const requestedTab = requestedRoute?.view === 'module'
+        ? String(requestedRoute.tab || '')
+        : '';
+      initTabs({ forceFirstTab: false, focusActiveTab: false, preferredTab: requestedTab });
+      return;
+    }
+
+    const requestedRoute = getRequestedRoute();
+    if(requestedRoute?.view === 'home'){
+      showHome();
+      return;
+    }
+
+    if(requestedRoute?.view === 'module' && requestedRoute.moduleId){
+      setActive(requestedRoute.moduleId, {
+        forceFirstTab: false,
+        focusActiveTab: true,
+        preferredTab: requestedRoute.tab || ''
+      });
       return;
     }
 
     if(Number.isInteger(moduleFromQuery) && moduleFromQuery >= 1 && moduleFromQuery <= 10){
-      setActive(moduleFromQuery);
+      setActive(moduleFromQuery, { forceFirstTab: true, focusActiveTab: true });
+    }
+  });
+
+  window.addEventListener('hashchange', () => {
+    const requestedRoute = parseRouteHash();
+    if(!requestedRoute){
+      pendingRoute = null;
+      return;
+    }
+
+    pendingRoute = requestedRoute;
+    if(!isAuthenticated()) return;
+
+    if(requestedRoute.view === 'home'){
+      showHome();
+      return;
+    }
+
+    if(requestedRoute.view === 'module' && requestedRoute.moduleId){
+      setActive(requestedRoute.moduleId, {
+        forceFirstTab: false,
+        focusActiveTab: true,
+        preferredTab: requestedRoute.tab || ''
+      });
     }
   });
 
