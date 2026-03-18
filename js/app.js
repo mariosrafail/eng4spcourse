@@ -913,6 +913,12 @@ window.initializeApp = function initializeApp() {
     return res.json();
   }
 
+  function reportPassedButtonTask(button){
+    const buttonId = String(button?.id || '').trim();
+    if(!buttonId) return;
+    window.reportCourseTaskPassed?.(`button:${buttonId}`);
+  }
+
   function bindQuiz(cfg){
     const form = document.getElementById(cfg.formId);
     const feedback = document.getElementById(cfg.feedbackId);
@@ -1960,6 +1966,7 @@ window.initializeApp = function initializeApp() {
         });
         if(correct === blanks.length){
           setFeedback('All correct. Well done.');
+          reportPassedButtonTask(checkBtn);
         }else{
           setFeedback('Some answers are wrong. Try again.');
         }
@@ -2150,6 +2157,7 @@ window.initializeApp = function initializeApp() {
         });
         if(correct === blanks.length){
           setFeedback('All correct. Well done.');
+          reportPassedButtonTask(checkBtn);
         }else{
           setFeedback('Some answers are wrong. Try again.');
         }
@@ -2352,6 +2360,7 @@ window.initializeApp = function initializeApp() {
         });
         if(correct === blanks.length){
           setFeedback('All correct. Well done.');
+          reportPassedButtonTask(checkBtn);
         }else{
           setFeedback('Some answers are wrong. Try again.');
         }
@@ -3419,6 +3428,7 @@ window.initializeApp = function initializeApp() {
           });
           if(correct === blanks.length){
             setFeedback('All correct. Well done.');
+            reportPassedButtonTask(checkBtn);
           }else{
             setFeedback('Some answers are wrong. Try again.');
           }
@@ -3613,6 +3623,7 @@ window.initializeApp = function initializeApp() {
         });
         if(correct === blanks.length){
           setFeedback('All correct. Well done.');
+          reportPassedButtonTask(checkBtn);
         }else{
           setFeedback('Some answers are wrong. Try again.');
         }
