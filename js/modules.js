@@ -217,6 +217,92 @@
     return null;
   }
 
+  function slugifyRoutePart(value){
+    return String(value || '')
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/&/g, ' and ')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .replace(/-{2,}/g, '-');
+  }
+
+  function getCanonicalTabRouteAlias(tabKey){
+    const raw = String(tabKey || '').trim();
+    if(!raw) return '';
+
+    const stripped = raw.replace(/^m\d+_/, '');
+    const tokenMap = {
+      h2: 'hour2',
+      info: 'focus',
+      exercise: 'useful-language',
+      recall: 'learning-recall',
+      quick: 'quick',
+      ref: 'reference',
+      mock: ''
+    };
+
+    const parts = stripped
+      .split('_')
+      .map((part) => tokenMap[part] ?? part)
+      .filter(Boolean);
+
+    return parts.join('-');
+  }
+
+  function getTabLabelRouteAliases(button){
+    const label = button?.querySelector('.tab-label')?.textContent || '';
+    const normalized = String(label)
+      .replace(/^\s*[ivxlcdm]+\s*[.)-]?\s*/i, '')
+      .replace(/^\s*module\s+/i, '')
+      .trim();
+    const slug = slugifyRoutePart(normalized);
+    if(!slug) return [];
+
+    const aliases = [slug];
+    if(slug === 'focus') aliases.push('module-focus');
+    if(slug === 'useful-language') aliases.push('exercise');
+    if(slug === 'learning-recall') aliases.push('recall');
+    return aliases;
+  }
+
+  function getTabRouteAliases(button){
+    const aliases = new Set();
+    const key = String(button?.dataset?.tab || '').trim();
+    const canonical = getCanonicalTabRouteAlias(key);
+    if(canonical) aliases.add(canonical);
+    if(key) aliases.add(slugifyRoutePart(key.replace(/^m\d+_/, '').replace(/_/g, '-')));
+    getTabLabelRouteAliases(button).forEach((alias) => aliases.add(alias));
+
+    if(canonical.startsWith('hour2-')){
+      const shortHour2 = canonical.replace(/^hour2-/, 'h2-');
+      const bare = canonical.replace(/^hour2-/, '');
+      if(shortHour2) aliases.add(shortHour2);
+      if(bare) aliases.add(bare);
+    }
+
+    return Array.from(aliases).filter(Boolean);
+  }
+
+  function resolveTabRouteAlias(tabButtons, requestedTab){
+    const normalizedRequested = slugifyRoutePart(String(requestedTab || '').replace(/_/g, '-'));
+    if(!normalizedRequested) return '';
+
+    const exactMatch = tabButtons.find((button) => {
+      return getTabRouteAliases(button).includes(normalizedRequested);
+    });
+    if(exactMatch) return String(exactMatch.dataset.tab || '');
+
+    return '';
+  }
+
+  function getTabRouteAliasForKey(tabButtons, tabKey){
+    const match = tabButtons.find((button) => String(button.dataset.tab || '') === String(tabKey || ''));
+    if(!match) return '';
+    return getCanonicalTabRouteAlias(match.dataset.tab || '') || '';
+  }
+
   function writeRouteHash(route, { replace = true } = {}){
     const next = new URL(window.location.href);
     if(route?.view === 'home'){
@@ -503,6 +589,7 @@
 
     let tabButtons = Array.from(activeModulePanel.querySelectorAll('.tab-btn'));
     const panels = Array.from(document.querySelectorAll('main.content .tab-panel'));
+    const moduleId = String(activeModulePanel.dataset.module || '');
 
     function setActiveTab(key){
       const prevActive = tabButtons.find((b) => b.classList.contains('is-active'))?.dataset.tab || '';
@@ -530,10 +617,11 @@
         requestAnimationFrame(() => target.classList.add('is-visible'));
       }
       window.updateAmbientThemeForTab?.(key);
+      const routeTab = target ? getTabRouteAliasForKey(tabButtons, key) : '';
       writeRouteHash({
         view: 'module',
         moduleId,
-        tab: target ? key : ''
+        tab: routeTab
       });
 
       // Scroll to top
@@ -550,7 +638,6 @@
     
     // Get fresh references after cloning
     const freshTabButtons = Array.from(activeModulePanel.querySelectorAll('.tab-btn'));
-    const moduleId = String(activeModulePanel.dataset.module || '');
     applyChapterLocks(moduleId, freshTabButtons);
     tabButtons = freshTabButtons;
     freshTabButtons.forEach((btn) => {
@@ -564,8 +651,9 @@
     });
 
     // Set initial active tab
-    const preferredEnabledTab = preferredTab
-      ? freshTabButtons.find((b) => b.dataset.tab === preferredTab && !b.disabled)?.dataset.tab
+    const preferredResolvedTab = preferredTab ? resolveTabRouteAlias(freshTabButtons, preferredTab) : '';
+    const preferredEnabledTab = preferredResolvedTab
+      ? freshTabButtons.find((b) => b.dataset.tab === preferredResolvedTab && !b.disabled)?.dataset.tab
       : '';
     const initiallyActive =
       preferredEnabledTab ||
