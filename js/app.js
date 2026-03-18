@@ -1,5 +1,79 @@
 
 
+if(typeof window.ensureEnglishOnlyTextareaGuard !== 'function'){
+  window.ensureEnglishOnlyTextareaGuard = function ensureEnglishOnlyTextareaGuard(textarea){
+    if(!textarea){
+      return {
+        enforce(){ return true; },
+        clear(){}
+      };
+    }
+    if(textarea.__englishOnlyGuard) return textarea.__englishOnlyGuard;
+
+    let warningEl = textarea.parentElement?.querySelector('.writing-language-warning');
+    if(!warningEl){
+      warningEl = document.createElement('div');
+      warningEl.className = 'writing-language-warning';
+      warningEl.setAttribute('aria-live', 'polite');
+      warningEl.hidden = true;
+      textarea.insertAdjacentElement('afterend', warningEl);
+    }
+
+    const allowedCharPattern = /^[A-Za-z0-9\s.,!?;:'"()\-\/@&%+#*\[\]{}]$/;
+
+    function isAllowedChar(char){
+      return allowedCharPattern.test(char);
+    }
+
+    function setWarningVisible(isVisible){
+      warningEl.hidden = !isVisible;
+      warningEl.textContent = isVisible
+        ? 'Use English only. Switch your keyboard language to English and try again.'
+        : '';
+      textarea.classList.toggle('is-language-blocked', isVisible);
+    }
+
+    function enforceEnglishOnly(){
+      const currentValue = String(textarea.value || '');
+      const sanitizedValue = Array.from(currentValue).filter(isAllowedChar).join('');
+
+      if(sanitizedValue !== currentValue){
+        textarea.value = sanitizedValue;
+        setWarningVisible(true);
+        return false;
+      }
+
+      if(!warningEl.hidden) setWarningVisible(false);
+      return true;
+    }
+
+    textarea.addEventListener('beforeinput', (event) => {
+      if(event.isComposing) return;
+
+      const inputType = String(event.inputType || '');
+      if(!inputType.startsWith('insert')) return;
+      if(typeof event.data !== 'string' || !event.data) return;
+
+      const hasInvalidChars = Array.from(event.data).some((char) => !isAllowedChar(char));
+      if(hasInvalidChars){
+        event.preventDefault();
+        setWarningVisible(true);
+      }
+    });
+
+    textarea.addEventListener('input', enforceEnglishOnly);
+
+    textarea.__englishOnlyGuard = {
+      enforce: enforceEnglishOnly,
+      clear(){
+        setWarningVisible(false);
+      }
+    };
+
+    return textarea.__englishOnlyGuard;
+  };
+}
+
 // Ambient background tint by tab theme (kept intentionally subtle).
 window.updateAmbientThemeForTab = function updateAmbientThemeForTab(tabKey){
   const key = String(tabKey || '').toLowerCase();
@@ -2805,6 +2879,7 @@ window.initializeApp = function initializeApp() {
     const scoreEl = root.querySelector('#mockEmailScore');
     const fbEl = root.querySelector('#mockEmailFeedback');
     if(!textarea || !countEl || !checkBtn || !resetBtn || !scoreEl || !fbEl) return;
+    const languageGuard = window.ensureEnglishOnlyTextareaGuard(textarea);
 
     function words(text){
       return (text || '')
@@ -2819,6 +2894,7 @@ window.initializeApp = function initializeApp() {
     }
 
     function enforceMaxWords(){
+      languageGuard.enforce();
       const w = words(textarea.value);
       if(w.length > 50){
         textarea.value = w.slice(0, 50).join(' ');
@@ -2870,6 +2946,7 @@ window.initializeApp = function initializeApp() {
 
     resetBtn.addEventListener('click', () => {
       textarea.value = '';
+      languageGuard.clear();
       setCount(0);
       scoreEl.textContent = '';
       fbEl.innerHTML = '';

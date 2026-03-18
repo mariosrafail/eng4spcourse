@@ -1,5 +1,79 @@
 (() => {
   // Second Hour - V. Writing
+  if(typeof window.ensureEnglishOnlyTextareaGuard !== 'function'){
+    window.ensureEnglishOnlyTextareaGuard = function ensureEnglishOnlyTextareaGuard(textarea){
+      if(!textarea){
+        return {
+          enforce(){ return true; },
+          clear(){}
+        };
+      }
+      if(textarea.__englishOnlyGuard) return textarea.__englishOnlyGuard;
+
+      let warningEl = textarea.parentElement?.querySelector('.writing-language-warning');
+      if(!warningEl){
+        warningEl = document.createElement('div');
+        warningEl.className = 'writing-language-warning';
+        warningEl.setAttribute('aria-live', 'polite');
+        warningEl.hidden = true;
+        textarea.insertAdjacentElement('afterend', warningEl);
+      }
+
+      const allowedCharPattern = /^[A-Za-z0-9\s.,!?;:'"()\-\/@&%+#*\[\]{}]$/;
+
+      function isAllowedChar(char){
+        return allowedCharPattern.test(char);
+      }
+
+      function setWarningVisible(isVisible){
+        warningEl.hidden = !isVisible;
+        warningEl.textContent = isVisible
+          ? 'Use English only. Switch your keyboard language to English and try again.'
+          : '';
+        textarea.classList.toggle('is-language-blocked', isVisible);
+      }
+
+      function enforceEnglishOnly(){
+        const currentValue = String(textarea.value || '');
+        const sanitizedValue = Array.from(currentValue).filter(isAllowedChar).join('');
+
+        if(sanitizedValue !== currentValue){
+          textarea.value = sanitizedValue;
+          setWarningVisible(true);
+          return false;
+        }
+
+        if(!warningEl.hidden) setWarningVisible(false);
+        return true;
+      }
+
+      textarea.addEventListener('beforeinput', (event) => {
+        if(event.isComposing) return;
+
+        const inputType = String(event.inputType || '');
+        if(!inputType.startsWith('insert')) return;
+        if(typeof event.data !== 'string' || !event.data) return;
+
+        const hasInvalidChars = Array.from(event.data).some((char) => !isAllowedChar(char));
+        if(hasInvalidChars){
+          event.preventDefault();
+          setWarningVisible(true);
+        }
+      });
+
+      textarea.addEventListener('input', enforceEnglishOnly);
+
+      textarea.__englishOnlyGuard = {
+        enforce: enforceEnglishOnly,
+        clear(){
+          setWarningVisible(false);
+        }
+      };
+
+      return textarea.__englishOnlyGuard;
+    };
+  }
+
   // Task 1: drag & drop gap fill
   function setupWritingTaskOne(root){
     if(!root) return;
@@ -218,6 +292,7 @@
     const fbEl = root.querySelector('#h2EmailFeedback');
 
     if(!textarea || !countEl || !checkBtn || !resetBtn || !scoreEl || !fbEl) return;
+    const languageGuard = window.ensureEnglishOnlyTextareaGuard(textarea);
 
     function words(text){
       return (text || '')
@@ -248,6 +323,7 @@
     }
 
     function enforceMaxWords(){
+      languageGuard.enforce();
       const w = words(textarea.value);
       if(w.length > 50){
         textarea.value = w.slice(0, 50).join(' ');
@@ -655,6 +731,7 @@
 
     resetBtn.addEventListener('click', () => {
       textarea.value = '';
+      languageGuard.clear();
       setCount(0);
       setScore('');
       setFeedback('');
