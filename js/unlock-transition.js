@@ -58,6 +58,18 @@
 
       await wait(durationMs);
 
+      const root = document.documentElement;
+      const body = document.body;
+      if(root){
+        root.style.setProperty('--ambient-rgb', toRgb);
+        root.style.setProperty('--nav-accent-rgb', toRgb);
+      }
+      if(body){
+        body.classList.add('theme-shift');
+        window.clearTimeout(window.__themeShiftTimer);
+        window.__themeShiftTimer = window.setTimeout(() => body.classList.remove('theme-shift'), 520);
+      }
+
       overlay.classList.add('is-exiting');
       overlay.classList.remove('is-running');
 
