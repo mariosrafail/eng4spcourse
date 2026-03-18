@@ -67,6 +67,26 @@ export async function ensureSchema() {
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       );
     `);
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS user_tab_timer_progress (
+        user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        module_id TEXT NOT NULL,
+        tab_key TEXT NOT NULL,
+        duration_ms INTEGER NOT NULL DEFAULT 0 CHECK (duration_ms >= 0),
+        remaining_ms INTEGER NOT NULL DEFAULT 0 CHECK (remaining_ms >= 0),
+        completed BOOLEAN NOT NULL DEFAULT FALSE,
+        completed_at TIMESTAMPTZ NULL,
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        PRIMARY KEY (user_id, module_id, tab_key)
+      );
+    `);
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS global_tab_timer_overrides (
+        override_key TEXT PRIMARY KEY,
+        minutes INTEGER NOT NULL CHECK (minutes > 0),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+    `);
     await client.query("COMMIT");
     schemaReady = true;
   } catch (error) {

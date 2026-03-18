@@ -52,3 +52,28 @@
   from = "/api/progress/set"
   to = "/.netlify/functions/progress-set"
   status = 200
+
+[[redirects]]
+  from = "/api/timer-config/get"
+  to = "/.netlify/functions/timer-config-get"
+  status = 200
+
+[[redirects]]
+  from = "/api/timer-config/set"
+  to = "/.netlify/functions/timer-config-set"
+  status = 200
+
+[[redirects]]
+  from = "/api/timer-config/reset"
+  to = "/.netlify/functions/timer-config-reset"
+  status = 200
+
+[[redirects]]
+  from = "/api/timer-progress/get"
+  to = "/.netlify/functions/timer-progress-get"
+  status = 200
+
+[[redirects]]
+  from = "/api/timer-progress/set"
+  to = "/.netlify/functions/timer-progress-set"
+  status = 200

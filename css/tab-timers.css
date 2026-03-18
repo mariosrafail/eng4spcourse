@@ -270,6 +270,17 @@
   gap: 8px;
 }
 
+.tab-timer-settings__table-main{
+  font-weight: 700;
+  color: rgba(36,29,53,.9);
+}
+
+.tab-timer-settings__table-sub{
+  margin-top: 2px;
+  font-size: 11px;
+  color: rgba(36,29,53,.56);
+}
+
 @media (max-width: 720px){
   .tab-timer-settings__dialog{
     margin-top: 16px;
