@@ -73,6 +73,7 @@
       .filter((key) => !key.includes(':')),
     'h2_reading2'
   ])).sort();
+  const FALLBACK_MODULE_IDS = Array.from({ length: 10 }, (_, index) => String(index + 1));
 
   let isAuthenticated = document.body.classList.contains('is-authenticated');
   let activeTab = null;
@@ -382,6 +383,129 @@
     return raw;
   }
 
+  function getKnownModules(){
+    const seen = new Map();
+
+    document.querySelectorAll('.module-btn[data-module]').forEach((button) => {
+      const id = String(button.dataset.module || '').trim();
+      if(!id) return;
+      const label = String(button.textContent || '').trim() || `Module ${id}`;
+      seen.set(id, label);
+    });
+
+    Object.keys(getAllTimerOverrides()).forEach((key) => {
+      if(!key.includes(':')) return;
+      const [moduleId] = key.split(':');
+      const id = String(moduleId || '').trim();
+      if(!id || seen.has(id)) return;
+      seen.set(id, `Module ${id}`);
+    });
+
+    FALLBACK_MODULE_IDS.forEach((id) => {
+      if(!seen.has(id)) seen.set(id, `Module ${id}`);
+    });
+
+    return Array.from(seen.entries())
+      .sort((left, right) => Number(left[0]) - Number(right[0]))
+      .map(([id, label]) => ({ id, label }));
+  }
+
+  function buildOverrideKey(moduleId, tabKey){
+    const cleanModuleId = String(moduleId || '').trim();
+    const cleanTabKey = String(tabKey || '').trim();
+    if(!cleanTabKey) return '';
+    return cleanModuleId ? `${cleanModuleId}:${cleanTabKey}` : cleanTabKey;
+  }
+
+  function getSettingsFormState(){
+    const modal = ensureSettingsUi();
+    return {
+      moduleId: String(modal.querySelector('#tabTimerModuleSelect')?.value || '').trim(),
+      tabKey: String(modal.querySelector('#tabTimerTabKeySelect')?.value || '').trim()
+    };
+  }
+
+  function setSettingsFormState(moduleId, tabKey){
+    const modal = ensureSettingsUi();
+    const moduleSelect = modal.querySelector('#tabTimerModuleSelect');
+    const tabSelect = modal.querySelector('#tabTimerTabKeySelect');
+    if(moduleSelect) moduleSelect.value = String(moduleId || '').trim();
+    if(tabSelect) tabSelect.value = String(tabKey || '').trim();
+  }
+
+  function populateSettingsSelectOptions(){
+    const modal = ensureSettingsUi();
+    const moduleSelect = modal.querySelector('#tabTimerModuleSelect');
+    const tabSelect = modal.querySelector('#tabTimerTabKeySelect');
+    const current = getSettingsFormState();
+
+    if(moduleSelect){
+      moduleSelect.innerHTML = '<option value="">All modules with this tab key</option>';
+      getKnownModules().forEach(({ id, label }) => {
+        const option = document.createElement('option');
+        option.value = id;
+        option.textContent = label;
+        moduleSelect.appendChild(option);
+      });
+      moduleSelect.value = current.moduleId;
+    }
+
+    if(tabSelect){
+      tabSelect.innerHTML = '<option value="">Select a tab key</option>';
+      KNOWN_TAB_KEYS.forEach((key) => {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = key;
+        tabSelect.appendChild(option);
+      });
+      tabSelect.value = current.tabKey;
+    }
+  }
+
+  function renderCustomOverridesTable(){
+    const modal = document.getElementById('tabTimerSettingsModal');
+    if(!modal) return;
+
+    const tableWrap = modal.querySelector('#tabTimerOverridesTableWrap');
+    const body = modal.querySelector('#tabTimerOverridesTableBody');
+    const empty = modal.querySelector('#tabTimerOverridesEmpty');
+    if(!tableWrap || !body || !empty) return;
+
+    const entries = Object.entries(readCustomOverrides())
+      .sort((left, right) => left[0].localeCompare(right[0], undefined, { numeric: true }));
+
+    body.innerHTML = '';
+
+    if(!entries.length){
+      tableWrap.hidden = true;
+      empty.hidden = false;
+      return;
+    }
+
+    tableWrap.hidden = false;
+    empty.hidden = true;
+
+    entries.forEach(([key, minutes]) => {
+      const row = document.createElement('tr');
+      const [moduleId, rawTabKey] = key.includes(':')
+        ? key.split(':')
+        : ['', key];
+
+      row.innerHTML = `
+        <td>${moduleId ? `Module ${moduleId}` : 'All modules'}</td>
+        <td>${rawTabKey}</td>
+        <td>${minutes}</td>
+        <td>
+          <div class="tab-timer-settings__table-actions">
+            <button class="btn" type="button" data-load-override="${key}">Load</button>
+            <button class="btn" type="button" data-delete-override="${key}">Delete</button>
+          </div>
+        </td>
+      `;
+      body.appendChild(row);
+    });
+  }
+
   function ensureSettingsUi(){
     let modal = document.getElementById('tabTimerSettingsModal');
     if(modal) return modal;
@@ -400,22 +524,21 @@
           </div>
           <button class="tab-timer-settings__close" type="button" data-close="true" aria-label="Close timer settings">×</button>
         </div>
-        <p class="tab-timer-settings__help">Leave Module empty to change all tabs with the same key. Fill Module to target one specific tab.</p>
+        <p class="tab-timer-settings__help">Choose a tab key, then optionally choose a module if you want the override to apply only there.</p>
         <div class="tab-timer-settings__grid">
           <label class="tab-timer-settings__field">
             <span>Module</span>
-            <input class="tab-timer-settings__input" id="tabTimerModuleInput" type="text" inputmode="numeric" placeholder="e.g. 2">
+            <select class="tab-timer-settings__input" id="tabTimerModuleSelect"></select>
           </label>
           <label class="tab-timer-settings__field">
             <span>Tab key</span>
-            <input class="tab-timer-settings__input" id="tabTimerTabKeyInput" list="tabTimerKnownKeys" type="text" placeholder="e.g. h2_keywords">
+            <select class="tab-timer-settings__input" id="tabTimerTabKeySelect"></select>
           </label>
           <label class="tab-timer-settings__field">
             <span>Minutes</span>
             <input class="tab-timer-settings__input" id="tabTimerMinutesInput" type="number" min="1" step="1" placeholder="10">
           </label>
         </div>
-        <datalist id="tabTimerKnownKeys"></datalist>
         <div class="tab-timer-settings__summary" id="tabTimerSettingsSummary"></div>
         <div class="tab-timer-settings__actions">
           <button class="btn" id="tabTimerUseCurrentBtn" type="button">Use current tab</button>
@@ -423,42 +546,71 @@
           <button class="btn" id="tabTimerResetBtn" type="button">Reset this override</button>
           <button class="btn" id="tabTimerResetAllBtn" type="button">Reset all custom</button>
         </div>
+        <div class="tab-timer-settings__list">
+          <div class="tab-timer-settings__list-head">
+            <h3>Custom overrides</h3>
+            <span>Only the overrides you saved in this browser are listed here.</span>
+          </div>
+          <p class="tab-timer-settings__empty" id="tabTimerOverridesEmpty">No custom overrides saved yet.</p>
+          <div class="tab-timer-settings__table-wrap" id="tabTimerOverridesTableWrap" hidden>
+            <table class="tab-timer-settings__table">
+              <thead>
+                <tr>
+                  <th scope="col">Scope</th>
+                  <th scope="col">Tab key</th>
+                  <th scope="col">Minutes</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tabTimerOverridesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
       </div>
     `;
     document.body.appendChild(modal);
-
-    const dataList = modal.querySelector('#tabTimerKnownKeys');
-    KNOWN_TAB_KEYS.forEach((key) => {
-      const option = document.createElement('option');
-      option.value = key;
-      dataList.appendChild(option);
-    });
+    populateSettingsSelectOptions();
 
     modal.addEventListener('click', (event) => {
       const closeTrigger = event.target.closest('[data-close="true"]');
       if(closeTrigger){
         modal.hidden = true;
+        return;
+      }
+
+      const loadOverride = event.target.closest('[data-load-override]');
+      if(loadOverride){
+        const key = String(loadOverride.getAttribute('data-load-override') || '').trim();
+        const [moduleId, tabKey] = key.includes(':') ? key.split(':') : ['', key];
+        setSettingsFormState(moduleId, tabKey);
+        populateMinutesForInputs();
+        return;
+      }
+
+      const deleteOverride = event.target.closest('[data-delete-override]');
+      if(deleteOverride){
+        const key = String(deleteOverride.getAttribute('data-delete-override') || '').trim();
+        const overrides = readCustomOverrides();
+        delete overrides[key];
+        writeCustomOverrides(overrides);
+        refreshActiveTimerState();
+        updateSettingsSummary();
+        populateMinutesForInputs();
       }
     });
 
     modal.querySelector('#tabTimerUseCurrentBtn')?.addEventListener('click', () => {
-      const moduleInput = modal.querySelector('#tabTimerModuleInput');
-      const tabInput = modal.querySelector('#tabTimerTabKeyInput');
-      if(moduleInput) moduleInput.value = activeTab?.moduleId || '';
-      if(tabInput) tabInput.value = activeTab?.tabKey || '';
+      setSettingsFormState(activeTab?.moduleId || '', activeTab?.tabKey || '');
       populateMinutesForInputs();
     });
 
     modal.querySelector('#tabTimerSaveBtn')?.addEventListener('click', () => {
-      const moduleInput = modal.querySelector('#tabTimerModuleInput');
-      const tabInput = modal.querySelector('#tabTimerTabKeyInput');
       const minutesInput = modal.querySelector('#tabTimerMinutesInput');
-      const moduleId = String(moduleInput?.value || '').trim();
-      const tabKey = String(tabInput?.value || '').trim();
+      const { moduleId, tabKey } = getSettingsFormState();
       const minutes = Number(minutesInput?.value || '');
       if(!tabKey || !Number.isFinite(minutes) || minutes <= 0) return;
 
-      const overrideKey = moduleId ? `${moduleId}:${tabKey}` : tabKey;
+      const overrideKey = buildOverrideKey(moduleId, tabKey);
       const overrides = readCustomOverrides();
       overrides[overrideKey] = Math.round(minutes);
       writeCustomOverrides(overrides);
@@ -468,13 +620,10 @@
     });
 
     modal.querySelector('#tabTimerResetBtn')?.addEventListener('click', () => {
-      const moduleInput = modal.querySelector('#tabTimerModuleInput');
-      const tabInput = modal.querySelector('#tabTimerTabKeyInput');
-      const moduleId = String(moduleInput?.value || '').trim();
-      const tabKey = String(tabInput?.value || '').trim();
+      const { moduleId, tabKey } = getSettingsFormState();
       if(!tabKey) return;
 
-      const overrideKey = moduleId ? `${moduleId}:${tabKey}` : tabKey;
+      const overrideKey = buildOverrideKey(moduleId, tabKey);
       const overrides = readCustomOverrides();
       delete overrides[overrideKey];
       writeCustomOverrides(overrides);
@@ -490,19 +639,17 @@
       populateMinutesForInputs();
     });
 
-    modal.querySelector('#tabTimerModuleInput')?.addEventListener('input', populateMinutesForInputs);
-    modal.querySelector('#tabTimerTabKeyInput')?.addEventListener('input', populateMinutesForInputs);
+    modal.querySelector('#tabTimerModuleSelect')?.addEventListener('change', populateMinutesForInputs);
+    modal.querySelector('#tabTimerTabKeySelect')?.addEventListener('change', populateMinutesForInputs);
 
     return modal;
   }
 
   function getOverrideMinutesForInputs(){
-    const modal = ensureSettingsUi();
-    const moduleId = String(modal.querySelector('#tabTimerModuleInput')?.value || '').trim();
-    const tabKey = String(modal.querySelector('#tabTimerTabKeyInput')?.value || '').trim();
+    const { moduleId, tabKey } = getSettingsFormState();
     if(!tabKey) return null;
 
-    const key = moduleId ? `${moduleId}:${tabKey}` : tabKey;
+    const key = buildOverrideKey(moduleId, tabKey);
     const all = getAllTimerOverrides();
     const value = all[key];
     return Number.isFinite(value) ? value : null;
@@ -530,10 +677,12 @@
 
     if(!customKeys.length){
       summary.textContent = `${activeText}. No custom overrides saved.`;
+      renderCustomOverridesTable();
       return;
     }
 
     summary.textContent = `${activeText}. Custom overrides: ${customKeys.map((key) => prettifyOverrideKey(key)).join(', ')}`;
+    renderCustomOverridesTable();
   }
 
   function ensureSettingsButton(){
@@ -549,6 +698,7 @@
     button.textContent = 'Tab timer settings (testing)';
     button.addEventListener('click', () => {
       const modal = ensureSettingsUi();
+      populateSettingsSelectOptions();
       modal.hidden = false;
       populateMinutesForInputs();
       updateSettingsSummary();
