@@ -508,6 +508,7 @@
         await window.playUnlockTransition(transitionPayload);
       }catch(_e){}
     }
+    hideModuleLoading();
     setActive(destination.moduleId, {
       forceFirstTab: destination.forceFirstTab !== false,
       focusActiveTab: true,
@@ -848,6 +849,9 @@
     
     // Check if already cached
     if(_cache[id]){ 
+      if(suppressLoadingIndicator){
+        hideModuleLoading();
+      }
       panel.innerHTML = _cache[id].menu; 
       mainContent.innerHTML = _cache[id].content;
       initTabs({ forceFirstTab, focusActiveTab, preferredTab });
@@ -858,6 +862,8 @@
     try{
       if(!suppressLoadingIndicator){
         scheduleModuleLoading();
+      }else{
+        hideModuleLoading();
       }
       const parsed = await fetchAndCacheModule(id);
       
