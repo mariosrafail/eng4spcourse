@@ -511,7 +511,8 @@
     setActive(destination.moduleId, {
       forceFirstTab: destination.forceFirstTab !== false,
       focusActiveTab: true,
-      preferredTab: destination.preferredTab || ''
+      preferredTab: destination.preferredTab || '',
+      suppressLoadingIndicator: true
     });
   }
 
@@ -836,7 +837,12 @@
   }
 
   async function loadModule(id, options = {}){
-    const { forceFirstTab = false, focusActiveTab = false, preferredTab = '' } = options;
+    const {
+      forceFirstTab = false,
+      focusActiveTab = false,
+      preferredTab = '',
+      suppressLoadingIndicator = false
+    } = options;
     const panel = modulePanels.find(p => p.dataset.module === String(id));
     if(!panel || !mainContent) return;
     
@@ -850,7 +856,9 @@
     }
     
     try{
-      scheduleModuleLoading();
+      if(!suppressLoadingIndicator){
+        scheduleModuleLoading();
+      }
       const parsed = await fetchAndCacheModule(id);
       
       // Inject into DOM
@@ -880,7 +888,12 @@
   }
 
   function setActive(id, options = {}){
-    const { forceFirstTab = true, focusActiveTab = true, preferredTab = '' } = options;
+    const {
+      forceFirstTab = true,
+      focusActiveTab = true,
+      preferredTab = '',
+      suppressLoadingIndicator = false
+    } = options;
     if(!document.body.classList.contains('is-authenticated')) return;
     const moduleButton = moduleButtons.find((b) => b.dataset.module === String(id));
     if(!moduleButton || moduleButton.disabled) return;
@@ -913,7 +926,8 @@
     loadModule(id, {
       forceFirstTab,
       focusActiveTab,
-      preferredTab: preferredTab || consumePendingRouteForModule(id)
+      preferredTab: preferredTab || consumePendingRouteForModule(id),
+      suppressLoadingIndicator
     });
     setTimeout(() => prefetchModules(id), 220);
   }
