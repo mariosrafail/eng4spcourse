@@ -85,3 +85,123 @@
     font-size: 28px;
   }
 }
+
+.tab-timer-settings{
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+}
+
+.tab-timer-settings__backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(21, 16, 38, .34);
+  backdrop-filter: blur(8px);
+}
+
+.tab-timer-settings__dialog{
+  position: relative;
+  width: min(680px, calc(100vw - 32px));
+  margin: 8vh auto 0;
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,.46);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.84)),
+    rgba(255,255,255,.9);
+  box-shadow: 0 28px 70px rgba(20, 14, 45, .18);
+  color: #241d35;
+}
+
+.tab-timer-settings__head{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tab-timer-settings__eyebrow{
+  font: 700 11px/1.2 'Poppins', 'Segoe UI', sans-serif;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: rgba(36,29,53,.56);
+}
+
+.tab-timer-settings__title{
+  margin: 8px 0 0;
+  font: 800 28px/1.1 'Merriweather', Georgia, serif;
+}
+
+.tab-timer-settings__close{
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(36,29,53,.08);
+  color: #241d35;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.tab-timer-settings__help{
+  margin: 14px 0 0;
+  font: 500 14px/1.5 'Poppins', 'Segoe UI', sans-serif;
+  color: rgba(36,29,53,.72);
+}
+
+.tab-timer-settings__grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.tab-timer-settings__field{
+  display: grid;
+  gap: 6px;
+  font: 600 12px/1.3 'Poppins', 'Segoe UI', sans-serif;
+  color: rgba(36,29,53,.72);
+}
+
+.tab-timer-settings__input{
+  min-height: 42px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(36,29,53,.14);
+  background: rgba(255,255,255,.82);
+  color: #241d35;
+  font: 500 14px/1.4 'Poppins', 'Segoe UI', sans-serif;
+}
+
+.tab-timer-settings__summary{
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(36,29,53,.06);
+  font: 500 13px/1.5 'Poppins', 'Segoe UI', sans-serif;
+  color: rgba(36,29,53,.72);
+}
+
+.tab-timer-settings__actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+@media (max-width: 720px){
+  .tab-timer-settings__dialog{
+    margin-top: 16px;
+    padding: 18px;
+    width: min(100vw - 16px, 680px);
+  }
+
+  .tab-timer-settings__grid{
+    grid-template-columns: 1fr;
+  }
+
+  .tab-timer-settings__title{
+    font-size: 24px;
+  }
+}
