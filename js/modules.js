@@ -59,6 +59,18 @@
   const completedPanelTasks = new Map();
   const unlockNextButton = ensureGlobalUnlockNextButton();
 
+  function dispatchActiveTabChange(detail = {}){
+    document.dispatchEvent(new CustomEvent('course:active-tab-change', {
+      detail: {
+        view: detail.view || 'module',
+        moduleId: String(detail.moduleId || ''),
+        tabKey: String(detail.tabKey || ''),
+        tabLabel: String(detail.tabLabel || ''),
+        timerDurationMs: Number(detail.timerDurationMs) || 0
+      }
+    }));
+  }
+
   function moduleHasFocusTab(moduleId){
     return String(moduleId) !== '9' && String(moduleId) !== FINAL_APPENDIX_MODULE_ID;
   }
@@ -579,42 +591,74 @@
     return Array.from(keys);
   }
 
-  async function unlockNextTabFromTask(taskKey){
-    if(unlockNextInFlight || !isAuthenticated() || !taskKey) return;
-
+  function getActivePanelContext(){
     const activeModulePanel = getActiveModulePanel();
-    if(!activeModulePanel) return;
+    if(!activeModulePanel) return null;
 
     const moduleId = String(activeModulePanel.dataset.module || '');
     const tabButtons = Array.from(activeModulePanel.querySelectorAll('.tab-btn'));
     const activeTabButton = tabButtons.find((button) => button.classList.contains('is-active'));
-    if(!activeTabButton) return;
+    if(!activeTabButton) return null;
 
+    const tabKey = String(activeTabButton.dataset.tab || '');
     const tabIndex = tabButtons.indexOf(activeTabButton);
-    if(tabIndex < 0) return;
+    if(tabIndex < 0) return null;
 
-    const panel = getVisibleTabPanel(activeTabButton.dataset.tab || '');
-    if(!panel) return;
+    const panel = getVisibleTabPanel(tabKey);
+    if(!panel) return null;
+
+    const panelKey = `${moduleId}:${panel.dataset.panel || tabKey || tabIndex}`;
+    return { moduleId, tabButtons, activeTabButton, tabKey, tabIndex, panel, panelKey };
+  }
+
+  function isPanelTimerComplete(moduleId, tabKey){
+    if(typeof window.isTabTimerComplete !== 'function') return false;
+    try{
+      return !!window.isTabTimerComplete(moduleId, tabKey);
+    }catch(_e){
+      return false;
+    }
+  }
+
+  async function attemptUnlockActivePanel(options = {}){
+    const { taskKey = '', timerModuleId = '', timerTabKey = '' } = options;
+    if(unlockNextInFlight || !isAuthenticated()) return;
+
+    const context = getActivePanelContext();
+    if(!context) return;
+
+    const { moduleId, tabIndex, panel, panelKey, tabKey } = context;
+    if(timerModuleId && String(timerModuleId) !== moduleId) return;
+    if(timerTabKey && String(timerTabKey) !== tabKey) return;
 
     const trackedTaskKeys = getTrackedTaskKeys(panel);
-    if(trackedTaskKeys.length === 0 || !trackedTaskKeys.includes(taskKey)) return;
+    if(taskKey && (trackedTaskKeys.length === 0 || !trackedTaskKeys.includes(taskKey))) return;
 
     const targetUnit = getCompletionTargetUnit(moduleId, tabIndex);
     if(getCompletedParts(currentProgress) >= targetUnit) return;
 
-    const panelKey = `${moduleId}:${panel.dataset.panel || activeTabButton.dataset.tab || tabIndex}`;
-    const solvedTasks = completedPanelTasks.get(panelKey) || new Set();
-    solvedTasks.add(taskKey);
-    completedPanelTasks.set(panelKey, solvedTasks);
+    if(taskKey){
+      const solvedTasks = completedPanelTasks.get(panelKey) || new Set();
+      solvedTasks.add(taskKey);
+      completedPanelTasks.set(panelKey, solvedTasks);
+    }
 
-    const isPanelComplete = trackedTaskKeys.every((key) => solvedTasks.has(key));
-    if(!isPanelComplete) return;
+    const solvedTasks = completedPanelTasks.get(panelKey) || new Set();
+    const isTaskRequirementMet = trackedTaskKeys.length === 0 || trackedTaskKeys.every((key) => solvedTasks.has(key));
+    if(!isTaskRequirementMet) return;
+
+    if(!isPanelTimerComplete(moduleId, tabKey)) return;
 
     await unlockNextPart({
       navigateToNewlyUnlocked: true,
       originModuleId: moduleId,
       originTabIndex: tabIndex
     });
+  }
+
+  async function unlockNextTabFromTask(taskKey){
+    if(!taskKey) return;
+    await attemptUnlockActivePanel({ taskKey });
   }
 
   function ensureGlobalUnlockNextButton(){
@@ -773,10 +817,18 @@
       }
       window.updateAmbientThemeForTab?.(key);
       const routeTab = target ? getTabRouteAliasForKey(tabButtons, key) : '';
+      const activeButton = tabButtons.find((button) => button.dataset.tab === key);
       writeRouteHash({
         view: 'module',
         moduleId,
         tab: routeTab
+      });
+      dispatchActiveTabChange({
+        view: 'module',
+        moduleId,
+        tabKey: key,
+        tabLabel: getTabLabelText(activeButton),
+        timerDurationMs: Number(activeButton?.dataset?.timerMs || activeButton?.dataset?.timerMinutes || 0)
       });
 
       // Scroll to top
@@ -962,6 +1014,7 @@
 
     pendingRoute = { view: 'home', moduleId: '', tab: '' };
     writeRouteHash({ view: 'home' });
+    dispatchActiveTabChange({ view: 'home' });
 
     // Reset ambient/nav theme to the default Home purple.
     if(typeof window.updateAmbientThemeForTab === 'function'){
@@ -1158,6 +1211,13 @@
 
   document.addEventListener('course:task-passed', (event) => {
     unlockNextTabFromTask(String(event?.detail?.taskKey || ''));
+  });
+
+  document.addEventListener('course:tab-timer-complete', (event) => {
+    attemptUnlockActivePanel({
+      timerModuleId: String(event?.detail?.moduleId || ''),
+      timerTabKey: String(event?.detail?.tabKey || '')
+    });
   });
 
   modulesMenuToggle?.addEventListener('click', () => toggleMobileDrawer('modules'));

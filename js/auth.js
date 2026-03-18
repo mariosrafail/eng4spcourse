@@ -1,5 +1,10 @@
 (() => {
   const TOKEN_KEY = "e4sp_auth_token";
+  let currentUserEmail = "";
+
+  window.getCurrentCourseUserKey = function getCurrentCourseUserKey() {
+    return currentUserEmail || "guest";
+  };
 
   const loginForm = document.getElementById("loginForm");
   const registerForm = document.getElementById("registerForm");
@@ -131,6 +136,7 @@
   function showUser(user) {
     const numeric = Number(user?.progress);
     const progress = Number.isFinite(numeric) ? Math.max(0, Math.min(100, Math.round(numeric * 100) / 100)) : 0;
+    currentUserEmail = String(user?.email || "").trim().toLowerCase();
     setAuthState(true, progress);
     userBox.hidden = false;
     loginForm.hidden = true;
@@ -141,6 +147,7 @@
   }
 
   function showAuthForms(defaultMode = "login") {
+    currentUserEmail = "";
     setAuthState(false, 0);
     userBox.hidden = true;
     authSwitch.hidden = false;
