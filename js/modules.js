@@ -307,23 +307,7 @@
     const isPanelComplete = trackedTaskKeys.every((key) => solvedTasks.has(key));
     if(!isPanelComplete) return;
 
-    unlockNextInFlight = true;
-    updateUnlockNextButtonsState();
-
-    try{
-      const targetProgress = getProgressForUnit(targetUnit);
-      const result = await setProgressOnServer(targetProgress);
-      syncProgressState(result?.progress ?? targetProgress);
-
-      const safeProgress = normalizeProgress(currentProgress);
-      document.dispatchEvent(new CustomEvent('progress:updated', { detail: { progress: safeProgress } }));
-      document.dispatchEvent(new CustomEvent('auth:statechange', { detail: { authenticated: true, progress: safeProgress } }));
-    }catch(_e){
-      // no-op: keep existing progress if the server update fails
-    }finally{
-      unlockNextInFlight = false;
-      updateUnlockNextButtonsState();
-    }
+    await unlockNextPart();
   }
 
   function ensureGlobalUnlockNextButton(){
