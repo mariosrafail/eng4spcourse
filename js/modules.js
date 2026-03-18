@@ -266,7 +266,7 @@
     if(!panel) return [];
 
     const keys = new Set();
-    panel.querySelectorAll('form.quiz[id]').forEach((form) => {
+    panel.querySelectorAll('form[id]').forEach((form) => {
       keys.add(`form:${form.id}`);
     });
     panel.querySelectorAll('button[id*="Check"]').forEach((button) => {
