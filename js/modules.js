@@ -505,6 +505,20 @@
     }
   }
 
+  function reinitializeModuleFeatures(){
+    try{
+      window.initializeApp?.();
+    }catch(error){
+      console.warn('initializeApp failed after module load', error);
+    }
+
+    try{
+      window.initializeH2Writing?.();
+    }catch(error){
+      console.warn('initializeH2Writing failed after module load', error);
+    }
+  }
+
   async function loadModule(id, options = {}){
     const { forceFirstTab = false, focusActiveTab = false } = options;
     const panel = modulePanels.find(p => p.dataset.module === String(id));
@@ -515,13 +529,7 @@
       panel.innerHTML = _cache[id].menu; 
       mainContent.innerHTML = _cache[id].content;
       initTabs({ forceFirstTab, focusActiveTab });
-      // Also reinitialize all app functionality
-      if (window.initializeApp) {
-        window.initializeApp();
-      }
-      if (window.initializeH2Writing) {
-        window.initializeH2Writing();
-      }
+      reinitializeModuleFeatures();
       return; 
     }
     
@@ -536,13 +544,8 @@
       // Initialize tabs after injection
       initTabs({ forceFirstTab, focusActiveTab });
       
-      // Also reinitialize all app functionality (audio, quizzes, drag-drop, etc.)
-      if (window.initializeApp) {
-        window.initializeApp();
-      }
-      if (window.initializeH2Writing) {
-        window.initializeH2Writing();
-      }
+      // Reinitialize app functionality without treating runtime init errors as load failures.
+      reinitializeModuleFeatures();
     }catch(e){
       panel.innerHTML = '<!-- failed to load module -->';
       mainContent.innerHTML = '<!-- failed to load module content -->';

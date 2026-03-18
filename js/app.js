@@ -418,6 +418,25 @@ window.initializeApp = function initializeApp() {
 
     let isSeeking = false;
     let baseStatus = 'Ready';
+    let isUnavailable = false;
+
+    function setControlsDisabled(disabled){
+      [playBtn, pauseBtn, restartBtn].forEach((btn) => {
+        if(!btn) return;
+        btn.disabled = !!disabled;
+        btn.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+      });
+
+      if(progressTrack){
+        progressTrack.classList.toggle('is-disabled', !!disabled);
+        progressTrack.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+        if(disabled){
+          progressTrack.removeAttribute('tabindex');
+        }else if(!progressTrack.hasAttribute('tabindex')){
+          progressTrack.tabIndex = 0;
+        }
+      }
+    }
 
     function formatClock(seconds){
       const s = Math.max(0, Number(seconds) || 0);
@@ -428,6 +447,10 @@ window.initializeApp = function initializeApp() {
 
     function updateStatusWithTime(){
       if(!audioStatus) return;
+      if(isUnavailable){
+        audioStatus.textContent = baseStatus;
+        return;
+      }
       if(!audio || !Number.isFinite(audio.duration) || audio.duration <= 0){
         audioStatus.textContent = baseStatus;
         return;
@@ -447,7 +470,7 @@ window.initializeApp = function initializeApp() {
     }
 
     function canSeek(){
-      return !!audio && Number.isFinite(audio.duration) && audio.duration > 0;
+      return !isUnavailable && !!audio && Number.isFinite(audio.duration) && audio.duration > 0;
     }
 
     function seekToRatio(ratio){
@@ -469,6 +492,11 @@ window.initializeApp = function initializeApp() {
 
     function updateProgress(){
       if (!audio || !progressBar) return;
+      if (isUnavailable){
+        progressBar.style.width = '0%';
+        updateStatusWithTime();
+        return;
+      }
       if (!audio.duration || Number.isNaN(audio.duration)){
         progressBar.style.width = '0%';
         updateStatusWithTime();
@@ -489,19 +517,35 @@ window.initializeApp = function initializeApp() {
 
     function safePlay(){
       if (!audio) return;
+      if (isUnavailable){
+        setStatus('Audio unavailable');
+        return;
+      }
       audio.play()
         .then(() => setStatus('Playing'))
         .catch(() => setStatus('Click Play to start'));
     }
 
+    function markAudioUnavailable(){
+      isUnavailable = true;
+      baseStatus = 'Audio unavailable';
+      try{
+        audio?.pause();
+      }catch(_e){}
+      setControlsDisabled(true);
+      updateProgress();
+    }
+
     playBtn?.addEventListener('click', safePlay);
     pauseBtn?.addEventListener('click', () => {
       if (!audio) return;
+      if (isUnavailable) return;
       audio.pause();
       setStatus('Paused');
     });
     restartBtn?.addEventListener('click', () => {
       if (!audio) return;
+      if (isUnavailable) return;
       audio.currentTime = 0;
       audio.pause();
       setStatus('Ready');
@@ -509,11 +553,17 @@ window.initializeApp = function initializeApp() {
     });
 
     audio?.addEventListener('timeupdate', updateProgress);
+    audio?.addEventListener('loadedmetadata', () => {
+      if(isUnavailable) return;
+      setControlsDisabled(false);
+      updateProgress();
+    });
     audio?.addEventListener('ended', () => {
       setStatus('Ended');
       updateProgress();
       if (typeof cfg.onEnded === 'function') cfg.onEnded();
     });
+    audio?.addEventListener('error', markAudioUnavailable);
 
     // Seek/scrub on the progress bar
     if(progressTrack){
@@ -581,8 +631,13 @@ window.initializeApp = function initializeApp() {
     }
 
     // Init
+    setControlsDisabled(false);
     updateProgress();
-    setStatus('Ready');
+    if(audio && audio.error){
+      markAudioUnavailable();
+    }else{
+      setStatus('Ready');
+    }
 
     return { audio, setStatus, updateProgress };
   }
@@ -2869,7 +2924,6 @@ window.initializeApp = function initializeApp() {
       }
     });
 
-          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
     resetBtn?.addEventListener('click', () => {
       blanks.forEach((b) => {
         const t = getTokenInBlank(b);
@@ -2884,7 +2938,6 @@ window.initializeApp = function initializeApp() {
   }
 
   function setupMockWritingTaskTwo(){
-          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
     const root = document.querySelector('#tabMockWriting');
     if(!root) return;
 
@@ -2906,7 +2959,6 @@ window.initializeApp = function initializeApp() {
     }
 
     function setCount(n){
-          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
       countEl.textContent = `Words: ${n}/50`;
     }
 
@@ -3166,7 +3218,6 @@ window.initializeApp = function initializeApp() {
       }
     }
 
-            window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
     checkBtn?.addEventListener('click', check);
     resetBtn?.addEventListener('click', reset);
 
@@ -3174,7 +3225,6 @@ window.initializeApp = function initializeApp() {
   }
 
   // Hour 2 (Tab II) Key Words matching drag and drop
-          window.reportCourseTaskPassed?.(`button:${checkBtn.id}`);
   function setupHour2KeywordsMatchDnD(){
     const roots = Array.from(document.querySelectorAll('#tabHour2Keywords, #tab3Hour2Keywords, #tab4Hour2Keywords, #tab5Hour2Keywords, #tab6Hour2Reading'));
     if(!roots.length) return;
