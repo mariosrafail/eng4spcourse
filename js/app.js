@@ -1589,23 +1589,124 @@ window.initializeApp = function initializeApp() {
     const buttons = Array.from(document.querySelectorAll('.speak-btn[data-word]'));
     if(!buttons.length) return;
 
-    function speak(word){
+    let activeAudio = null;
+
+    function getActiveModuleId(){
+      const activeBtn = document.querySelector('.module-btn.is-active[data-module]');
+      const direct = String(activeBtn?.dataset?.module || '').trim();
+      if(direct) return direct;
+
+      const tabs = document.querySelector('nav.tabs[aria-label*="Module"]');
+      const label = String(tabs?.getAttribute('aria-label') || '');
+      const m = label.match(/module\s*(\d+)/i);
+      return m ? String(m[1]) : '';
+    }
+
+    function getButtonContext(btn){
+      const panel = btn.closest('.tab-panel');
+      const panelKey = String(panel?.dataset?.panel || '').trim();
+      const hour = panelKey.includes('h2') ? 2 : 1;
+      const isReadingPanel = panelKey.includes('reading');
+      return { panelKey, hour, isReadingPanel };
+    }
+
+    function buildWordFileCandidates(word){
+      const raw = String(word || '').trim().toLowerCase();
+      if(!raw) return [];
+
+      const normalized = raw
+        .replace(/[’']/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      const underscore = normalized
+        .replace(/[\s\-\/]+/g, '_')
+        .replace(/[^a-z0-9_]/g, '')
+        .replace(/_+/g, '_')
+        .replace(/^_+|_+$/g, '');
+
+      const noSep = normalized
+        .replace(/[\s\-\/]+/g, '')
+        .replace(/[^a-z0-9]/g, '');
+
+      const variants = Array.from(new Set([
+        normalized.replace(/\s+/g, '_'),
+        underscore,
+        noSep
+      ].filter(Boolean)));
+
+      return variants.map((v) => `${v}.mp3`);
+    }
+
+    function buildAudioPathCandidates(btn){
+      const moduleId = getActiveModuleId();
+      if(!moduleId) return [];
+      const { hour, isReadingPanel } = getButtonContext(btn);
+      const baseFolders = isReadingPanel
+        ? [`sound/m${moduleId}_h${hour}_read_kw`, `sound/m${moduleId}_h${hour}_kw`]
+        : [`sound/m${moduleId}_h${hour}_kw`, `sound/m${moduleId}_h${hour}_read_kw`];
+
+      const fileCandidates = buildWordFileCandidates(btn.dataset.word || '');
+      const urls = [];
+      baseFolders.forEach((folder) => {
+        fileCandidates.forEach((fileName) => {
+          urls.push(`${folder}/${fileName}`);
+        });
+      });
+      return urls;
+    }
+
+    function stopActiveAudio(){
+      if(!activeAudio) return;
       try{
-        if(!('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(word);
-        u.lang = 'en-US';
-        u.rate = 0.95;
-        window.speechSynthesis.speak(u);
-      }catch(e){}
+        activeAudio.pause();
+        activeAudio.currentTime = 0;
+      }catch(_e){}
+      activeAudio = null;
+    }
+
+    function playFirstAvailable(urls, btn, idx = 0){
+      if(idx >= urls.length){
+        btn.classList.remove('is-speaking');
+        return;
+      }
+
+      const audio = new Audio(urls[idx]);
+      let movedOn = false;
+      const onFailure = () => {
+        if(movedOn) return;
+        movedOn = true;
+        audio.pause();
+        playFirstAvailable(urls, btn, idx + 1);
+      };
+      const onEnded = () => btn.classList.remove('is-speaking');
+
+      audio.addEventListener('error', onFailure, { once: true });
+      audio.addEventListener('ended', onEnded, { once: true });
+      activeAudio = audio;
+
+      audio.play()
+        .then(() => {
+          btn.classList.add('is-speaking');
+        })
+        .catch(() => {
+          onFailure();
+        });
+    }
+
+    function playKwAudio(btn){
+      const urls = buildAudioPathCandidates(btn);
+      if(!urls.length) return;
+      stopActiveAudio();
+      playFirstAvailable(urls, btn);
     }
 
     buttons.forEach((btn) => {
-      btn.addEventListener('click', () => speak(btn.dataset.word || ''));
+      btn.addEventListener('click', () => playKwAudio(btn));
       btn.addEventListener('keydown', (e) => {
         if(e.key === 'Enter' || e.key === ' '){
           e.preventDefault();
-          speak(btn.dataset.word || '');
+          playKwAudio(btn);
         }
       });
     });

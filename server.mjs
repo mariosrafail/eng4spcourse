@@ -160,6 +160,26 @@ async function ensureSchema() {
       );
     `);
     await client.query(`
+      CREATE TABLE IF NOT EXISTS timer_overrides (
+        override_key TEXT PRIMARY KEY,
+        minutes INTEGER NOT NULL CHECK (minutes > 0),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+    `);
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS user_timer_progress (
+        user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        module_id TEXT NOT NULL DEFAULT '',
+        tab_key TEXT NOT NULL,
+        duration_ms INTEGER NOT NULL DEFAULT 0 CHECK (duration_ms >= 0),
+        remaining_ms INTEGER NOT NULL DEFAULT 0 CHECK (remaining_ms >= 0),
+        completed BOOLEAN NOT NULL DEFAULT FALSE,
+        completed_at_ms BIGINT NOT NULL DEFAULT 0,
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        PRIMARY KEY (user_id, module_id, tab_key)
+      );
+    `);
+    await client.query(`
       ALTER TABLE user_progress
       ALTER COLUMN progress TYPE NUMERIC(7,4) USING progress::NUMERIC,
       ALTER COLUMN progress SET DEFAULT 0;
@@ -630,7 +650,7 @@ app.post("/api/auth/logout", async (req, res) => {
   }
 });
 
-app.get("/api/progress-get", async (req, res) => {
+const handleProgressGet = async (req, res) => {
   try {
     const auth = await requireUser(req);
     if (!auth) return res.status(401).json({ error: "Unauthorized" });
@@ -643,9 +663,9 @@ app.get("/api/progress-get", async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: error?.message || "Internal error" });
   }
-});
+};
 
-app.post("/api/progress-set", async (req, res) => {
+const handleProgressSet = async (req, res) => {
   try {
     const auth = await requireUser(req);
     if (!auth) return res.status(401).json({ error: "Unauthorized" });
@@ -663,6 +683,152 @@ app.post("/api/progress-set", async (req, res) => {
       [auth.user.id, normalized]
     );
     return res.status(200).json({ ok: true, progress: normalized, completed: normalized >= 100 });
+  } catch (error) {
+    return res.status(500).json({ error: error?.message || "Internal error" });
+  }
+};
+
+app.get("/api/progress-get", handleProgressGet);
+app.get("/api/progress/get", handleProgressGet);
+app.post("/api/progress-set", handleProgressSet);
+app.post("/api/progress/set", handleProgressSet);
+
+app.get("/api/timer-config/get", async (req, res) => {
+  try {
+    const auth = await requireUser(req);
+    if (!auth) return res.status(401).json({ error: "Unauthorized" });
+    await ensureSchema();
+    const { rows } = await getPool().query(
+      `SELECT override_key, minutes FROM timer_overrides`
+    );
+    const overrides = {};
+    rows.forEach((row) => {
+      const key = String(row.override_key || "").trim();
+      const minutes = Number(row.minutes);
+      if (!key || !Number.isFinite(minutes) || minutes <= 0) return;
+      overrides[key] = Math.round(minutes);
+    });
+    return res.status(200).json({ ok: true, overrides });
+  } catch (error) {
+    return res.status(500).json({ error: error?.message || "Internal error" });
+  }
+});
+
+app.post("/api/timer-config/set", async (req, res) => {
+  try {
+    const auth = await requireUser(req);
+    if (!auth) return res.status(401).json({ error: "Unauthorized" });
+    const overrideKey = String(req.body?.overrideKey || "").trim();
+    const minutes = Number(req.body?.minutes);
+    if (!overrideKey) return res.status(400).json({ error: "overrideKey is required." });
+    if (!Number.isFinite(minutes) || minutes <= 0) {
+      return res.status(400).json({ error: "minutes must be a positive number." });
+    }
+
+    await ensureSchema();
+    const normalized = Math.round(minutes);
+    await getPool().query(
+      `INSERT INTO timer_overrides (override_key, minutes, updated_at)
+       VALUES ($1, $2, NOW())
+       ON CONFLICT (override_key)
+       DO UPDATE SET minutes = EXCLUDED.minutes, updated_at = NOW()`,
+      [overrideKey, normalized]
+    );
+    return res.status(200).json({ ok: true, overrideKey, minutes: normalized });
+  } catch (error) {
+    return res.status(500).json({ error: error?.message || "Internal error" });
+  }
+});
+
+app.post("/api/timer-config/reset", async (req, res) => {
+  try {
+    const auth = await requireUser(req);
+    if (!auth) return res.status(401).json({ error: "Unauthorized" });
+    await ensureSchema();
+
+    const resetAll = !!req.body?.resetAll;
+    const overrideKey = String(req.body?.overrideKey || "").trim();
+    if (resetAll) {
+      await getPool().query(`DELETE FROM timer_overrides`);
+      return res.status(200).json({ ok: true, resetAll: true });
+    }
+    if (!overrideKey) return res.status(400).json({ error: "overrideKey is required." });
+    await getPool().query(`DELETE FROM timer_overrides WHERE override_key = $1`, [overrideKey]);
+    return res.status(200).json({ ok: true, overrideKey });
+  } catch (error) {
+    return res.status(500).json({ error: error?.message || "Internal error" });
+  }
+});
+
+app.get("/api/timer-progress/get", async (req, res) => {
+  try {
+    const auth = await requireUser(req);
+    if (!auth) return res.status(401).json({ error: "Unauthorized" });
+    await ensureSchema();
+    const { rows } = await getPool().query(
+      `SELECT module_id, tab_key, duration_ms, remaining_ms, completed, completed_at_ms,
+              EXTRACT(EPOCH FROM updated_at) * 1000 AS updated_at_ms
+       FROM user_timer_progress
+       WHERE user_id = $1`,
+      [auth.user.id]
+    );
+    const entries = rows.map((row) => ({
+      moduleId: String(row.module_id || ""),
+      tabKey: String(row.tab_key || ""),
+      durationMs: Number(row.duration_ms) || 0,
+      remainingMs: Number(row.remaining_ms) || 0,
+      completed: !!row.completed,
+      completedAt: Number(row.completed_at_ms) || 0,
+      updatedAt: Number(row.updated_at_ms) || Date.now()
+    }));
+    return res.status(200).json({ ok: true, entries });
+  } catch (error) {
+    return res.status(500).json({ error: error?.message || "Internal error" });
+  }
+});
+
+app.post("/api/timer-progress/set", async (req, res) => {
+  try {
+    const auth = await requireUser(req);
+    if (!auth) return res.status(401).json({ error: "Unauthorized" });
+    const entries = Array.isArray(req.body?.entries) ? req.body.entries : [];
+    if (!entries.length) return res.status(200).json({ ok: true, saved: 0 });
+
+    await ensureSchema();
+    const client = await getPool().connect();
+    try {
+      await client.query("BEGIN");
+      for (const entry of entries) {
+        const moduleId = String(entry?.moduleId || "").trim();
+        const tabKey = String(entry?.tabKey || "").trim();
+        if (!tabKey) continue;
+        const durationMs = Math.max(0, Math.round(Number(entry?.durationMs) || 0));
+        const remainingMs = Math.max(0, Math.round(Number(entry?.remainingMs) || 0));
+        const completed = !!entry?.completed || remainingMs <= 0;
+        const completedAtMs = completed ? Math.max(0, Math.round(Number(entry?.completedAt) || Date.now())) : 0;
+
+        await client.query(
+          `INSERT INTO user_timer_progress
+            (user_id, module_id, tab_key, duration_ms, remaining_ms, completed, completed_at_ms, updated_at)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+           ON CONFLICT (user_id, module_id, tab_key)
+           DO UPDATE SET
+             duration_ms = EXCLUDED.duration_ms,
+             remaining_ms = EXCLUDED.remaining_ms,
+             completed = EXCLUDED.completed,
+             completed_at_ms = EXCLUDED.completed_at_ms,
+             updated_at = NOW()`,
+          [auth.user.id, moduleId, tabKey, durationMs, completed ? 0 : remainingMs, completed, completedAtMs]
+        );
+      }
+      await client.query("COMMIT");
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
+    return res.status(200).json({ ok: true, saved: entries.length });
   } catch (error) {
     return res.status(500).json({ error: error?.message || "Internal error" });
   }
