@@ -36,6 +36,9 @@ const PORT = normalizePort(
 const SESSION_DAYS = 30;
 const REGISTER_CODE_MINUTES = 10;
 const REGISTER_CODE_MAX_ATTEMPTS = 5;
+const ADMIN_USERNAME = "admin123";
+const ADMIN_PASSWORD = "admin123";
+const ADMIN_EMAIL = "admin123@admin.local";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -212,6 +215,7 @@ async function ensureSchema() {
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       );
     `);
+    await ensureAdminUser(client);
     await client.query("COMMIT");
     schemaReady = true;
   } catch (error) {
@@ -243,6 +247,43 @@ function hashVerificationCode(code) {
 function createVerificationCode() {
   const value = crypto.randomInt(0, 1_000_000);
   return String(value).padStart(6, "0");
+}
+
+async function ensureAdminUser(client) {
+  const passwordPair = makePasswordPair(ADMIN_PASSWORD);
+  const byUsername = await client.query(
+    `SELECT id, email FROM users WHERE username = $1`,
+    [ADMIN_USERNAME]
+  );
+  if (byUsername.rows.length) {
+    await client.query(
+      `UPDATE users
+       SET password_salt = $2, password_hash = $3
+       WHERE id = $1`,
+      [byUsername.rows[0].id, passwordPair.salt, passwordPair.hash]
+    );
+    return;
+  }
+
+  const byEmail = await client.query(
+    `SELECT id FROM users WHERE email = $1`,
+    [ADMIN_EMAIL]
+  );
+  if (byEmail.rows.length) {
+    await client.query(
+      `UPDATE users
+       SET username = $2, password_salt = $3, password_hash = $4
+       WHERE id = $1`,
+      [byEmail.rows[0].id, ADMIN_USERNAME, passwordPair.salt, passwordPair.hash]
+    );
+    return;
+  }
+
+  await client.query(
+    `INSERT INTO users (email, username, password_salt, password_hash)
+     VALUES ($1, $2, $3, $4)`,
+    [ADMIN_EMAIL, ADMIN_USERNAME, passwordPair.salt, passwordPair.hash]
+  );
 }
 
 
@@ -325,7 +366,7 @@ async function getUserFromToken(token) {
   await ensureSchema();
   const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
   const { rows } = await getPool().query(
-    `SELECT u.id, u.email, s.expires_at
+    `SELECT u.id, u.email, u.username, s.expires_at
      FROM user_sessions s
      JOIN users u ON u.id = s.user_id
      WHERE s.token_hash = $1`,
@@ -341,7 +382,8 @@ async function getUserFromToken(token) {
     tokenHash,
     user: {
       id: row.id,
-      email: row.email
+      email: row.email,
+      username: row.username
     }
   };
 }
@@ -354,12 +396,32 @@ async function findUserByEmail(email) {
   await ensureSchema();
   const normalizedEmail = normalizeEmail(email);
   const { rows } = await getPool().query(
-    `SELECT id, email, password_salt, password_hash
+    `SELECT id, email, username, password_salt, password_hash
      FROM users
      WHERE email = $1`,
     [normalizedEmail]
   );
   return rows[0] || null;
+}
+
+async function findUserByUsername(username) {
+  await ensureSchema();
+  const normalizedUsername = String(username || "").trim().toLowerCase();
+  const { rows } = await getPool().query(
+    `SELECT id, email, username, password_salt, password_hash
+     FROM users
+     WHERE LOWER(username) = $1`,
+    [normalizedUsername]
+  );
+  return rows[0] || null;
+}
+
+async function requireAdmin(req) {
+  const auth = await requireUser(req);
+  if (!auth) return null;
+  const username = String(auth.user?.username || "").trim().toLowerCase();
+  if (username !== ADMIN_USERNAME.toLowerCase()) return null;
+  return auth;
 }
 
 const app = express();
@@ -645,6 +707,96 @@ app.post("/api/auth/logout", async (req, res) => {
     const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
     await getPool().query(`DELETE FROM user_sessions WHERE token_hash = $1`, [tokenHash]);
     return res.status(200).json({ ok: true });
+  } catch (error) {
+    return res.status(500).json({ error: error?.message || "Internal error" });
+  }
+});
+
+app.post("/api/admin/login", async (req, res) => {
+  try {
+    const username = String(req.body?.username || "").trim();
+    const password = String(req.body?.password || "");
+    if (!username || !password) {
+      return res.status(400).json({ error: "Username and password are required." });
+    }
+
+    const user = await findUserByUsername(username);
+    if (!user) return res.status(401).json({ error: "Invalid credentials." });
+    if (String(user.username || "").trim().toLowerCase() !== ADMIN_USERNAME.toLowerCase()) {
+      return res.status(403).json({ error: "Admin access only." });
+    }
+
+    const checkHash = hashPassword(password, user.password_salt);
+    if (checkHash !== user.password_hash) return res.status(401).json({ error: "Invalid credentials." });
+
+    const session = await createSession(user.id);
+    return res.status(200).json({
+      ok: true,
+      token: session.token,
+      expiresAt: session.expiresAt,
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ error: error?.message || "Internal error" });
+  }
+});
+
+app.get("/api/admin/me", async (req, res) => {
+  try {
+    const auth = await requireAdmin(req);
+    if (!auth) return res.status(401).json({ error: "Unauthorized" });
+    return res.status(200).json({
+      ok: true,
+      user: {
+        id: auth.user.id,
+        username: auth.user.username,
+        email: auth.user.email
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ error: error?.message || "Internal error" });
+  }
+});
+
+app.post("/api/admin/logout", async (req, res) => {
+  try {
+    const token = getBearerToken(req);
+    if (!token) return res.status(200).json({ ok: true });
+    const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
+    await getPool().query(`DELETE FROM user_sessions WHERE token_hash = $1`, [tokenHash]);
+    return res.status(200).json({ ok: true });
+  } catch (error) {
+    return res.status(500).json({ error: error?.message || "Internal error" });
+  }
+});
+
+app.get("/api/admin/candidates", async (req, res) => {
+  try {
+    const auth = await requireAdmin(req);
+    if (!auth) return res.status(401).json({ error: "Unauthorized" });
+
+    await ensureSchema();
+    const { rows } = await getPool().query(
+      `SELECT u.id, u.username, u.email, COALESCE(p.progress, 0) AS progress
+       FROM users u
+       LEFT JOIN user_progress p ON p.user_id = u.id
+       WHERE LOWER(u.username) <> $1
+       ORDER BY u.created_at ASC`,
+      [ADMIN_USERNAME.toLowerCase()]
+    );
+
+    const candidates = rows.map((row) => ({
+      id: Number(row.id),
+      username: String(row.username || ""),
+      email: String(row.email || ""),
+      progress: Math.max(0, Math.min(100, Number(row.progress) || 0))
+    }));
+
+    return res.status(200).json({ ok: true, candidates });
   } catch (error) {
     return res.status(500).json({ error: error?.message || "Internal error" });
   }
