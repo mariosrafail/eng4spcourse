@@ -44,6 +44,26 @@
   status = 200
 
 [[redirects]]
+  from = "/api/admin/login"
+  to = "/.netlify/functions/admin-login"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/me"
+  to = "/.netlify/functions/admin-me"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/logout"
+  to = "/.netlify/functions/admin-logout"
+  status = 200
+
+[[redirects]]
+  from = "/api/admin/candidates"
+  to = "/.netlify/functions/admin-candidates"
+  status = 200
+
+[[redirects]]
   from = "/api/progress/get"
   to = "/.netlify/functions/progress-get"
   status = 200

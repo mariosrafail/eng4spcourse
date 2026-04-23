@@ -100,3 +100,15 @@ export async function findUserByEmail(email) {
   );
   return rows[0] || null;
 }
+
+export async function findUserByUsername(username) {
+  await ensureSchema();
+  const normalized = String(username || "").trim().toLowerCase();
+  const { rows } = await getPool().query(
+    `SELECT id, email, username, password_salt, password_hash
+     FROM users
+     WHERE LOWER(username) = $1`,
+    [normalized]
+  );
+  return rows[0] || null;
+}
