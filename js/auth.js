@@ -136,6 +136,32 @@
     registerCodeInput.value = "";
   }
 
+  async function loadDevCredentials() {
+    if (!authDevCreds || !authDevCredsList) return;
+
+    try {
+      const response = await fetch("passwords.txt", { cache: "no-store" });
+      if (!response.ok) return;
+      const text = await response.text();
+      const rows = String(text || "")
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+      const emails = rows.filter((line) => line.includes("@"));
+      const password = rows.find((line) => !line.includes("@")) || "";
+      if (!emails.length || !password) return;
+
+      authDevCredsList.textContent = "";
+      for (const email of emails) {
+        const li = document.createElement("li");
+        li.textContent = `${email} / ${password}`;
+        authDevCredsList.appendChild(li);
+      }
+      authDevCreds.hidden = false;
+    } catch (_error) {}
+  }
+
   function showUser(user) {
     const numeric = Number(user?.progress);
     const progress = Number.isFinite(numeric) ? Math.max(0, Math.min(100, Math.round(numeric * 100) / 100)) : 0;
@@ -144,6 +170,7 @@
     userBox.hidden = false;
     loginForm.hidden = true;
     registerForm.hidden = true;
+    if (authDevCreds) authDevCreds.hidden = true;
     authSwitch.hidden = true;
     userText.textContent = `Signed in as ${user.email}`;
     authProgressBig.textContent = formatProgressPercent(progress);
@@ -280,5 +307,6 @@
     authProgressBig.textContent = formatProgressPercent(next);
   });
 
+  loadDevCredentials();
   refreshSession();
 })();
