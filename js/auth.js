@@ -20,6 +20,8 @@
   const feedback = document.getElementById("authFeedback");
   const userBox = document.getElementById("authUserBox");
   const userText = document.getElementById("authUserText");
+  const authDevCreds = document.getElementById("authDevCreds");
+  const authDevCredsList = document.getElementById("authDevCredsList");
   const changeProgressBtn = document.getElementById("changeProgressBtn");
   const logoutBtn = document.getElementById("logoutBtn");
   let registerStage = "request";
@@ -110,6 +112,7 @@
     const loginMode = mode === "login";
     loginForm.hidden = !loginMode;
     registerForm.hidden = loginMode;
+    if (authDevCreds) authDevCreds.hidden = !loginMode;
     showLoginBtn.classList.toggle("is-active", loginMode);
     showRegisterBtn.classList.toggle("is-active", !loginMode);
     showLoginBtn.setAttribute("aria-selected", loginMode ? "true" : "false");

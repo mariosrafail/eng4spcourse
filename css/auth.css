@@ -90,6 +90,31 @@ body.assets-loading .layout {
   max-width: 420px;
 }
 
+.auth-dev-creds {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px dashed rgba(122, 103, 201, 0.34);
+  border-radius: 10px;
+  background: rgba(122, 103, 201, 0.06);
+  max-width: 420px;
+}
+
+.auth-dev-creds-title {
+  margin: 0 0 6px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #4b378f;
+}
+
+.auth-dev-creds-list {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
 .auth-label {
   font-size: 0.9rem;
   opacity: 0.92;
@@ -179,7 +204,8 @@ body.assets-loading .layout {
 
 .auth-form[hidden],
 .auth-user[hidden],
-.auth-switch[hidden] {
+.auth-switch[hidden],
+.auth-dev-creds[hidden] {
   display: none !important;
 }
 

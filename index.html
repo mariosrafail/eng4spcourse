@@ -90,6 +90,10 @@
               <input class="auth-input" id="loginPassword" name="password" type="password" required minlength="8">
               <button class="auth-submit" type="submit">Login</button>
             </form>
+            <div class="auth-dev-creds" id="authDevCreds" hidden>
+              <p class="auth-dev-creds-title">Available users and passwords</p>
+              <ul class="auth-dev-creds-list" id="authDevCredsList"></ul>
+            </div>
 
             <form class="auth-form" id="registerForm" hidden novalidate>
               <label class="auth-label" for="registerEmail">Email</label>
