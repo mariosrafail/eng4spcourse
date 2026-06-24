@@ -142,6 +142,11 @@
     pointer-events:auto !important;
   }
 
+  body.mobile-modules-open .modules-sidebar .module-btn.is-locked{
+    opacity:.48 !important;
+    pointer-events:auto !important;
+  }
+
   body.mobile-modules-open .mobile-drawer-backdrop{
     z-index:1200;
   }

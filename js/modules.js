@@ -962,6 +962,7 @@
     if(!document.body.classList.contains('is-authenticated')) return;
     const moduleButton = moduleButtons.find((b) => b.dataset.module === String(id));
     if(!moduleButton || moduleButton.disabled) return;
+    if(!isModuleUnlockedByProgress(id, currentProgress)) return;
     moduleButtons.forEach(b => b.classList.toggle('is-active', b.dataset.module === String(id)));
     modulePanels.forEach(p => {
       const match = p.dataset.module === String(id);
@@ -1036,7 +1037,7 @@
     moduleButtons.forEach((btn) => {
       const id = String(btn.dataset.module || '');
       const unlocked = isModuleUnlockedByProgress(id, currentProgress);
-      btn.disabled = !unlocked;
+      btn.disabled = !unlocked && !isMobileViewport();
       btn.classList.toggle('is-locked', !unlocked);
       btn.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
       if(!unlocked){
