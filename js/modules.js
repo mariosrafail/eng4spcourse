@@ -705,6 +705,13 @@
     const courseClass = 'mobile-course-open';
     if(which === 'modules'){
       const willOpen = !document.body.classList.contains(modulesClass);
+      if(willOpen){
+        if(collapseTimer){
+          clearTimeout(collapseTimer);
+          collapseTimer = null;
+        }
+        modulesSidebar.classList.remove('is-collapsing', 'is-collapsed');
+      }
       document.body.classList.toggle(modulesClass, willOpen);
       document.body.classList.toggle(courseClass, false);
     }else if(which === 'course'){

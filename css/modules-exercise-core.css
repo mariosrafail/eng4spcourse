@@ -117,6 +117,8 @@
     flex:0 0 auto;
     border-radius:0 18px 18px 0;
     transform: translateX(-108%);
+    opacity:1;
+    pointer-events:auto;
   }
 
   .sidebar{
@@ -130,6 +132,9 @@
 
   body.mobile-modules-open .modules-sidebar{
     transform: translateX(0);
+    opacity:1;
+    pointer-events:auto;
+    z-index:1700;
   }
 
   body.mobile-course-open .sidebar{
@@ -159,6 +164,17 @@
 
   .modules-sidebar.is-collapsed .modules-nav{
     opacity:1;
+    pointer-events:auto;
+  }
+
+  .modules-sidebar.is-collapsing .logo-image,
+  .modules-sidebar.is-collapsing .home-btn,
+  .modules-sidebar.is-collapsing .modules-label,
+  .modules-sidebar.is-collapsing .modules-nav{
+    opacity:1;
+  }
+
+  .modules-sidebar.is-collapsing .modules-nav{
     pointer-events:auto;
   }
 }
