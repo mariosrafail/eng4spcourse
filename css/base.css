@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
 
 /* Global font defaults */
-* { font-family: 'Comic Sans MS', 'Comic Sans', cursive; }
+* { font-family: 'Inter', 'Poppins', 'Segoe UI', Arial, sans-serif; }
 h1, h2, h3, h4, h5, h6, .unit-title, .module-focus-title, .card-title, .side-title, .kw-title, .reading-section-title, .writing-task-head {
-  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  font-family: 'Inter', 'Poppins', 'Segoe UI', Arial, sans-serif;
 }
 
 /* ==========================================================================
