@@ -1034,23 +1034,12 @@
 
   function applyModuleLocks(){
     moduleButtons.forEach((btn) => {
-      const id = String(btn.dataset.module || '');
-      const unlocked = isModuleUnlockedByProgress(id, currentProgress);
-      btn.disabled = !unlocked;
-      btn.classList.toggle('is-locked', !unlocked);
-      btn.setAttribute('aria-disabled', unlocked ? 'false' : 'true');
-      if(!unlocked){
-        const requiredUnit = getModuleUnlockUnit(id);
-        btn.title = `Locked until ${formatProgress(getProgressForUnit(requiredUnit))}%`;
-      }else{
-        btn.removeAttribute('title');
-      }
+      btn.disabled = false;
+      btn.classList.remove('is-locked');
+      btn.setAttribute('aria-disabled', 'false');
+      btn.removeAttribute('title');
     });
 
-    const activeButton = moduleButtons.find((btn) => btn.classList.contains('is-active'));
-    if(activeButton?.disabled){
-      showHome();
-    }
     updateUnlockNextButtonsState();
   }
 
