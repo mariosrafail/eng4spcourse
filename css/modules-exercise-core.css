@@ -134,7 +134,16 @@
     transform: translateX(0);
     opacity:1;
     pointer-events:auto;
-    z-index:1700;
+    z-index:2200;
+  }
+
+  body.mobile-modules-open .modules-sidebar .module-btn:not(:disabled){
+    opacity:1 !important;
+    pointer-events:auto !important;
+  }
+
+  body.mobile-modules-open .mobile-drawer-backdrop{
+    z-index:1200;
   }
 
   body.mobile-course-open .sidebar{
